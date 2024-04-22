@@ -1,6 +1,6 @@
 ---
 layout: lecture
-title: "Why we are teaching this class"
+title: "ทำไมเราสอนวิชาเหล่านี้"
 ---
 
 During a traditional Computer Science education, chances are you will take

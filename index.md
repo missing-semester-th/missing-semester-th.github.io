@@ -4,11 +4,10 @@ title: The Missing Semester of Your CS Education
 nositetitle: true
 ---
 
-Classes teach you all about advanced topics within CS, from operating systems
-to machine learning, but there’s one critical subject that’s rarely covered,
-and is instead left to students to figure out on their own: proficiency with
-their tools. We’ll teach you how to master the command-line, use a powerful
-text editor, use fancy features of version control systems, and much more!
+ในห้องเรียน เรามีวิชาเรียนที่โคตรยากเยอะแยะเต็มไปหมด ตั้งแต่เรื่อง operating systems ไปจนถึง machine learning เลย
+แต่มันดันมีเรื่องหนึ่ง ที่แทบไม่มีใครสอน เป็นเรื่องปล่อยให้คิดกันเอาเองว่าเครื่องมือเหล่านั้นใช้งานยังไง แล้วก็หวังว่าเราจะใช้งานกันเองได้
+พวกเราก็เลยจะสอนให้คุณเก่งขึ้น ตั้งแต่การใช้งาน command-line ซึ่งเป็น text editor ที่สามารถทำอะไรได้เยอะแยะมากมาย
+ไปจนถึง version control system และอื่น ๆ อีกมายมายอีกด้วย
 
 Students spend hundreds of hours using these tools over the course of their
 education (and thousands over their career), so it makes sense to make the

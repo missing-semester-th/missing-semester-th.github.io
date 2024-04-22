@@ -9,22 +9,19 @@ open an issue or submit a pull request.
 
 ## Development
 
-To build and view the site locally, run:
+หากต้องการ build เพื่อดูเว็บไซต์บนเครื่อง local ของตัวเอง ให้ run คำสั่งนี้:
 
 ```bash
 bundle exec jekyll serve -w
 ```
 
-If you'd prefer to develop the site in a Docker container (e.g., to avoid
-having to install Ruby and dependencies on your host machine), run:
-
+(แนะนำวิธีนี้!) หากต้องการ build แบบไม่ต้องการติดตั้ง Rudy และ dependencies ต่าง ๆ บนเครื่อง local ของตัวเอง ให้ build ผ่าน Docker โดย run คำสั่งนี้:
 
 ```bash
 docker-compose up --build
 ```
 
-Then, navigate to <http://localhost:4000> on your host machine to view the
-website. Jekyll will re-build the website as you make changes to files.
+หลังจาก build เสร็จแล้วให้ไปที่ <http://localhost:4000> บนเครื่อง local ของตัวเองเพื่อดูเว็บไซต์ได้เลย ทันทีที่มีการแก้ไขไฟล์เกิดขึ้น เว็บไซต์นี้จะถูก build ใหม่ ซึ่งจะทำให้เห็นการเปลี่ยนแปลงบนเว็บไซต์ทันที
 
 ## License
 
