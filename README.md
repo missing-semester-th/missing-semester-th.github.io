@@ -1,27 +1,26 @@
-# The Missing Semester of Your CS Education
+# The Missing Semester of Your CS Education ฉบับแปลภาษาไทย (Thai language)
 
 [![Build Status](https://github.com/missing-semester/missing-semester/workflows/Build/badge.svg)](https://github.com/missing-semester/missing-semester/actions?query=workflow%3ABuild) [![Links Status](https://github.com/missing-semester/missing-semester/workflows/Links/badge.svg)](https://github.com/missing-semester/missing-semester/actions?query=workflow%3ALinks)
 
 เว็บไซต์สำหรับ [The Missing Semester of Your CS Education](https://missing-semester-th.github.io/) ฉบับแปลภาษาไทย
 
-Contributions are most welcome! If you have edits or new content to add, please
-open an issue or submit a pull request.
+หากใครต้องการแก้ไขหรือเพิ่มเนื้อหาใหม่ สามารถเปิด issue หรือ pull request มาได้เลย!
 
 ## Development
 
-หากต้องการ build เพื่อดูเว็บไซต์บนเครื่อง local ของตัวเอง ให้ run คำสั่งนี้:
+หากต้องการ build เพื่อดูเว็บไซต์บนเครื่อง local ของตัวเอง ให้ run คำสั่งข้างล่างนี้:
 
 ```bash
 bundle exec jekyll serve -w
 ```
 
-(แนะนำวิธีนี้!) หากต้องการ build แบบไม่ต้องการติดตั้ง Rudy และ dependencies ต่าง ๆ บนเครื่อง local ของตัวเอง ให้ build ผ่าน Docker โดย run คำสั่งนี้:
+*แนะนำวิธีนี้* หากต้องการ build แบบไม่ต้องการติดตั้ง Ruby และ dependencies ต่าง ๆ บนเครื่อง local ของตัวเอง ให้ build ผ่าน Docker โดย run คำสั่งนี้:
 
 ```bash
 docker-compose up --build
 ```
 
-หลังจาก build เสร็จแล้วให้ไปที่ <http://localhost:4000> บนเครื่อง local ของตัวเองเพื่อดูเว็บไซต์ได้เลย ทันทีที่มีการแก้ไขไฟล์เกิดขึ้น เว็บไซต์นี้จะถูก build ใหม่ ซึ่งจะทำให้เห็นการเปลี่ยนแปลงบนเว็บไซต์ทันที
+หลังจาก build เสร็จแล้วให้ไปที่ <http://localhost:4000> บนเครื่อง local ของตัวเองเพื่อดูเว็บไซต์ได้เลย ทันทีที่มีการแก้ไขไฟล์ เว็บไซต์นี้จะถูก build ใหม่ ซึ่งจะทำให้เห็นการเปลี่ยนแปลงบนเว็บไซต์ทันที
 
 ## License
 

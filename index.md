@@ -4,24 +4,16 @@ title: The Missing Semester of Your CS Education
 nositetitle: true
 ---
 
-ในห้องเรียน เรามีวิชาเรียนที่โคตรยากเยอะแยะเต็มไปหมด ตั้งแต่เรื่อง operating systems ไปจนถึง machine learning เลย
-แต่มันดันมีเรื่องหนึ่ง ที่แทบไม่มีใครสอน เป็นเรื่องปล่อยให้คิดกันเอาเองว่าเครื่องมือเหล่านั้นใช้งานยังไง แล้วก็หวังว่าเราจะใช้งานกันเองได้
-พวกเราก็เลยจะสอนให้คุณเก่งขึ้น ตั้งแต่การใช้งาน command-line ซึ่งเป็น text editor ที่สามารถทำอะไรได้เยอะแยะมากมาย
-ไปจนถึง version control system และอื่น ๆ อีกมายมายอีกด้วย
+วิชาเรียนในหลักสูตรสาขาวิชาวิทยาการคอมพิวเตอร์ (CS) จะเต็มไปด้วยวิชาที่ถือได้ว่ายากเยอะแยะเต็มไปหมด ตั้งแต่เรื่อง operating systems ไปจนถึง machine learning แต่ถึงอย่างนั้น มันดันมีเนื้อหาหนึ่งที่แทบไม่มีใครสอน คือนอกจากจะไม่ได้พูดถึงมันแล้ว ยังปล่อยให้นักเรียนคิดหาทางที่จะต้องเก่งขึ้นในเรื่องเหล่านั้นด้วยตัวเองอีกด้วย พวกเราเลยจะมาช่วยสอนเนื้อหาตรงนั้น เพื่อทำให้คุณมีความเชี่ยวชาญมากขึ้น โดยเนื้อหาดังกล่าวจะประกอบไปด้วย วิธีการใช้งาน command-line, ใช้งาน text editor, ตลอดจนการใช้งาน version control systems และอื่น ๆ อีกมายมาย!
 
-Students spend hundreds of hours using these tools over the course of their
-education (and thousands over their career), so it makes sense to make the
-experience as fluid and frictionless as possible. Mastering these tools not
-only enables you to spend less time on figuring out how to bend your tools to
-your will, but it also lets you solve problems that would previously seem
-impossibly complex.
+สิ่งที่น่าตลกก็คือ เนื้อหาเหล่านั้นเป็นสิ่งที่นักเรียนได้นำไปใช้งานจริงตั้งแต่ที่อยู่ในรั้วการศึกษาไปจนถึงชีวิตการทำงาน หลายร้อยถึงหลายพันชั่วโมง ดังนั้น มันถึงเวลาแล้วล่ะที่พวกเราจะทำให้เนื้อหาเหล่านั้นเป็นสิ่งที่นักเรียนสามารถเข้าถึงได้ง่ายและจับต้องได้มากขึ้น เพราะการเข้าใจในเนื้อหาเกี่ยวกับเครื่องมือเหล่านั้น นอกจากจะช่วยลดเวลาในการควานหาวิธีการใช้เครื่องมือ (ที่ไม่มีใครสอน) ด้วยตัวเองแล้ว ยังช่วยให้สามารถนำเครื่องมือเหล่านั้นไปแก้ไขปัญหาที่ซับซ้อนมากขึ้นได้อีกด้วย
 
-Read about the [motivation behind this class](/about/).
+อ่านเกี่ยวกับ [แรงบันดาลใจที่ทำให้วิชานี้เกิดขึ้นได้ที่นี่](/about/).
 
 {% comment %}
 # Registration
 
-Sign up for the IAP 2020 class by filling out this [registration form](https://forms.gle/TD1KnwCSV52qexVt9).
+ลงทะเบียนเรียนวิชา IAP 2020 ด้วยการกรอกแบบฟอร์มนี้ [registration form](https://forms.gle/TD1KnwCSV52qexVt9). (ปิดรับแล้ว)
 {% endcomment %}
 
 # Schedule
@@ -47,18 +39,17 @@ Sign up for the IAP 2020 class by filling out this [registration form](https://f
 {% endfor %}
 </ul>
 
-Video recordings of the lectures are available [on
+วิดีโอบันทึกการสอนจะถูกเก็บไว้ที่ [on
 YouTube](https://www.youtube.com/playlist?list=PLyzOVJj3bHQuloKGG59rS43e29ro7I57J).
 
 # About the class
 
-**Staff**: This class is co-taught by [Anish](https://www.anishathalye.com/), [Jon](https://thesquareplanet.com/), and [Jose](http://josejg.com/).<br>
-**Questions**: Email us at [missing-semester@mit.edu](mailto:missing-semester@mit.edu).
+**ผู้สอน**: วิชานี้สอนโดย [Anish](https://www.anishathalye.com/), [Jon](https://thesquareplanet.com/), and [Jose](http://josejg.com/).<br>
+**หากมีคำถาม**: ให้ส่ง Email มาหาเราได้ที่ [missing-semester@mit.edu](mailto:missing-semester@mit.edu).
 
 # Beyond MIT
 
-We've also shared this class beyond MIT in the hopes that others may
-benefit from these resources. You can find posts and discussion on
+แหล่งเรียนรู้อื่น ๆ นอกเหนือจากเนื้อหาที่วิชานี้สอน เผื่อว่าจะมีประโยชน์
 
  - [Hacker News](https://news.ycombinator.com/item?id=22226380)
  - [Lobsters](https://lobste.rs/s/ti1k98/missing_semester_your_cs_education_mit)
@@ -96,13 +87,11 @@ Some more URLs:
 - [Italian](https://missing-semester-it.github.io/)
 - [Persian](https://missing-semester-fa.github.io/)
 - [German](https://missing-semester-de.github.io/)
+- [Thai (ภาษาไทย)](https://missing-semester-th.github.io/)
 
-Note: these are external links to community translations. We have not vetted
-them.
+ป.ล. ลิงก์เหล่านี้เป็นลิงก์ที่มีคนใน community อาสาแปลให้ทั้งหมด ไม่ได้มาจากทางมหาวิทยาลัยโดยตรง
 
-Have you created a translation of the course notes from this class? Submit a
-[pull request](https://github.com/missing-semester/missing-semester/pulls) so
-we can add it to the list!
+หากต้องการช่วยแปลเนื้อหาวิชาเรียนเหล่านี้ให้เป็นภาษาไทย สามารถเปิด [pull request](https://github.com/missing-semester-th/missing-semester-th.github.io/pulls) มาได้เลย
 
 ## Acknowledgements
 
