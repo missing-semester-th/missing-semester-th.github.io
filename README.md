@@ -14,7 +14,7 @@
 bundle exec jekyll serve -w
 ```
 
-*แนะนำวิธีนี้* หากต้องการ build แบบไม่ต้องการติดตั้ง Ruby และ dependencies ต่าง ๆ บนเครื่อง local ของตัวเอง ให้ build ผ่าน Docker โดย run คำสั่งนี้:
+*(แนะนำวิธีนี้)* หากต้องการ build แบบไม่ต้องการติดตั้ง Ruby และ dependencies ต่าง ๆ บนเครื่อง local ของตัวเอง ให้ build ผ่าน Docker โดย run คำสั่งนี้:
 
 ```bash
 docker-compose up --build
