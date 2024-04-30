@@ -8,7 +8,7 @@ video:
   id: Z56Jmr9Z34Q
 ---
 
-# Motivation
+# แรงบันดาลใจ
 
 As computer scientists, we know that computers are great at aiding in
 repetitive tasks. However, far too often, we forget that this applies

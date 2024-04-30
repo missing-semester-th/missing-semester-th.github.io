@@ -3,50 +3,24 @@ layout: lecture
 title: "ทำไมเราสอนวิชาเหล่านี้"
 ---
 
-During a traditional Computer Science education, chances are you will take
-plenty of classes that teach you advanced topics within CS, everything from
-Operating Systems to Programming Languages to Machine Learning. But at many
-institutions there is one essential topic that is rarely covered and is instead
-left for students to pick up on their own: computing ecosystem literacy.
+ในการเรียนการสอนของหลักสูตรวิทยาการคอมพิวเตอร์นั้น มีการสอนเนื้อหายาก ๆ ให้กับคุณมากมาย ตั้งแต่เรื่อง Operating Systems, Programming Languages, ไปจนถึง Machine Learning แต่มันดันมีเนื้อหาสำคัญหนึ่งสิ่งที่ไม่ค่อยมีใครสอนเท่าไหร่เลย แถมยังปล่อยให้นักเรียนคิดหาทางเรียนกันเอาเองด้วย นั้นก็คือ computing ecosystem literacy
 
-Over the years, we have helped teach several classes at MIT, and over and over
-we have seen that many students have limited knowledge of the tools available
-to them. Computers were built to automate manual tasks, yet students often
-perform repetitive tasks by hand or fail to take full advantage of powerful
-tools such as version control and text editors. In the best case, this results
-in inefficiencies and wasted time; in the worst case, it results in issues like
-data loss or inability to complete certain tasks.
+หลายปีมานี้ พวกเราได้ช่วยสอนให้กับห้องเรียนหลาย ๆ ห้องที่ MIT และมีหลายครั้งที่เราสังเกตเห็นได้ว่า นักเรียนเหล่านั้นมีความรู้ที่ค่อนข้างจำกัดเกี่ยวกับเครื่องมือที่มีอยู่ คือคอมพิวเตอร์น่ะถูกสร้างมาเพื่อช่วยทำงานที่ถูกเรียกว่าเป็นงานซ้ำ ๆ เดิม ๆ แบบอัตโนมัติ แต่หลายครั้งนักเรียนนั้นดันทำงานซ้ำ ๆ เหล่านั้นด้วยตัวเอง คือพลาดโอกาสในการใช้เครื่องมือที่พวกเขามีแบบเต็มประสิทธิภาพของมัน อย่างเช่นพวก version control หรือ text editors ซึ่งในกรณีที่ดีที่สุดอ่ะนะ พวกเขาก็แค่เสียเวลาไปโดยเปล่าประโยชน์เฉย ๆ แต่อย่างแย่ที่สุด คือพวกเขาอาจจะต้องเจอกับปัญหาเรื่องข้อมูลสูญหาย หรือทำงานบางอย่างไม่ได้ไปเลย
 
-These topics are not taught as part of the university curriculum: students are
-never shown how to use these tools, or at least not how to use them
-efficiently, and thus waste time and effort on tasks that _should_ be simple.
-The standard CS curriculum is missing critical topics about the computing
-ecosystem that could make students' lives significantly easier.
+หัวข้อนี้ไม่ได้ถูกสอนในหลักสูตรของมหาวิทยาลัย ไม่เคยมีตัวอย่างใด ๆ ให้นักเรียนเลยว่าเครื่องมือนี้ใช้งานยังไง หรือถ้าเคย ก็ไม่ได้สอนอีกล่ะว่าจะใช้งานมันยังไงให้เต็มประสิทธิภาพ นักเรียนก็เลยต้องเสียเวลาไปโดยเปล่าประโยชน์ให้กับอะไรที่มันควรจะดูง่าย หลักสูตรวิทยาการคอมพิวเตอร์ควรที่จะทำให้ชีวิตของนักเรียนง่ายขึ้นสิ!
 
 # The missing semester of your CS education
 
-To help remedy this, we are running a class that covers all the topics we
-consider crucial to be an effective computer scientist and programmer. The
-class is pragmatic and practical, and it provides hands-on introduction to
-tools and techniques that you can immediately apply in a wide variety of
-situations you will encounter. The class is being run during MIT's "Independent
-Activities Period" in January 2020 — a one-month semester that features shorter
-student-run classes. While the lectures themselves are only available to MIT
-students, we will provide all lecture materials along with video recordings of
-lectures to the public.
+เพื่อที่จะช่วยตรงจุดนี้ พวกเราก็เลยจัดการเรียนการสอนที่ครอบคลุมหัวข้อที่จำเป็นสำหรับการที่จะทำงานในฐานะนักวิทยาศาสตร์คอมพิวเตอร์หรือโปรแกรมเมอร์ได้อย่างยอดเยี่ยม สิ่งที่จะสอนนี้จะไม่ได้พูดถึงทฤษฎีซักเท่าไหร่ ตรงกันข้าม พวกเราจะสอนสิ่งที่คุณสามารถนำไปใช้ได้จริง ในสถานการณ์จริง ห้องเรียนนี้ถูกจัดขึ้นในช่วง Independent
+Activities Period ซึ่งเป็นเหมือนภาคเรียนสั้น ๆ ของ MIT ในเดือนมกราคมปี 2020 ถึงแม้ว่าการจัดการเรียนการสอนนั้นจะเกิดขึ้นที่ MIT แต่พวกเราก็จะจัดเตรียมเอกสารต่าง ๆ และลงวิดีโอบันทึกการสอนไว้ให้คนทั่วไปสามารถเข้าถึงได้ด้วย
 
-If this sounds like it might be for you, here are some concrete
-examples of what the class will teach:
+ถ้าฟังสิ่งที่เล่ามาแล้วหัวใจมันบอกว่า "ใช่" งั้นลองมาดูสิ่งที่เราจะสอนกัน
 
 ## Command shell
 
-How to automate common and repetitive tasks with aliases, scripts,
-and build systems. No more copy-pasting commands from a text
-document. No more "run these 15 commands one after the other". No
-more "you forgot to run this thing" or "you forgot to pass this
-argument".
+เรื่องนี้จะสอนเกี่ยวกับการทำให้งานทั่วไปหรืองานที่ต้องทำแบบซ้ำ ๆ นั้นสามารถทำได้อย่างอัตโนมัติด้วยการใช้ aliases, scripts, และการสร้าง system ขึ้นมาใช้ จะไม่มีแล้วกับการ copy & paste command จาก text document ต่าง ๆ จะไม่มีอีกแล้วกับการ run commond 15 commands ต่อกันทีละ command แบบอัตโนมือ และจะไม่มีอีกแล้วกับการลืม run หรือลืมใส่ argument ต่าง ๆ อย่างที่เคย
 
-For example, searching through your history quickly can be a huge time saver. In the example below we show several tricks related to navigating your shell history for `convert` commands.
+ตัวอย่างด้านล่าง แสดงให้เห็นว่าหากเราสามารถใช้งาน shell ได้อย่างคล่องแคล่วแล้ว เราสามารถที่จะประหยัดเวลาในการใช้ command ที่ชื่อ `convert` ได้มากเลยทีเดียว
 
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/history.mp4" type="video/mp4">
@@ -54,40 +28,29 @@ For example, searching through your history quickly can be a huge time saver. In
 
 ## Version control
 
-How to use version control _properly_, and take advantage of it to
-save you from disaster, collaborate with others, and quickly find and
-isolate problematic changes. No more `rm -rf; git clone`. No more
-merge conflicts (well, fewer of them at least). No more huge blocks
-of commented-out code. No more fretting over how to find what broke
-your code. No more "oh no, did we delete the working code?!". We'll
-even teach you how to contribute to other people's projects with pull
-requests!
+เรื่องนี้จะสอนวิธีใช้ version control _แบบถูกต้อง_ , ให้คุณสามารถใช้ประโยชน์จากมันเพื่อแก้ไขปัญหาต่าง ๆ, ทำงานร่วมกับผู้อื่น, หรือแม้กระทั่งนำมาช่วยเป็นเครื่องมือหา change ของ code ที่มีปัญหาได้ จะไม่มีอีกแล้วกับการใช้ `rm -rf; git clone` จะไม่มีอีกแล้วกับการ merge code ที่มี conflict (คือว่านะ มันก็ต้องมีบ้างแหละ แต่มันจะลดลง) จะไม่มีอีกแล้วกับการปิดการทำงานของ code ด้วยการใส่เครื่องหมาย comment เอาไว้ จะไม่มีอีกต่อไปกับการมานั่งกังวลหาว่าอะไรที่ทำให้ code พัง ไม่มีอีกแล้วกับการนั่งอุทานว่า "ชิบหายละกู นี่กูเพิ่งลบ code ที่มันใช้งานได้ออกไปรึป่าววะ?!" และสุดท้าย เราจะสอนคุณให้สามารถ contribute ให้กับโปรเจคของคนอื่่น ๆ ได้ด้วย pull request อีกด้วย!
 
-In the example below we use `git bisect` to find which commit broke a unit test and then we fix it with `git revert`.
+ตัวอย่างด้านล่างนี้ พวกเราใช้ command `git bisect` เพื่อหาว่า commit ไหนที่มันพัง unit test ของเรา จากนั้นเราก็ใช้ command `git revert` เพื่อแก้ไขมัน
+
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/git.mp4" type="video/mp4">
 </video>
 
 ## Text editing
 
-How to efficiently edit files from the command-line, both locally and
-remotely, and take advantage of advanced editor features. No more
-copying files back and forth. No more repetitive file editing.
+เรื่องนี้จะสอนให้สามารถแก้ไขไฟล์จาก command-line ได้่อย่างมีประสิทธิภาพ ทั้งที่ local หรือ remote ไปที่อื่นก็ตาม และเราก็จะใช้มันให้เกิดประโยชน์สูงสุดด้วย จะไม่มีอีกต่อไปกับการ copy ไฟล์ไป ๆ มา ๆ และจะไม่มีอีกต่อไปกับการต้องแก้ไขไฟล์ซ้ำ ๆ เดิม ๆ
 
-Vim macros are one of its best features, in the example below we quickly convert an html table to csv format using a nested vim macro.
+Macro(s) ของ vim นั้นคือหนึ่งใน features ที่ดีที่สุดเลยทีเดียว ในตัวอย่างด้านล่างนี้ เราสามารถ convert ข้อมูลจาก html table ให้อยู่ในรูปแบบของไฟล์ csv ได้โดยใช้แค่ nested vim macro
+
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/vim.mp4" type="video/mp4">
 </video>
 
 ## Remote machines
 
-How to stay sane when working with remote machines using SSH keys and
-terminal multiplexing. No more keeping many terminals open just to
-run two commands at once. No more typing your password every time you
-connect. No more losing everything just because your Internet
-disconnected or you had to reboot your laptop.
+เรื่องนี้จะสอนให้คุณไม่เป็นบ้าไปซะก่อนตอนที่ต้องทำงานกับเครื่อง remote ด้วยการใช้ SSH keys และ terminal multiplexing จะไม่มีอีกต่อไปกับการเปิด 2 terminals เพียงเพื่อให้สามารถ run 2 commands ไปพร้อม ๆ กันได้ จะไม่มีอีกต่อไปกับการมานั่งพิมพ์ password ทุกครั้งที่ต้องเชื่อมต่อไปใหม่ และจะไม่มีอีกต่อไปกับการที่จะต้องสูญเสียงานทุกอย่างไปตอนที่อินเตอร์เน็ตหลุดหรือคอมพิวเตอร์ดับ
 
-In the example below we use `tmux` to keep sessions alive in remote servers and `mosh` to support network roaming and disconnection.
+ในตัวอย่างด้านล่างนี้ พวกเราใช้ `tmux` เพื่อเปิด sessions ค้างไว้บน remote servers และใช้ `mosh` เพื่อให้การเชื่อมต่อไปยัง remote servers ดังกล่าวนั้นเสถียรมากขึ้น
 
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/ssh.mp4" type="video/mp4">
@@ -95,11 +58,9 @@ In the example below we use `tmux` to keep sessions alive in remote servers and 
 
 ## Finding files
 
-How to quickly find files that you are looking for. No
-more clicking through files in your project until you find the one
-that has the code you want.
+เรื่องนี้จะสอนให้คุณหาไฟล์ที่คุณต้องการได้อย่างรวดเร็ว จะไม่มีการนั่งหา code ที่ต้องการโดยการ click ทีละโฟลเดอร์/ไฟล์จนกว่าจะเจออีกต่อไป
 
-In the example below we quickly look for files with `fd` and for code snippets with `rg`. We also quickly `cd` and `vim` recent/frequent files/folder using `fasd`.
+ในตัวอย่างด้านล่างนี้เราใช้ `fd` เพื่อหาไฟล์ที่ต้องการ และใช้ `rg` เพื่อหา code ที่ถูกแนบเอาไว้ นอกจากนี้ พวกเรายังใช้ `cd` และ `vim` แบบไว ๆ เพื่อหาไฟล์/โฟลเดอร์ ที่ถูกใช้บ่อย ๆ/เพิ่งใช้มาไม่นานด้วย `fasd` ด้วย
 
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/find.mp4" type="video/mp4">
@@ -107,35 +68,22 @@ In the example below we quickly look for files with `fd` and for code snippets w
 
 ## Data wrangling
 
-How to quickly and easily modify, view, parse, plot, and compute over
-data and files directly from the command-line. No more copy pasting
-from log files. No more manually computing statistics over data. No
-more spreadsheet plotting.
+เรื่องนี้จะสอนให้คุณสามารถดู, แก้ไข, จัดการข้อมูลหรือไฟล์ได้โดยตรงจากการใช้ command-line จะไม่มีการต้องมานั่ง copy & paste จาก log file อีกต่อไป จะไม่มีการนั่งอัตโนมือคำนวณค่าทางสถิติของข้อมูลอีกต่อไป แล้วก็จะไม่ต้องมา plot อะไรลงบน spreadsheet แล้วด้วย
 
 ## Virtual machines
 
-How to use virtual machines to try out new operating systems, isolate
-unrelated projects, and keep your main machine clean and tidy. No
-more accidentally corrupting your computer while doing a security
-lab. No more millions of randomly installed packages with differing
-versions.
+เรื่องนี้จะสอนให้คุณใช้ virtual machines เพื่อลองใช้งาน operating systems ใหม่ ๆ, แยกโปรเจคที่ไม่เกี่ยวข้องกันออกจากกัน เพื่อทำให้เครื่องคอมพิวเตอร์เครื่องหลักของคุณนั้นสะอาดเอี่ยมอ่องอยู่เสมอ จะไม่มีการเผลอลบอะไรสำคัญจากเครื่องคอมพิวเตอร์ของเราเองอีกต่อไปในขณะที่กำลังทำแบบฝึกหัดเกี่ยวกับด้าน security แล้วก็จะไม่มีการต้องมาติดตั้ง packages หลาย ๆ เวอร์ชั่นเอาไว้ที่เครื่องของตัวเองด้วย
 
 ## Security
 
-How to be on the Internet without immediately revealing all of your
-secrets to the world. No more coming up with passwords that match the
-insane criteria yourself. No more unsecured, open WiFi networks. No
-more unencrypted messaging.
+เรื่องนี้จะสอนให้คุณสามารถใช้อินเตอร์เน็ตได้แบบปลอดภัยหายห่วง จะไม่มีการตั้ง passwords แบบบ้า ๆ อีกต่อไป จะใช้ WiFi ได้อย่างปลอดภัย และไม่มีการส่งข้อความแบบที่ไม่เข้ารหัส (unencrypted messaging) อีกต่อไปด้วย
 
-# Conclusion
+# บทสรุป
 
-This, and more, will be covered across the 12 class lectures, each including an
-exercise for you to get more familiar with the tools on your own. If you can't
-wait for January, you can also take a look at the lectures from [Hacker
-Tools](https://hacker-tools.github.io/lectures/), which we ran during IAP last
-year. It is the precursor to this class, and covers many of the same topics.
+เนื้อหาที่เราจะสอนทั้งหมดนี้มีรวมกันแล้วทั้งสิ้น 12 บท แต่ละบทจะมีแบบฝึกหัดให้คุณได้ทำเพื่อสร้างความคุ้นเคยกับเครื่องมือต่าง ๆ ด้วยตัวของคุณเอง แต่ถ้าคุณรอให้ถึงเดือนมกราคมไม่ได้ คุณสามารถดูเนื้อหาตรงนี้ที่เราเคยสอนในปีก่อนได้นะ [Hacker
+Tools](https://hacker-tools.github.io/lectures/) เนื้อหามันก็คือ ๆ กันอะแหละ
 
-We hope to see you in January, whether virtually or in person!
+พวกเราหวังว่าจะได้เจอคุณในเดือนมกราคมนะ ไม่ว่าจะเป็นรูปแบบ online หรือเจอกันตัวเป็น ๆ ก็ตาม!
 
 Happy hacking,<br>
-Anish, Jose, and Jon
+Anish, Jose, และ Jon

@@ -7,7 +7,7 @@ video:
   id: qw2c6ffSVOM
 ---
 
-# Motivation
+# แรงบันดาลใจ
 
 This class is about [hacker](https://en.wikipedia.org/wiki/Hacker_culture)
 tools, not [hacker](https://en.wikipedia.org/wiki/Security_hacker) tools.
