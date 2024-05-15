@@ -1,6 +1,6 @@
 ---
 layout: lecture
-title: "Course overview + the shell"
+title: "ภาพรวมของคอร์สนี้และ Shell"
 date: 2020-01-13
 ready: true
 video:
@@ -10,52 +10,25 @@ video:
 
 # แรงบันดาลใจ
 
-As computer scientists, we know that computers are great at aiding in
-repetitive tasks. However, far too often, we forget that this applies
-just as much to our _use_ of the computer as it does to the computations
-we want our programs to perform. We have a vast range of tools
-available at our fingertips that enable us to be more productive and
-solve more complex problems when working on any computer-related
-problem. Yet many of us utilize only a small fraction of those tools; we
-only know enough magical incantations by rote to get by, and blindly
-copy-paste commands from the internet when we get stuck.
+ในฐานะนักวิทยาศาสตร์คอมพิวเตอร์ 
 
-This class is an attempt to address this.
+ในฐานะนักวิทยาการคอมพิวเตอร์ เราทราบดีว่าคอมพิวเตอร์ยอดเยี่ยมในการช่วยเหลือเราในงานที่ซ้ำซาก จำเจ อย่างไรก็ตาม บ่อยครั้งที่เราลืมไปว่าสิ่งนี้สามารถนำมา _ประยุกต์ใช้_ กับการประมวลผลตามคำสั่งของเราด้วยเช่นกัน เรามีเครื่องมือมากมายหลากหลายที่อยู่แค่ปลายนิ้วของเรา ซึ่งจะช่วยให้เราทำงานที่เกี่ยวข้องกับคอมพิวเตอร์ได้อย่างมีประสิทธิภาพมากขึ้นและสามารถแก้ปัญหาที่ซับซ้อนยิ่งขึ้น  แต่หลายคนกลับใช้เครื่องมือเหล่านั้นเพียงแค่เศษเสี้ยวเดียวของมันเท่านั้น เราเรียนรู้เพียงแค่คำสั่งพื้นฐานแบบท่องจำเพื่อให้ทำงานเสร็จไปวัน ๆ และบ่อยครั้งก็มักจะทำเพียง copy และ paste คำสั่งจากอินเตอร์เน็ตอย่างไม่ลืมหูลืมตาถ้าคำสั่งนั้นมันเกิดมันติดขัดอะไรขึ้นมา
 
-We want to teach you how to make the most of the tools you know, show
-you new tools to add to your toolbox, and hopefully instill in you some
-excitement for exploring (and perhaps building) more tools on your own.
-This is what we believe to be the missing semester from most Computer
-Science curricula.
+คอร์สนี้เป็นความพยายามที่จะแก้ไขปัญหาดังกล่าว
 
-# Class structure
+เราต้องการสอนคุณเกี่ยวกับวิธีการใช้เครื่องมือที่มีอยู่ให้เกิดประโยชน์สูงสุด แนะนำเครื่องมือใหม่ ๆ เพื่อเพิ่มเข้าไปในคลังเครื่องมือของคุณ และหวังว่าสิ่งเหล่านี้จะช่วยกระตุ้นให้คุณตื่นเต้นกับการเรียนรู้สิ่งต่าง ๆ เหล่านี้ รวมไปถึงการสร้างเครื่องมือต่าง ๆ ด้วยตัวคุณเองอีกด้วย และสิ่งที่เรากำลังจะสอนคุณต่อไปนี้ คือสิ่งที่เราเชื่อว่ามันขาดหายไปจากหลักสูตรวิทยาการคอมพิวเตอร์
 
-The class consists of 11 1-hour lectures, each one centering on a
-[particular topic](/2020/). The lectures are largely independent,
-though as the semester goes on we will presume that you are familiar
-with the content from the earlier lectures. We have lecture notes
-online, but there will be a lot of content covered in class (e.g. in the
-form of demos) that may not be in the notes. We will be recording
-lectures and posting the recordings online.
+# โครงสร้างของคอร์สนี้
 
-We are trying to cover a lot of ground over the course of just 11 1-hour
-lectures, so the lectures are fairly dense. To allow you some time to
-get familiar with the content at your own pace, each lecture includes a
-set of exercises that guide you through the lecture's key points. After
-each lecture, we are hosting office hours where we will be present to
-help answer any questions you might have. If you are attending the class
-online, you can send us questions at
-[missing-semester@mit.edu](mailto:missing-semester@mit.edu).
+คอร์สนี้จะประกอบไปด้วย เนื้อหา 11 บท บทละ 1 ชั่วโมง โดยแต่ละบทจะเน้นไปที่ [หัวข้อที่แตกต่างกันออกไป](/2020/) กล่าวคือ เนื้อหาส่วนใหญ่แต่ละบทนั้นจะไม่ได้เกี่ยวข้องกันเลย แต่อย่างไรก็ตาม เมื่อการสอนนั้นดำเนินไปเรื่อย ๆ เราก็หวังว่าคุณจะคุ้นเคยกับเนื้อหาจากบทที่สอนไปก่อนหน้านี้แล้วเช่นกัน เราได้จัดเตรียมเอกสารประกอบการบรรยายไว้ด้วย โดยที่เนื้อหาส่วนใหญ่นั้นจะถูกสอนในห้องเรียน เช่น โจทย์ตัวอย่างต่าง ๆ ที่อาจจะไม่ได้มีอยู่ในเอกสาร แต่เราก็จะบันทึกวิดีโอการเรียนการสอนนั้นไว้ และเอาไปเผยแพร่บน Youtube
 
-Due to the limited time we have, we won't be able to cover all the tools
-in the same level of detail a full-scale class might. Where possible, we
-will try to point you towards resources for digging further into a tool
-or topic, but if something particularly strikes your fancy, don't
-hesitate to reach out to us and ask for pointers!
+เราพยายามที่จะสอนให้ครอบคลุมเนื้อหาให้มากที่สุดเท่าที่จะมากได้ภายในระยะเวลาเพียง 11 ชั่วโมง ดังนั้น การสอนนี้จะค่อนข้างเข้มข้นมาก พร้อมกันนี้ เพื่อให้คุณมีเวลาทำความคุ้นเคยกับเนื้อหาต่าง ๆ มากขึ้น เราจึงได้จัดเตรียมแบบฝึกหัดให้คุณในตอนท้ายของแต่ละบทด้วย หากคุณมีคำถามใด ๆ สามารถ คุณสามารถส่งคำถามถึงเราได้ที่ [missing-semester@mit.edu](mailto:missing-semester@mit.edu)
 
-# Topic 1: The Shell
+เนื่องจากเวลาที่มีอยู่จำกัด เราจึงไม่สามารถสอนให้ครอบคลุมเครื่องมือทั้งหมดทั้งหมดอย่างละเอียดได้อย่างที่เราสอนกันในห้องเรียนปกติ ดังนั้นถ้าเป็นไปได้ เราจะพยายามชี้แนะแหล่งเรียนรู้ต่าง ๆ ให้คุณเพื่อให้คุณสามารถไปเรียนรู้ต่อด้วยตัวเองได้ และถ้าหากมีความสนใจในหัวข้อใด ๆ เป็นพิเศษ ก็อย่าลีงเลที่จะติดต่อเรามาเพื่อขอคำแนะนำนะ!
 
-## What is the shell?
+# หัวข้อที่ 1: Shell
+
+## Shell คืออะไร?
 
 Computers these days have a variety of interfaces for giving them
 commands; fanciful graphical user interfaces, voice interfaces, and
@@ -353,7 +326,7 @@ state of various system LEDs (your path might be different):
 $ echo 1 | sudo tee /sys/class/leds/input6::scrolllock/brightness
 ```
 
-# Next steps
+# ขั้นตอนต่อไป
 
 At this point you know your way around a shell enough to accomplish
 basic tasks. You should be able to navigate around to find files of
@@ -362,7 +335,7 @@ lecture, we will talk about how to perform and automate more complex
 tasks using the shell and the many handy command-line programs out
 there.
 
-# Exercises
+# แบบฝึกหัด
 
 All classes in this course are accompanied by a series of exercises. Some give
 you a specific task to do, while others are open-ended, like "try using X and Y
