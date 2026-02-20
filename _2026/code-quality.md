@@ -2,7 +2,7 @@
 layout: lecture
 title: "Code Quality"
 description: >
-  Learn about formatting, linting, testing, continuous integration, and more.
+  เรียนรู้เกี่ยวกับ formatting, linting, testing, continuous integration และอื่น ๆ
 thumbnail: /static/assets/thumbnails/2026/lec9.png
 date: 2026-01-23
 ready: true
@@ -11,7 +11,7 @@ video:
   id: XBiLUNx84CQ
 ---
 
-There are a variety of tools and techniques that support developers in writing high-quality code. In this lecture, we'll cover:
+มีเครื่องมือและเทคนิคหลากหลายที่ช่วยให้นักพัฒนาเขียนโค้ดที่มีคุณภาพสูง ในบทนี้จะครอบคลุมเรื่อง:
 
 - [Formatting](#formatting)
 - [Linting](#linting)
@@ -20,29 +20,29 @@ There are a variety of tools and techniques that support developers in writing h
 - [Continuous integration](#continuous-integration)
 - [Command runners](#command-runners)
 
-As a bonus topic, we'll also cover [regular expressions](#regular-expressions), a cross-cutting topic that has applications in code quality (e.g., for running a subset of tests that match a pattern) as well as other domains like IDEs (e.g., for search and replace).
+เป็นหัวข้อเสริม เราจะพูดถึง [regular expressions](#regular-expressions) ด้วย ซึ่งเป็นหัวข้อที่มีการใช้งานข้ามศาสตร์ ทั้งในด้าน code quality (เช่น การรัน test เฉพาะบางส่วนที่ตรงกับ pattern) รวมถึงด้านอื่น ๆ อย่าง IDE (เช่น การ search and replace)
 
-Many of these tools will be language-specific (e.g., the [Ruff](https://docs.astral.sh/ruff/) linter/formatter for Python). In some cases, tools will support multiple languages (e.g., the [Prettier](https://prettier.io/) code formatter). The concepts, however, are near universal --- you can find code formatters, linters, testing libraries, and so on for any programming language.
+เครื่องมือหลายตัวจะเป็นแบบเฉพาะภาษา (เช่น [Ruff](https://docs.astral.sh/ruff/) ซึ่งเป็น linter/formatter สำหรับ Python) แต่ในบางกรณีเครื่องมือจะรองรับหลายภาษา (เช่น [Prettier](https://prettier.io/) ซึ่งเป็น code formatter) อย่างไรก็ตาม แนวคิดเหล่านี้ใกล้เคียงกับสากล --- จะหา code formatter, linter, testing library และอื่น ๆ ได้สำหรับภาษาโปรแกรมใดก็ได้
 
 # Formatting
 
-Code auto-formatters automatically prettify surface syntax. This way, you can focus on the more deep and challenging problems, while the auto-formatting tool handles mundane details such as consistency of `'` versus `"` syntax for strings, having spaces surrounding binary operators (`x + y` instead of `x+y`), having `import` statements in sorted order, and avoiding over-length lines. One major benefit of code formatters is that they standardize code style across all developers working on a codebase.
+Code auto-formatter จะจัดรูปแบบ surface syntax ให้สวยงามโดยอัตโนมัติ วิธีนี้ทำให้สามารถโฟกัสกับปัญหาที่ลึกและท้าทายกว่าได้ ขณะที่เครื่องมือ auto-formatting จัดการรายละเอียดปลีกย่อยให้ เช่น ความสม่ำเสมอระหว่างการใช้ `'` กับ `"` สำหรับ string, การมีช่องว่างรอบ binary operator (`x + y` แทน `x+y`), การเรียง `import` statement ตามลำดับ, และการหลีกเลี่ยงบรรทัดที่ยาวเกินไป ประโยชน์หลักอย่างหนึ่งของ code formatter คือการทำให้ code style เป็นมาตรฐานเดียวกันในทุกคนที่ทำงานบน codebase เดียวกัน
 
-Some tools such as Prettier are [highly configurable](https://prettier.io/docs/configuration); you should check in the configuration file into [version control](/2026/version-control/) for your project. Other tools, such as [Black](https://github.com/psf/black) and [gofmt](https://pkg.go.dev/cmd/gofmt) have limited or no configurability, to reduce [bikeshedding](https://en.wikipedia.org/wiki/Law_of_triviality).
+เครื่องมือบางตัวอย่าง Prettier มี[ตัวเลือกการตั้งค่าจำนวนมาก](https://prettier.io/docs/configuration) ควร check in ไฟล์ configuration เข้าไปใน [version control](/2026/version-control/) ของโปรเจกต์ด้วย เครื่องมืออื่น ๆ เช่น [Black](https://github.com/psf/black) และ [gofmt](https://pkg.go.dev/cmd/gofmt) มีตัวเลือกการปรับแต่งจำกัดหรือไม่มีเลย เพื่อลด [bikeshedding](https://en.wikipedia.org/wiki/Law_of_triviality) (การถกเถียงเรื่องเล็กน้อยที่ไม่สำคัญ)
 
-You can set up [IDE integration](/2026/development-environment/#code-intelligence-and-language-servers) with your code formatter, so that your code will be auto-formatted as you type or when you save a file. You can also add an [EditorConfig](https://editorconfig.org/) file to your project, which communicates to your IDE certain project-level settings like indent size for each file type.
+สามารถตั้งค่า [IDE integration](/2026/development-environment/#code-intelligence-and-language-servers) กับ code formatter ได้ เพื่อให้โค้ดถูก auto-format ขณะพิมพ์หรือเมื่อบันทึกไฟล์ นอกจากนี้ยังสามารถเพิ่มไฟล์ [EditorConfig](https://editorconfig.org/) เข้าไปในโปรเจกต์ ซึ่งจะบอก IDE ถึงการตั้งค่าระดับโปรเจกต์ เช่น indent size สำหรับแต่ละประเภทไฟล์
 
 # Linting
 
-Linters run static analysis (analyze your code without running it) to find antipatterns and potential issues in your code. These tools go deeper than autoformatters, looking beyond surface syntax. The level of depth of analysis varies by tool.
+Linter ทำ static analysis (วิเคราะห์โค้ดโดยไม่ต้องรัน) เพื่อหา antipattern และปัญหาที่อาจเกิดขึ้นในโค้ด เครื่องมือเหล่านี้ทำงานลึกกว่า autoformatter โดยมองไกลกว่าแค่ surface syntax ความลึกของการวิเคราะห์จะแตกต่างกันไปตามเครื่องมือ
 
-Linters come equipped with lists of _rules_, with presets that can be configured on a project-level basis. Some linter rules produce false positives, so you can disable them on a per-file or per-line basis.
+Linter มาพร้อมกับรายการ _rule_ ต่าง ๆ โดยมี preset ที่สามารถตั้งค่าได้ในระดับโปรเจกต์ rule ของ linter บางตัวอาจให้ผลลัพธ์ที่เป็น false positive ได้ จึงสามารถปิดการทำงานได้ในระดับไฟล์หรือระดับบรรทัด
 
-Good linters will have built-in help or documentation that explains each linter rule --- what the rule is looking for, why it's bad, and what's a better alternative for the code pattern. For example, see the documentation for the [SIM102](https://docs.astral.sh/ruff/rules/collapsible-if/) rule in [Ruff](https://docs.astral.sh/ruff/) which catches unnecessarily nested `if` statements in Python code.
+Linter ที่ดีจะมี help หรือเอกสารในตัวที่อธิบาย rule แต่ละตัว --- rule นั้นมองหาอะไร ทำไมถึงไม่ดี และอะไรเป็นทางเลือกที่ดีกว่าสำหรับ code pattern นั้น ตัวอย่างเช่น ดูเอกสารของ rule [SIM102](https://docs.astral.sh/ruff/rules/collapsible-if/) ใน [Ruff](https://docs.astral.sh/ruff/) ซึ่งจับ `if` statement ที่ซ้อนกันโดยไม่จำเป็นในโค้ด Python
 
-Some linters can not only flag issues but also automatically fix certain issues for you.
+Linter บางตัวไม่ได้แค่แจ้งปัญหา แต่ยังสามารถ fix ปัญหาบางอย่างให้โดยอัตโนมัติได้อีกด้วย
 
-Aside from language-specific linters, another tool that might come in handy is [semgrep](https://github.com/semgrep/semgrep), a "semantic grep" tool that works at the AST level (rather than character level, like grep) and supports many languages. You can use semgrep to easily write custom linter rules for your projects. For example, if you wanted to prevent the dangerous `subprocess.Popen(..., shell=True)` in Python, you could find that code pattern with:
+นอกจาก linter เฉพาะภาษาแล้ว เครื่องมืออีกตัวที่อาจมีประโยชน์คือ [semgrep](https://github.com/semgrep/semgrep) ซึ่งเป็นเครื่องมือ "semantic grep" ที่ทำงานในระดับ AST (แทนที่จะเป็นระดับตัวอักษรอย่าง grep) และรองรับหลายภาษา สามารถใช้ semgrep เขียน custom linter rule สำหรับโปรเจกต์ได้อย่างง่ายดาย ตัวอย่างเช่น ถ้าต้องการป้องกันการใช้ `subprocess.Popen(..., shell=True)` ที่อันตรายใน Python สามารถค้นหา code pattern นั้นได้ด้วย:
 
 ```bash
 semgrep -l python -e "subprocess.Popen(..., shell=True, ...)"
@@ -50,85 +50,85 @@ semgrep -l python -e "subprocess.Popen(..., shell=True, ...)"
 
 # Testing
 
-Software testing is a standard technique to increase your confidence in the correctness of your code. You write code, and then you write code that exercises the code you wrote and raises an error if the code doesn't work as expected.
+Software testing เป็นเทคนิคมาตรฐานในการเพิ่มความมั่นใจว่าโค้ดทำงานถูกต้อง เขียนโค้ดขึ้นมา แล้วก็เขียนโค้ดเพิ่มเพื่อทดสอบโค้ดที่เขียนไว้ และแจ้ง error ถ้าโค้ดไม่ทำงานตามที่คาดไว้
 
-You can write tests for chunks of code at different levels of granularity: _unit tests_ for individual functions, _integration tests_ for interaction between modules or services, and _functional tests_ for end-to-end scenarios. You can do _test-driven development_, where you write tests before you write any implementation code. When you find bugs in your code, you can write _regression tests_, so you'll catch if the functionality ever breaks in the future. You can write _property-based tests_, pioneered in [QuickCheck](https://hackage.haskell.org/package/QuickCheck) in Haskell, and implemented in many libraries, like [Hypothesis](https://hypothesis.readthedocs.io/) for Python. Which approach to testing is right depends on your project; likely, you will adopt some combination.
+สามารถเขียน test สำหรับโค้ดในระดับความละเอียดที่แตกต่างกันได้: _unit test_ สำหรับ function แต่ละตัว, _integration test_ สำหรับการทำงานร่วมกันระหว่าง module หรือ service, และ _functional test_ สำหรับสถานการณ์ end-to-end สามารถทำ _test-driven development_ โดยเขียน test ก่อนเขียนโค้ดจริง เมื่อพบ bug ในโค้ด สามารถเขียน _regression test_ เพื่อจับได้ถ้า functionality นั้นพังในอนาคต สามารถเขียน _property-based test_ ซึ่งเริ่มต้นจาก [QuickCheck](https://hackage.haskell.org/package/QuickCheck) ใน Haskell และถูก implement ในหลาย library เช่น [Hypothesis](https://hypothesis.readthedocs.io/) สำหรับ Python แนวทาง testing ที่เหมาะสมขึ้นอยู่กับโปรเจกต์ โดยมักจะใช้หลายแนวทางผสมกัน
 
-If your program has external dependencies like a database or web API, it may be helpful to _mock_ those dependencies in your tests, rather than have your code interact with third-party dependencies at test time.
+ถ้าโปรแกรมมี external dependency อย่างฐานข้อมูลหรือ web API การ _mock_ dependency เหล่านั้นใน test อาจเป็นประโยชน์ แทนที่จะให้โค้ดไปเชื่อมต่อกับ third-party dependency ตอนรัน test
 
 ## Code coverage
 
-Code coverage is a metric by which you can measure how good your tests are. Code coverage looks at which lines of your code are executed when your tests are run, so you can ensure you are covering all code paths. Code coverage tools can show you line-by-line coverage to guide you in writing tests. Services such as [Codecov](https://app.codecov.io) provide web interfaces for tracking and viewing code coverage over the history of a project.
+Code coverage เป็น metric ที่ใช้วัดว่า test ดีแค่ไหน code coverage จะดูว่าบรรทัดไหนของโค้ดถูก execute เมื่อรัน test เพื่อให้มั่นใจว่าครอบคลุมทุก code path เครื่องมือ code coverage สามารถแสดง coverage ทีละบรรทัดเพื่อช่วยนำทางในการเขียน test บริการอย่าง [Codecov](https://app.codecov.io) มี web interface สำหรับติดตามและดู code coverage ตลอดประวัติของโปรเจกต์
 
-Like any metric, code coverage is not perfect; don't over-index on coverage, focus on writing high-quality tests.
+เช่นเดียวกับ metric อื่น ๆ code coverage ไม่ได้สมบูรณ์แบบ อย่าให้น้ำหนักกับ coverage มากเกินไป ให้เน้นเขียน test ที่มีคุณภาพสูง
 
 # Pre-commit hooks
 
-Git pre-commit [hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), made easier by the [pre-commit](https://pre-commit.com/) framework, automatically run user-specified code prior to every Git commit. Projects commonly use pre-commit hooks to run formatters and linters, and sometimes tests, automatically before every commit, to ensure that committed code matches the project code style and is free of certain issues.
+Git pre-commit [hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) ซึ่งใช้งานง่ายขึ้นด้วย framework [pre-commit](https://pre-commit.com/) จะรันโค้ดที่ผู้ใช้กำหนดโดยอัตโนมัติก่อนทุก Git commit โปรเจกต์ทั่วไปใช้ pre-commit hook เพื่อรัน formatter และ linter และบางครั้ง test โดยอัตโนมัติก่อนทุก commit เพื่อให้มั่นใจว่าโค้ดที่ commit ตรงตาม code style ของโปรเจกต์และปราศจากปัญหาบางประเภท
 
 # Continuous integration
 
-Continuous integration (CI) services like [GitHub Actions](https://github.com/features/actions) can run scripts for you every time you push code (or on every pull request, or on a schedule). Developers commonly use CI services to run code quality tools including formatters, linters, and tests. For compiled languages, you can ensure code compiles; for statically typed languages, you can make sure it type checks. Running CI every push of new commits can catch errors introduced into the main version of the code; running on pull requests can catch issues with contributor submissions; running on a schedule can catch issues with external dependencies (e.g., a developer accidentally releases a breaking change as [semver-compatible](/2026/shipping-code/#releases--versioning)).
+บริการ continuous integration (CI) เช่น [GitHub Actions](https://github.com/features/actions) สามารถรัน script ให้ทุกครั้งที่ push โค้ด (หรือทุก pull request หรือตามตาราง) นักพัฒนาทั่วไปใช้บริการ CI เพื่อรันเครื่องมือ code quality รวมถึง formatter, linter และ test สำหรับ compiled language สามารถตรวจสอบว่าโค้ด compile ได้ สำหรับ statically typed language สามารถตรวจสอบว่า type check ผ่าน การรัน CI ทุกครั้งที่ push commit ใหม่ช่วยจับ error ที่ถูกนำเข้าสู่ version หลักของโค้ด การรันบน pull request ช่วยจับปัญหาจากการ submit ของ contributor การรันตามตารางช่วยจับปัญหาจาก external dependency (เช่น นักพัฒนาปล่อย breaking change โดยไม่ตั้งใจในรูปแบบที่ [เข้ากันได้กับ semver](/2026/shipping-code/#releases--versioning))
 
-Because CI scripts run separately from developer machines, you can easily run long-running jobs there. This can be leveraged, for example, to run a _matrix_ of tests across different operating systems and programming language versions to ensure that the software works properly across all of them.
+เนื่องจาก CI script รันแยกจากเครื่องของนักพัฒนา จึงสามารถรัน job ที่ใช้เวลานานได้อย่างง่ายดาย สามารถนำไปใช้ประโยชน์ได้ เช่น การรัน test แบบ _matrix_ ข้ามระบบปฏิบัติการและเวอร์ชันของภาษาโปรแกรมที่แตกต่างกัน เพื่อให้มั่นใจว่าซอฟต์แวร์ทำงานได้อย่างถูกต้องบนทุก platform
 
-Generally, the script running in CI will not directly make changes to your code: it will run tools in "check-only" mode rather than "fix" mode, so for example, the auto-formatter will raise an error when the code is not compliant with the format.
+โดยทั่วไปแล้ว script ที่รันใน CI จะไม่ทำการเปลี่ยนแปลงโค้ดโดยตรง แต่จะรันเครื่องมือในโหมด "check-only" แทนโหมด "fix" ตัวอย่างเช่น auto-formatter จะแจ้ง error เมื่อโค้ดไม่เป็นไปตาม format ที่กำหนด
 
-Repositories often include [status badges](https://docs.github.com/en/actions/how-tos/monitor-workflows/add-a-status-badge) in their README, showing CI status and other information such as code coverage. For example, below is Missing Semester's current build status.
+Repository มักจะมี [status badge](https://docs.github.com/en/actions/how-tos/monitor-workflows/add-a-status-badge) ใน README แสดงสถานะ CI และข้อมูลอื่น ๆ เช่น code coverage ตัวอย่างด้านล่างคือสถานะ build ปัจจุบันของ Missing Semester
 
 [![Build Status](https://github.com/missing-semester/missing-semester/actions/workflows/build.yml/badge.svg)](https://github.com/missing-semester/missing-semester/actions/workflows/build.yml) [![Links Status](https://github.com/missing-semester/missing-semester/actions/workflows/links.yml/badge.svg)](https://github.com/missing-semester/missing-semester/actions/workflows/links.yml)
 
-> Our [links checker](https://github.com/missing-semester/missing-semester/blob/master/.github/workflows/links.yml), which uses the [proof-html](https://github.com/anishathalye/proof-html) GitHub Action is often failing, usually due to issues with third-party websites. Still, it has helped us catch and fix many broken links (sometimes due to typos, most of the time due to websites moving around content without adding redirects or websites disappearing).
+> [links checker](https://github.com/missing-semester/missing-semester/blob/master/.github/workflows/links.yml) ของเราซึ่งใช้ GitHub Action [proof-html](https://github.com/anishathalye/proof-html) มักจะ fail อยู่เรื่อย ๆ โดยปกติเกิดจากปัญหาของเว็บไซต์ภายนอก แต่ก็ช่วยให้เราจับและแก้ไข broken link จำนวนมากได้ (บางครั้งเกิดจากพิมพ์ผิด ส่วนใหญ่เกิดจากเว็บไซต์ย้ายเนื้อหาโดยไม่ใส่ redirect หรือเว็บไซต์หายไป)
 
-A good way to learn the particulars of CI services, formatters, linters, and testing libraries is by example. Find high-quality open-source projects on GitHub---the more similar to your project in programming language, domain, size and scope, and so on, the better---and study their `pyproject.toml`, `.github/workflows/`, `DEVELOPMENT.md`, and other relevant files.
+วิธีที่ดีในการเรียนรู้รายละเอียดของบริการ CI, formatter, linter และ testing library คือการดูตัวอย่าง หาโปรเจกต์ open-source คุณภาพดีบน GitHub --- ยิ่งคล้ายกับโปรเจกต์ของตัวเองในด้านภาษาโปรแกรม, domain, ขนาดและขอบเขต ยิ่งดี --- แล้วศึกษาไฟล์ `pyproject.toml`, `.github/workflows/`, `DEVELOPMENT.md` และไฟล์อื่น ๆ ที่เกี่ยวข้อง
 
 ## Continuous deployment
 
-Continuous deployment makes use of CI infrastructure to actually _deploy_ changes. For example, the Missing Semester repository uses continuous deployment to GitHub pages so that whenever we `git push` updated lecture notes, the site is automatically built and deployed. You can build other types of [artifacts](/2026/shipping-code/) in CI, such as binaries for applications or Docker images for services.
+Continuous deployment ใช้ประโยชน์จาก CI infrastructure ในการ _deploy_ การเปลี่ยนแปลงจริง ๆ ตัวอย่างเช่น repository ของ Missing Semester ใช้ continuous deployment ไปยัง GitHub Pages เพื่อให้ทุกครั้งที่ `git push` lecture note ที่อัปเดต เว็บไซต์จะถูก build และ deploy โดยอัตโนมัติ สามารถ build [artifact](/2026/shipping-code/) ประเภทอื่น ๆ ใน CI ได้ด้วย เช่น binary สำหรับ application หรือ Docker image สำหรับ service
 
 # Command runners
 
-Command runners like [just](https://github.com/casey/just) simplify the task of running commands in the context of a project. As you build up code quality infrastructure for your project, you don't want to make your developers memorize commands like `uv run ruff check --fix`. With a command runner, this can turn into `just lint`, and you can have analogous invocations like `just format`, `just typecheck`, etc., for all the different tools a developer might want to run for your project.
+Command runner เช่น [just](https://github.com/casey/just) ทำให้การรันคำสั่งในบริบทของโปรเจกต์ง่ายขึ้น เมื่อสร้าง code quality infrastructure สำหรับโปรเจกต์แล้ว ไม่ควรให้นักพัฒนาต้องจำคำสั่งอย่าง `uv run ruff check --fix` ด้วย command runner คำสั่งนี้จะกลายเป็นแค่ `just lint` และสามารถมีการเรียกใช้แบบคล้าย ๆ กันอย่าง `just format`, `just typecheck` เป็นต้น สำหรับเครื่องมือต่าง ๆ ที่นักพัฒนาอาจต้องการรันในโปรเจกต์
 
-Some language-specific project or package managers have built-in support for such functionality, which means you don't need to use a language-agnostic tool like `just`. For example, the `scripts` section of a `package.json` for [npm](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager) (Node.js) and the `tool.hatch.envs.*.scripts` sections of a `pyproject.toml` for [Hatch](https://hatch.pypa.io/) (Python) support this functionality.
+Project manager หรือ package manager เฉพาะภาษาบางตัวมี built-in support สำหรับฟังก์ชันนี้ ซึ่งหมายความว่าไม่จำเป็นต้องใช้เครื่องมือที่ไม่ผูกกับภาษาอย่าง `just` ตัวอย่างเช่น section `scripts` ใน `package.json` สำหรับ [npm](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager) (Node.js) และ section `tool.hatch.envs.*.scripts` ใน `pyproject.toml` สำหรับ [Hatch](https://hatch.pypa.io/) (Python) รองรับฟังก์ชันนี้
 
 # Regular expressions
 
-_Regular expressions_, commonly abbreviated as "regex", is a language used to represent sets of strings. Regex patterns are commonly used for pattern matching in various contexts such as command-line tools and IDEs. For example, [ag](https://github.com/ggreer/the_silver_searcher) supports regex patterns for codebase-wide search (e.g., `ag "import .* as .*"` will find all renamed imports in Python), and [go test](https://pkg.go.dev/cmd/go#hdr-Test_packages) supports a `-run [regexp]` option for selecting a subset of tests. Furthermore, programming languages have built-in support or third-party libraries for regular expression matching, so you can use regexes for functionality such as pattern matching, validation, and parsing.
+_Regular expression_ หรือที่เรียกกันย่อ ๆ ว่า "regex" เป็นภาษาที่ใช้แทนเซตของ string regex pattern ใช้กันทั่วไปสำหรับ pattern matching ในบริบทต่าง ๆ เช่น เครื่องมือ command-line และ IDE ตัวอย่างเช่น [ag](https://github.com/ggreer/the_silver_searcher) รองรับ regex pattern สำหรับการค้นหาทั้ง codebase (เช่น `ag "import .* as .*"` จะหา renamed import ทั้งหมดใน Python) และ [go test](https://pkg.go.dev/cmd/go#hdr-Test_packages) รองรับ option `-run [regexp]` สำหรับเลือก test บางส่วน นอกจากนี้ ภาษาโปรแกรมมี built-in support หรือ third-party library สำหรับ regular expression matching ทำให้สามารถใช้ regex สำหรับฟังก์ชันอย่าง pattern matching, validation และ parsing
 
-To help build intuition, below are some examples of regex patterns. In this lecture, we use [Python regex syntax](https://docs.python.org/3/library/re.html). There are many flavors of regex, with slight variation between them, especially in the more sophisticated functionality. You can use an online regex tester like [regex101](https://regex101.com/) to develop and debug regular expressions.
+เพื่อช่วยสร้างความเข้าใจ ด้านล่างคือตัวอย่างบางส่วนของ regex pattern ในบทนี้ใช้ [Python regex syntax](https://docs.python.org/3/library/re.html) regex มีหลายรสชาติ โดยมีความแตกต่างเล็กน้อยระหว่างกัน โดยเฉพาะในฟังก์ชันที่ซับซ้อนกว่า สามารถใช้ online regex tester เช่น [regex101](https://regex101.com/) เพื่อพัฒนาและ debug regular expression
 
-- `abc` --- matches the literal "abc".
-- `missing|semester` --- matches the string "missing" or the string "semester".
-- `\d{4}-\d{2}-\d{2}` --- matches dates in YYYY-MM-DD format, such as "2026-01-14". Beyond ensuring that the string consists of four digits, a dash, two digits, a dash, and two digits, this does not validate the date, so "2026-01-99" matches this regex pattern too.
-- `.+@.+` --- matches email addresses, strings that contain some text, then an "@", and then some more text. This does only the most basic validation and matches strings like "nonsense@@@email". A regex that matches email addresses with no false positives or negatives [exists](https://pdw.ex-parrot.com/Mail-RFC822-Address.html) but is impractical.
+- `abc` --- จับคู่กับ "abc" ตรงตัว
+- `missing|semester` --- จับคู่กับ string "missing" หรือ string "semester"
+- `\d{4}-\d{2}-\d{2}` --- จับคู่กับวันที่ในรูปแบบ YYYY-MM-DD เช่น "2026-01-14" นอกเหนือจากการตรวจสอบว่า string ประกอบด้วยตัวเลขสี่หลัก, ขีดกลาง, ตัวเลขสองหลัก, ขีดกลาง, และตัวเลขสองหลักแล้ว pattern นี้ไม่ได้ validate วันที่ ดังนั้น "2026-01-99" ก็ตรงกับ regex pattern นี้เช่นกัน
+- `.+@.+` --- จับคู่กับ email address ซึ่งเป็น string ที่มีข้อความบางส่วน ตามด้วย "@" แล้วตามด้วยข้อความอีก pattern นี้ทำ validation พื้นฐานที่สุดเท่านั้น และจับคู่กับ string อย่าง "nonsense@@@email" ได้ด้วย regex ที่จับคู่กับ email address โดยไม่มี false positive หรือ false negative [มีอยู่จริง](https://pdw.ex-parrot.com/Mail-RFC822-Address.html) แต่ไม่ practical
 
 ## Regex syntax
 
-You can find a comprehensive guide to regex syntax in [this documentation](https://docs.python.org/3/library/re.html#regular-expression-syntax) (or one of many other resources available online). Here are some of the basic building blocks:
+สามารถหาคู่มือ regex syntax ที่ครบถ้วนได้ใน[เอกสารนี้](https://docs.python.org/3/library/re.html#regular-expression-syntax) (หรือแหล่งข้อมูลอื่น ๆ อีกมากที่มีออนไลน์) ต่อไปนี้เป็น building block พื้นฐาน:
 
-- `abc` matches the literal string, when the characters have no special meaning (in this example, "abc")
-- `.` matches any single character
-- `[abc]` matches a single character contained in the brackets (in this example, "a", "b", or "c")
-- `[^abc]` matches a single character except those contained in the brackets (e.g., "d")
-- `[a-f]` matches a single character contained in the range indicated in the brackets (e.g., "c", but not "q")
-- `a|b` matches either pattern (e.g., "a" or "b")
-- `\d` matches any digit character (e.g., "3")
-- `\w` matches any word character (e.g., "x")
-- `\b` matches any word _boundary_ (e.g., in the string "missing semester", matches just before the "m", just after the "g", just before the "s", and just after the "r")
-- `(...)` matches the group of a pattern
-- `...?` matches zero or one of a pattern, such as `words?` to match "word" or "words"
-- `...*` matches any number of a pattern, such as `.*` to match any number of any character
-- `...+` matches one or more of a pattern, such as `\d+` to match any non-zero number of digits
-- `...{N}` matches exactly N of a pattern, such as `\d{4}` for 4 digits
-- `\.` matches a literal "."
-- `\\` matches a literal "\\"
-- `^` matches the start of the line
-- `$` matches the end of the line
+- `abc` จับคู่กับ string ตรงตัว เมื่อตัวอักษรไม่มีความหมายพิเศษ (ในตัวอย่างนี้คือ "abc")
+- `.` จับคู่กับตัวอักษรใดก็ได้หนึ่งตัว
+- `[abc]` จับคู่กับตัวอักษรหนึ่งตัวที่อยู่ในวงเล็บเหลี่ยม (ในตัวอย่างนี้คือ "a", "b" หรือ "c")
+- `[^abc]` จับคู่กับตัวอักษรหนึ่งตัวที่ไม่อยู่ในวงเล็บเหลี่ยม (เช่น "d")
+- `[a-f]` จับคู่กับตัวอักษรหนึ่งตัวที่อยู่ในช่วงที่ระบุในวงเล็บเหลี่ยม (เช่น "c" แต่ไม่ใช่ "q")
+- `a|b` จับคู่กับ pattern ใดก็ได้ (เช่น "a" หรือ "b")
+- `\d` จับคู่กับตัวเลขใดก็ได้ (เช่น "3")
+- `\w` จับคู่กับ word character ใดก็ได้ (เช่น "x")
+- `\b` จับคู่กับ word _boundary_ ใดก็ได้ (เช่น ใน string "missing semester" จะจับคู่ตรงก่อน "m", หลัง "g", ก่อน "s" และหลัง "r")
+- `(...)` จับคู่กับ group ของ pattern
+- `...?` จับคู่กับ pattern ศูนย์หรือหนึ่งครั้ง เช่น `words?` จะจับคู่กับ "word" หรือ "words"
+- `...*` จับคู่กับ pattern จำนวนเท่าใดก็ได้ เช่น `.*` จะจับคู่กับตัวอักษรใดก็ได้จำนวนเท่าใดก็ได้
+- `...+` จับคู่กับ pattern หนึ่งครั้งขึ้นไป เช่น `\d+` จะจับคู่กับตัวเลขที่ไม่เป็นศูนย์จำนวนหลัก
+- `...{N}` จับคู่กับ pattern ตรง N ครั้ง เช่น `\d{4}` สำหรับตัวเลข 4 หลัก
+- `\.` จับคู่กับ "." ตรงตัว
+- `\\` จับคู่กับ "\\" ตรงตัว
+- `^` จับคู่กับจุดเริ่มต้นของบรรทัด
+- `$` จับคู่กับจุดสิ้นสุดของบรรทัด
 
 ## Capture groups and references
 
-If you use regex groups `(...)`, you can refer to sub-parts of the match for extraction or search-and-replace purposes. For example, to extract just the month from a YYYY-MM-DD style date, you can use the following Python code:
+ถ้าใช้ regex group `(...)` จะสามารถอ้างอิงส่วนย่อยของสิ่งที่จับคู่ได้ สำหรับการ extract ข้อมูลหรือ search-and-replace ตัวอย่างเช่น หากต้องการ extract เฉพาะเดือนจากวันที่รูปแบบ YYYY-MM-DD สามารถใช้โค้ด Python ต่อไปนี้:
 
 ```python
 >>> import re
@@ -136,17 +136,17 @@ If you use regex groups `(...)`, you can refer to sub-parts of the match for ext
 '01'
 ```
 
-In your text editor, you can use reference capture groups in replace patterns. The syntax might vary between IDEs. For example, in VS Code, you can use variables like `$1`, `$2`, etc., and in Vim, you can use `\1`, `\2`, etc., to reference groups.
+ใน text editor สามารถใช้ reference capture group ใน replace pattern ได้ syntax อาจแตกต่างกันระหว่าง IDE ตัวอย่างเช่น ใน VS Code สามารถใช้ตัวแปรอย่าง `$1`, `$2` เป็นต้น และใน Vim สามารถใช้ `\1`, `\2` เป็นต้น เพื่ออ้างอิง group
 
 ## Limitations
 
-[Regular languages](https://en.wikipedia.org/wiki/Regular_language) are powerful but limited; there are classes of strings that cannot be expressed as a standard regex (e.g., it is [not possible](https://en.wikipedia.org/wiki/Pumping_lemma_for_regular_languages) to write a regular expression that matches the set of strings {a^n b^n \| n &ge; 0}, the set of strings of a number of "a"s followed by the same number of "b"s; more practically, languages like HTML are not regular languages). In practice, modern regex engines support features like lookahead and backreferences that extend support beyond regular languages, and they are practically extremely useful, but it is important to know that they are still limited in their expressive power. For more sophisticated languages, you might need to reach for a more capable type of parser (for one example, see [pyparsing](https://github.com/pyparsing/pyparsing), a [PEG](https://en.wikipedia.org/wiki/Parsing_expression_grammar) parser).
+[Regular language](https://en.wikipedia.org/wiki/Regular_language) มีพลังแต่มีข้อจำกัด มี class ของ string ที่ไม่สามารถแสดงเป็น standard regex ได้ (เช่น [ไม่สามารถ](https://en.wikipedia.org/wiki/Pumping_lemma_for_regular_languages) เขียน regular expression ที่จับคู่กับเซตของ string {a^n b^n \| n &ge; 0} ซึ่งเป็นเซตของ string ที่มี "a" จำนวนหนึ่งตามด้วย "b" จำนวนเท่ากัน ในทาง practical มากขึ้น ภาษาอย่าง HTML ไม่ใช่ regular language) ในทางปฏิบัติ regex engine สมัยใหม่รองรับฟีเจอร์อย่าง lookahead และ backreference ที่ขยายความสามารถเกินกว่า regular language และมีประโยชน์อย่างมากในทางปฏิบัติ แต่สิ่งสำคัญคือต้องรู้ว่ามันยังมีข้อจำกัดใน expressive power สำหรับภาษาที่ซับซ้อนกว่า อาจต้องใช้ parser ที่มีความสามารถมากกว่า (ตัวอย่างหนึ่ง ดู [pyparsing](https://github.com/pyparsing/pyparsing) ซึ่งเป็น [PEG](https://en.wikipedia.org/wiki/Parsing_expression_grammar) parser)
 
 ## Learning regex
 
-We recommend learning the fundamentals (what we have covered in this lecture), and then looking at regex references as you need them, rather than memorizing the entirety of the language.
+แนะนำให้เรียนรู้พื้นฐาน (สิ่งที่ครอบคลุมในบทนี้) แล้วค่อยดู regex reference เมื่อต้องการ แทนที่จะท่องจำภาษาทั้งหมด
 
-Conversational AI tools can be effective at helping you generating regex patterns. For example, try prompting your favorite LLM with the following query:
+เครื่องมือ conversational AI สามารถช่วยสร้าง regex pattern ได้อย่างมีประสิทธิภาพ ตัวอย่างเช่น ลอง prompt LLM ที่ชอบด้วย query ต่อไปนี้:
 
 ```
 Write a Python-style regex pattern that matches the requested path from log lines from Nginx. Here is an example log line:
@@ -156,11 +156,11 @@ Write a Python-style regex pattern that matches the requested path from log line
 
 # Exercises
 
-1. Configure a formatter, linter, and pre-commit hooks for a project you're working on. If you have lots of errors: autoformatting should take care of the format errors. For the linter errors, try using an [AI agent](/2026/agentic-coding/) to fix all the linter errors. Make sure the AI agent can run the linter and observe the results, so that it can run in an iterative loop to fix all the issues. Check the results carefully to ensure the AI doesn't break your code!
-1. Learn a testing library for a language you know and write a unit test for a project you're working on. Run a code coverage tool, generate an HTML-formatted coverage report, and observe the results. Can you find the lines that are covered? Your code coverage will likely be very low. Try manually writing some tests to improve it. Try using an [AI agent](/2026/agentic-coding/) to improve coverage; make sure the coding agent can run tests with coverage and produce a line-by-line coverage report, so it knows where to focus. Are the AI-generated tests actually good?
-1. Set up continuous integration to run on every push for a project you're working on. Have CI run formatting, linting, and tests. Break your code on purpose (e.g., introduce a linter violation), and ensure that CI catches it.
-1. Try writing a [regex pattern](#regular-expressions) and use the `grep` [command-line tool](/2026/course-shell/) to find occurrences of `subprocess.Popen(..., shell=True)` in your code. Now, try to "break" the regex pattern. Does [semgrep](#linting) still successfully match the dangerous code that trips up your grep invocation?
-1. Practice regex search-and-replace in your IDE or text editor by replacing the `-` [Markdown bullet markers](https://spec.commonmark.org/0.31.2/#bullet-list-marker) with `*` bullet markers in [these lecture notes](https://raw.githubusercontent.com/missing-semester/missing-semester/refs/heads/master/_2026/code-quality.md). Note that just replacing all the "-" characters in the file would be incorrect, as there are many uses of that character that are not bullet markers.
-1. Write a regex to capture from JSON structures of the form `{"name": "Alyssa P. Hacker", "college": "MIT"}` the name (e.g., `Alyssa P. Hacker`, in this example). Hint: in your first attempt, you might end up writing a regex that extracts `Alyssa P. Hacker", "college": "MIT`; read about greedy quantifiers in the [Python regex docs](https://docs.python.org/3/library/re.html) to figure out how to fix it.
-    1. Make the regex pattern work even in situations where the name has a `"` character in it (double quotes can be escaped in JSON with `\"`).
-    1. We do **not** recommend using regular expressions for sophisticated parsing problems in practice. Figure out how to use your programming language's JSON parser for this task. Write a command-line program that takes as input, on stdin, a JSON structure of the form described above, and output, on stdout, the name. You should only need a couple lines of code to do this. In Python, you can do it easily in one line of code beyond `import json`.
+1. ตั้งค่า formatter, linter และ pre-commit hook สำหรับโปรเจกต์ที่กำลังทำอยู่ ถ้ามี error เยอะ: autoformatting ควรจัดการ format error ได้ สำหรับ linter error ลองใช้ [AI agent](/2026/agentic-coding/) เพื่อ fix linter error ทั้งหมด ต้องให้แน่ใจว่า AI agent สามารถรัน linter และดูผลลัพธ์ได้ เพื่อให้มันทำงานแบบ iterative loop เพื่อ fix ปัญหาทั้งหมด ตรวจสอบผลลัพธ์อย่างละเอียดเพื่อให้แน่ใจว่า AI ไม่ทำให้โค้ดพัง
+2. เรียนรู้ testing library สำหรับภาษาที่รู้จักและเขียน unit test สำหรับโปรเจกต์ที่กำลังทำอยู่ รันเครื่องมือ code coverage สร้าง coverage report ในรูปแบบ HTML และดูผลลัพธ์ หาบรรทัดที่ถูก cover ได้ไหม code coverage น่าจะต่ำมาก ลองเขียน test เพิ่มเองเพื่อปรับปรุง ลองใช้ [AI agent](/2026/agentic-coding/) เพื่อปรับปรุง coverage โดยต้องให้ coding agent สามารถรัน test พร้อม coverage และสร้าง coverage report แบบทีละบรรทัดได้ เพื่อให้มันรู้ว่าควรเน้นตรงไหน test ที่ AI สร้างมาดีจริงไหม
+3. ตั้งค่า continuous integration ให้รันทุกครั้งที่ push สำหรับโปรเจกต์ที่กำลังทำอยู่ ให้ CI รัน formatting, linting และ test ทำให้โค้ดพังตั้งใจ (เช่น สร้าง linter violation) แล้วตรวจสอบว่า CI จับได้
+4. ลองเขียน [regex pattern](#regular-expressions) และใช้เครื่องมือ command-line `grep` [](/2026/course-shell/) เพื่อหาการใช้ `subprocess.Popen(..., shell=True)` ในโค้ด จากนั้นลอง "break" regex pattern ดู [semgrep](#linting) ยังจับคู่กับโค้ดอันตรายที่ทำให้ grep invocation ล้มเหลวได้อยู่ไหม
+5. ฝึกใช้ regex search-and-replace ใน IDE หรือ text editor โดยเปลี่ยน `-` [Markdown bullet marker](https://spec.commonmark.org/0.31.2/#bullet-list-marker) เป็น `*` bullet marker ใน[lecture note เหล่านี้](https://raw.githubusercontent.com/missing-semester/missing-semester/refs/heads/master/_2026/code-quality.md) สังเกตว่าการแทนที่ตัวอักษร "-" ทั้งหมดในไฟล์จะไม่ถูกต้อง เพราะมีการใช้ตัวอักษรนี้ในบริบทอื่นที่ไม่ใช่ bullet marker
+6. เขียน regex เพื่อ capture ชื่อจากโครงสร้าง JSON ในรูปแบบ `{"name": "Alyssa P. Hacker", "college": "MIT"}` (เช่น `Alyssa P. Hacker` ในตัวอย่างนี้) คำใบ้: ในความพยายามแรก อาจจะเขียน regex ที่ extract ได้ `Alyssa P. Hacker", "college": "MIT` ลองอ่านเรื่อง greedy quantifier ใน [Python regex docs](https://docs.python.org/3/library/re.html) เพื่อหาวิธีแก้
+    1. ทำให้ regex pattern ทำงานได้แม้ในกรณีที่ชื่อมีตัวอักษร `"` อยู่ด้วย (เครื่องหมาย double quote สามารถ escape ได้ใน JSON ด้วย `\"`)
+    2. เรา**ไม่**แนะนำให้ใช้ regular expression สำหรับปัญหา parsing ที่ซับซ้อนในทางปฏิบัติ หาวิธีใช้ JSON parser ของภาษาโปรแกรมที่ใช้อยู่สำหรับงานนี้ เขียนโปรแกรม command-line ที่รับ input จาก stdin เป็นโครงสร้าง JSON ในรูปแบบที่อธิบายไว้ข้างต้น แล้ว output ชื่อไปที่ stdout ควรใช้แค่ไม่กี่บรรทัดของโค้ด ใน Python สามารถทำได้ในบรรทัดเดียวนอกเหนือจาก `import json`

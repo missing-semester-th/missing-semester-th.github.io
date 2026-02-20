@@ -2,7 +2,7 @@
 layout: lecture
 title: "Beyond the Code"
 description: >
-  Learn about essential soft skills including documentation, open-source community norms, and AI etiquette.
+  เรียนรู้เกี่ยวกับ soft skills ที่จำเป็น รวมถึงการเขียน documentation, บรรทัดฐานของชุมชน open-source และมารยาทการใช้ AI
 thumbnail: /static/assets/thumbnails/2026/lec8.png
 date: 2026-01-22
 ready: true
@@ -11,408 +11,157 @@ video:
   id: 2DOEATfXT8k
 ---
 
-Being a good software engineer isn't just about writing code that
-works. It's about writing code that others (including future you) can
-understand, maintain, and build upon. It's about communicating
-clearly, contributing thoughtfully, and being a good citizen in the
-ecosystems you participate in—whether open source or proprietary.
+การเป็น software engineer ที่ดีไม่ได้มีแค่เรื่องของการเขียนโค้ดที่ทำงานได้ แต่ยังรวมถึงการเขียนโค้ดที่คนอื่น (รวมถึงตัวเราในอนาคต) สามารถเข้าใจ ดูแลรักษา และต่อยอดได้ด้วย มันเกี่ยวกับการสื่อสารที่ชัดเจน การมีส่วนร่วมอย่างรอบคอบ และการเป็นพลเมืองที่ดีใน ecosystem ที่เราอยู่ ไม่ว่าจะเป็น open source หรือ proprietary
 
-# One-way communication
+# การสื่อสารทางเดียว
 
-Much of software engineering involves writing for people who lack your
-current context: teammates who join later, maintainers who inherit
-your code, or yourself in six months when you've forgotten why you
-made a particular choice. A key piece of advice for all this kind of
-writing is that your goal is to capture and convey the *why*, not just
-the *what*. The what tends to be self-explanatory, while the *why* is
-hard-earned knowledge that is easily lost to time.
+งาน software engineering ส่วนใหญ่เกี่ยวข้องกับการเขียนให้คนที่ไม่มี context เดียวกับเราอ่าน ไม่ว่าจะเป็นเพื่อนร่วมทีมที่เข้ามาทีหลัง, maintainer ที่มารับช่วงโค้ดต่อ, หรือตัวเราเองในอีกหกเดือนข้างหน้าเมื่อลืมไปแล้วว่าทำไมถึงตัดสินใจแบบนั้น คำแนะนำสำคัญสำหรับการเขียนทุกรูปแบบแบบนี้คือ เป้าหมายของเราควรจะจับและสื่อสาร *เหตุผล (why)* ไม่ใช่แค่ *สิ่งที่ทำ (what)* เพราะ what มักจะอธิบายตัวมันเองได้อยู่แล้ว แต่ *why* คือความรู้ที่ได้มาอย่างยากลำบากและหายไปง่ายตามกาลเวลา
 
-Perhaps the most common form of engineer-to-engineer communication
-(apart from the code itself) is code comments. I've personally found
-that a lot of code comments are useless. But they don't have to be! Good
-comments explain things that the code itself cannot: *why* something is
-done a particular way, not *how* it works (which is what the code
-shows). They can save hours of confusion, while bad comments add noise
-or, worse, mislead.
+รูปแบบการสื่อสารระหว่าง engineer ที่พบบ่อยที่สุด (นอกเหนือจากตัวโค้ดเอง) คือ code comment ส่วนตัวแล้วรู้สึกว่า code comment จำนวนมากไม่ค่อยมีประโยชน์ แต่มันไม่จำเป็นต้องเป็นแบบนั้น comment ที่ดีอธิบายสิ่งที่โค้ดเองบอกไม่ได้ นั่นคือ *ทำไม* ถึงทำแบบนั้น ไม่ใช่ *ทำงานยังไง* (ซึ่งโค้ดบอกอยู่แล้ว) comment ที่ดีช่วยประหยัดเวลาหลายชั่วโมงจากความสับสน ในขณะที่ comment ที่แย่เป็นแค่ noise หรือแย่กว่านั้นคือทำให้เข้าใจผิด
 
-Types of comments that are nearly always worthwhile:
+ประเภทของ comment ที่คุ้มค่าเกือบทุกครั้ง:
 
-- **TODOs**: Mark incomplete or unpolished code, but leave enough
-  context for someone else to understand what's outstanding and why it
-  was deferred. "TODO: optimize" is useless; "TODO: this O(n²) loop is
-  fine for `n<100`, but will need indexing if we scale" is actionable.
-- **References**: Link to external sources when code implements an
-  algorithm from a paper, adapts code from elsewhere, or encodes
-  behaviour specified in documentation. Use permalinks. Note any
-  divergences from the reference.
-- **Correctness arguments**: Explain *why* non-trivial code produces
-  correct results. The code shows the steps; a comment explains why
-  those steps work.
-- **Hard-learned lessons**: If you spent 30+ minutes debugging something
-  and the fix is a non-obvious incantation, document it. Your past self
-  didn't realize it was needed; future readers won't either.
-- **Rationale for constants**: Magic numbers deserve explanation. Why
-  1492? Why 16 bits? Was it chosen randomly, derived from testing, or
-  required for correctness? Even "chosen arbitrarily" is useful
-  information.
-- **Load-bearing choices**: If correctness depends on a
-  seemingly-innocent implementation detail (e.g., "must be a BTreeSet
-  because iteration order matters below"), call it out explicitly.
-- **"Why not"s**: When you deliberately avoid the obvious approach,
-  explain why. Otherwise someone will "fix" it later and break things.
+- **TODO**: ทำเครื่องหมายโค้ดที่ยังไม่เสร็จหรือยังไม่สมบูรณ์ แต่ใส่ context ให้เพียงพอเพื่อให้คนอื่นเข้าใจว่ามีอะไรที่ยังค้างอยู่และทำไมถึงเลื่อนออกไป "TODO: optimize" ไม่มีประโยชน์ แต่ "TODO: this O(n²) loop is fine for `n<100`, but will need indexing if we scale" นั้นนำไปใช้งานได้จริง
+- **Reference**: ลิงก์ไปยังแหล่งข้อมูลภายนอกเมื่อโค้ด implement algorithm จาก paper, ดัดแปลงโค้ดจากที่อื่น, หรือเข้ารหัสพฤติกรรมที่ระบุไว้ใน documentation ใช้ permalink เสมอ และบันทึกส่วนที่แตกต่างจาก reference ด้วย
+- **Correctness argument**: อธิบาย *ทำไม* โค้ดที่ไม่ตรงไปตรงมาถึงให้ผลลัพธ์ที่ถูกต้อง โค้ดแสดงขั้นตอน แต่ comment อธิบายว่าทำไมขั้นตอนเหล่านั้นถึงทำงานได้
+- **บทเรียนที่ได้มาอย่างยากลำบาก**: ถ้าใช้เวลา debug อะไรสักอย่าง 30 นาทีขึ้นไป แล้ววิธีแก้เป็นสิ่งที่ไม่ชัดเจน ให้ document มันไว้ ตัวเราในอดีตไม่รู้ว่ามันจำเป็น คนที่มาอ่านในอนาคตก็จะไม่รู้เช่นกัน
+- **เหตุผลของค่าคงที่**: Magic number สมควรได้รับคำอธิบาย ทำไม 1492? ทำไม 16 bits? มันถูกเลือกแบบสุ่ม ได้มาจากการทดสอบ หรือจำเป็นเพื่อความถูกต้อง? แม้แต่ "chosen arbitrarily" ก็เป็นข้อมูลที่มีประโยชน์
+- **ตัวเลือกที่ส่งผลต่อความถูกต้อง**: ถ้าความถูกต้องขึ้นอยู่กับรายละเอียดการ implement ที่ดูเหมือนไม่สำคัญ (เช่น "must be a BTreeSet because iteration order matters below") ให้ระบุไว้อย่างชัดเจน
+- **"ทำไมถึงไม่"**: เมื่อจงใจเลี่ยงวิธีที่ชัดเจน ให้อธิบายว่าทำไม ไม่งั้นจะมีคนมา "แก้ไข" มันทีหลังแล้วทำให้พัง
 
-READMEs (you have one, right?) are also a common first touch-point with
-other developers. A good one answers four questions immediately: What
-does this do? Why should I care? How do I use it? How do I install it?
-In that order. Structure it like a funnel: a one-liner and maybe a
-visual demo at the top so someone can decide in seconds if this solves
-their problem, then progressively add depth. Show usage before
-installation — people want to see what they're getting before committing
-to setup steps.
+README (มีอยู่แล้วใช่ไหม?) เป็นอีกหนึ่งจุดสัมผัสแรกกับนักพัฒนาคนอื่นที่พบบ่อย README ที่ดีตอบสี่คำถามทันที: สิ่งนี้ทำอะไร? ทำไมควรสนใจ? ใช้งานยังไง? ติดตั้งยังไง? เรียงตามลำดับนี้ จัด structure เหมือน funnel: ใส่ one-liner และอาจจะมี visual demo ไว้ด้านบนเพื่อให้คนตัดสินใจได้ในไม่กี่วินาทีว่าสิ่งนี้แก้ปัญหาของเขาได้ไหม จากนั้นค่อยเพิ่มรายละเอียดทีละน้อย แสดงวิธีใช้งานก่อนการติดตั้ง — คนอยากเห็นก่อนว่าจะได้อะไรก่อนที่จะ commit เข้าสู่ขั้นตอน setup
 
-Commit messages are another kind of "writing for others" that is often
-neglected. They are often written as "fixed blah" or "added foo", and
-while that may be sufficient in some cases, it's easy to forget that
-they form the historical record of *why* the codebase evolved the way it
-did. When someone (including you!) runs `git blame` trying to understand
-a confusing change, good commit messages should give them answers.
+Commit message เป็นอีกหนึ่งรูปแบบของ "การเขียนเพื่อคนอื่น" ที่มักถูกละเลย มักเขียนเป็น "fixed blah" หรือ "added foo" ซึ่งอาจเพียงพอในบางกรณี แต่ง่ายที่จะลืมว่ามันเป็นบันทึกประวัติศาสตร์ของ *เหตุผล* ที่ codebase วิวัฒนาการมาเป็นแบบนี้ เมื่อมีคน (รวมถึงตัวเราเอง!) รัน `git blame` เพื่อพยายามทำความเข้าใจการเปลี่ยนแปลงที่สับสน commit message ที่ดีควรให้คำตอบได้
 
-In general, the body should answer:
-- What problem forced this change?
-- What alternatives did you consider?
-- What are the trade-offs or implications?
-- What might be surprising about this approach?
+โดยทั่วไป body ควรตอบคำถามเหล่านี้:
+- ปัญหาอะไรที่บังคับให้เกิดการเปลี่ยนแปลงนี้?
+- ทางเลือกอื่นที่พิจารณาแล้วมีอะไรบ้าง?
+- trade-off หรือผลกระทบที่ตามมามีอะไร?
+- อะไรที่อาจทำให้ผู้อ่านประหลาดใจเกี่ยวกับแนวทางนี้?
 
-> Obviously you should scale detail with complexity. A one-line typo fix
-> needs only a subject. A subtle race condition fix that took hours to
-> debug deserves paragraphs explaining the problem and solution.
+> แน่นอนว่าควรปรับระดับรายละเอียดตามความซับซ้อน การแก้ typo แค่บรรทัดเดียวแค่มี subject ก็พอ แต่การแก้ race condition ที่ละเอียดอ่อนซึ่งใช้เวลา debug หลายชั่วโมง สมควรได้หลายย่อหน้าที่อธิบายทั้งปัญหาและวิธีแก้
 
-For complex changes, it can be useful to follow a Problem → Solution →
-Implications structure: Start with the forcing function or limitation,
-then explain what changed and the key design decisions, and then list
-noteworthy consequences (positive and negative). That last part is
-particularly important; real engineering involves balancing concerns,
-and documenting that a trade-off was intentional prevents future
-developers from thinking you missed the problem.
+สำหรับการเปลี่ยนแปลงที่ซับซ้อน อาจเป็นประโยชน์ที่จะใช้โครงสร้าง Problem → Solution → Implications: เริ่มจากแรงกดดันหรือข้อจำกัดที่เป็นต้นเหตุ จากนั้นอธิบายว่าเปลี่ยนอะไรไปและ design decision หลักคืออะไร แล้วก็ระบุผลที่ตามมาที่น่าสนใจ (ทั้งบวกและลบ) ส่วนสุดท้ายนี้สำคัญเป็นพิเศษ เพราะงาน engineering จริงเกี่ยวข้องกับการ balance ข้อพิจารณาต่าง ๆ และการ document ว่า trade-off นั้นเป็นสิ่งที่ตั้งใจทำ จะป้องกันไม่ให้นักพัฒนาในอนาคตคิดว่าเราพลาดปัญหานั้นไป
 
-LLMs _can_ be helpful in writing commit messages. However, if you simply
-point one at your change and ask it to write the commit message for the
-change, the LLM will only have access to the _what_, not the _why_. And
-the resulting commit message will thus be mostly descriptive (the
-opposite of what we want!). If you used an LLM to help you make the
-change in the first place, asking the LLM to write the commit in that
-same session can be a much better option since your conversation with
-the LLM is inherently a rich source of context about the change!
-Otherwise, or in addition, a useful trick is to specifically tell the
-LLM you'd like a commit message focused on the "why" (and other nuances
-from the notes above), and then _tell it to query you for missing
-context_. Essentially, you're acting like a MCP "tool" for the coding
-agent that it can use to "read" context.
+LLM _สามารถ_ ช่วยเรื่องการเขียน commit message ได้ อย่างไรก็ตาม ถ้าแค่ชี้ให้ LLM ดูการเปลี่ยนแปลงแล้วขอให้เขียน commit message LLM จะเข้าถึงได้แค่ _what_ ไม่ใช่ _why_ และ commit message ที่ได้จะเป็นแค่คำอธิบาย (ซึ่งตรงข้ามกับสิ่งที่เราต้องการ!) ถ้าใช้ LLM ช่วยทำการเปลี่ยนแปลงตั้งแต่แรก การขอให้ LLM เขียน commit ใน session เดียวกันนั้นอาจเป็นทางเลือกที่ดีกว่ามาก เพราะบทสนทนาระหว่างเรากับ LLM เป็นแหล่ง context ที่อุดมสมบูรณ์เกี่ยวกับการเปลี่ยนแปลงนั้นโดยธรรมชาติ นอกจากนี้ หรือเพิ่มเติมจากนั้น เทคนิคที่มีประโยชน์คือบอก LLM โดยเฉพาะว่าต้องการ commit message ที่เน้นเรื่อง "why" (และรายละเอียดอื่น ๆ จากบันทึกข้างต้น) แล้ว _บอกให้มันถามเราเพื่อขอ context ที่ขาดไป_ โดยพื้นฐานแล้ว เราทำหน้าที่เหมือน MCP "tool" ให้กับ coding agent ที่มันสามารถใช้เพื่อ "อ่าน" context
 
-As your changes get more complex, make sure to also break up commits
-logically (`git add -p` is your friend). Each commit should represent
-one coherent change that could be understood and reviewed independently.
-Don't mix refactoring with new features or combine unrelated bug fixes,
-as this muddies the story for which changes fixed what problem, and will
-almost certainly slow down the eventual review of your changes. It also
-gives you superpowers through `git bisect`, but that's a story for
-another time.
+เมื่อการเปลี่ยนแปลงซับซ้อนมากขึ้น ให้แยก commit ออกเป็นส่วน ๆ อย่างมีตรรกะด้วย (`git add -p` เป็นเพื่อนที่ดี) แต่ละ commit ควรเป็นตัวแทนของการเปลี่ยนแปลงที่สอดคล้องกันหนึ่งอย่าง ที่สามารถเข้าใจและ review ได้อย่างอิสระ อย่าผสม refactoring กับ feature ใหม่ หรือรวม bug fix ที่ไม่เกี่ยวกัน เพราะจะทำให้เรื่องราวว่าการเปลี่ยนแปลงไหนแก้ปัญหาอะไรไม่ชัดเจน และเกือบจะแน่นอนว่าจะทำให้การ review ช้าลง นอกจากนี้ยังให้พลังพิเศษผ่าน `git bisect` แต่นั่นเป็นเรื่องสำหรับคราวหน้า
 
-> One note as you start being more diligent about technical writing, and
-> using it more extensively, make sure you respect the reader. It's easy
-> to end up over-explaining once you start, but you have to resist that
-> urge lest the reader read _none_ of what you've written. Explain the
-> "why" and trust them to figure out the "how" for their situation.
+> ข้อสังเกตหนึ่ง เมื่อเริ่มใส่ใจกับการเขียนเชิงเทคนิคมากขึ้นและใช้มันอย่างกว้างขวาง ให้เคารพผู้อ่านด้วย พอเริ่มเขียนแล้วก็ง่ายที่จะอธิบายมากเกินไป แต่ต้องอดทนไม่ทำแบบนั้น เพราะสุดท้ายผู้อ่านอาจไม่อ่านสิ่งที่เราเขียน _เลย_ ให้อธิบาย "why" แล้วเชื่อใจให้พวกเขาหา "how" สำหรับสถานการณ์ของเขาเอง
 
-# Collaboration
+# การทำงานร่วมกัน
 
-As engineers, we may spend a large part of our job coding at our own
-keyboard, but a sizeable chunk of our time is also taken up by
-communicating with others. That time is usually split into collaboration
-and education, and the payoff from investing in getting better at both is
-significant.
+ในฐานะ engineer เราอาจใช้เวลาส่วนใหญ่ในการเขียนโค้ดที่คีย์บอร์ดของตัวเอง แต่เวลาจำนวนไม่น้อยก็ถูกใช้ไปกับการสื่อสารกับคนอื่นด้วย เวลาเหล่านั้นมักแบ่งเป็นการทำงานร่วมกันและการให้ความรู้ และผลตอบแทนจากการลงทุนพัฒนาทั้งสองด้านนี้มีมาก
 
-## Contributing
+## การมีส่วนร่วม (Contributing)
 
-Whether you are submitting a bug report, contributing a simple bug fix,
-or implementing a huge feature, it's worth keeping in mind that there
-are usually orders of magnitude more users than there are contributors,
-and an order of magnitude more contributors than there are maintainers.
-As a result, maintainer time is highly oversubscribed. If you want to
-increase the likelihood that your contribution goes somewhere
-productive, you have to ensure that your contributions carry a high
-signal-to-noise ratio and are worth the maintainers' time.
+ไม่ว่าจะกำลังส่ง bug report, contribute bug fix ง่าย ๆ, หรือ implement feature ขนาดใหญ่ ควรจำไว้เสมอว่าโดยปกติจำนวนผู้ใช้จะมากกว่าผู้ contribute หลายเท่าตัว และจำนวนผู้ contribute ก็มากกว่า maintainer หลายเท่าเช่นกัน ด้วยเหตุนี้ เวลาของ maintainer จึงเป็นที่ต้องการสูงมาก ถ้าต้องการเพิ่มโอกาสให้ contribution ของเราไปถึงจุดที่เกิดประโยชน์ ต้องทำให้ contribution มีอัตราส่วน signal-to-noise สูง และคุ้มค่ากับเวลาของ maintainer
 
-For example, a good bug report respects the maintainer's time by
-providing everything needed to understand and reproduce the problem:
+ตัวอย่างเช่น bug report ที่ดีเคารพเวลาของ maintainer โดยให้ข้อมูลทุกอย่างที่จำเป็นในการเข้าใจและ reproduce ปัญหา:
 
-- **Environment**: OS, version numbers, relevant configuration
-- **What you expected** vs **what actually happened**
-- **Steps to reproduce**: Be specific. "Click the button" is less useful
-  than "Click the Submit button on the /settings page while logged in as
-  an admin."
-- **What you've already tried**: This prevents duplicate suggestions and
-  shows you've done some investigation
+- **Environment**: OS, หมายเลขเวอร์ชัน, configuration ที่เกี่ยวข้อง
+- **สิ่งที่คาดหวัง** vs **สิ่งที่เกิดขึ้นจริง**
+- **ขั้นตอนในการ reproduce**: ระบุให้ชัดเจน "Click the button" มีประโยชน์น้อยกว่า "Click the Submit button on the /settings page while logged in as an admin."
+- **สิ่งที่ลองทำแล้ว**: ช่วยป้องกันคำแนะนำซ้ำซ้อน และแสดงว่าเราได้ลองตรวจสอบมาบ้างแล้ว
 
-> If you find a security vulnerability, don't post it publicly. Contact
-> the maintainers privately first and give them reasonable time to fix
-> it before disclosure. Many projects have a SECURITY.md file or
-> similar for this purpose.
+> ถ้าพบ security vulnerability อย่าโพสต์สาธารณะ ให้ติดต่อ maintainer เป็นการส่วนตัวก่อน และให้เวลาที่เหมาะสมในการแก้ไขก่อนเปิดเผย หลายโปรเจกต์มีไฟล์ SECURITY.md หรือคล้ายกันสำหรับเรื่องนี้
 
-**Make sure you search for existing issues.** Your bug or feature
-request may already be reported, and it's far better to add information
-to existing discussions rather than creating duplicates. Not to mention,
-it reduces noise for the maintainers.
+**ต้องค้นหา issue ที่มีอยู่แล้วก่อนเสมอ** bug หรือ feature request ของเราอาจถูกรายงานไปแล้ว และการเพิ่มข้อมูลใน discussion ที่มีอยู่ดีกว่าการสร้างซ้ำ ไม่ต้องพูดถึงว่ามันช่วยลด noise ให้ maintainer ด้วย
 
-Minimal reproducible examples are gold, if you can come up with one.
-They save the maintainer a huge amount of time and effort, and
-reliably reproducing the bug is often the hardest part of fixing it. Not
-to mention, the effort you put into isolating the problem often helps
-you understand it better too, and sometimes leads you to find a fix
-yourself.
+Minimal reproducible example มีค่ามาก ถ้าสามารถสร้างขึ้นมาได้ มันช่วยประหยัดเวลาและแรงของ maintainer ได้มหาศาล และการ reproduce bug ได้อย่างน่าเชื่อถือมักเป็นส่วนที่ยากที่สุดของการแก้ไข นอกจากนี้ ความพยายามที่ลงไปในการแยกปัญหามักช่วยให้เข้าใจมันดีขึ้นด้วย และบางครั้งนำไปสู่การค้นพบวิธีแก้ไขด้วยตัวเอง
 
-If you don't hear back right away, keep in mind that maintainers are
-often volunteers with limited time. If you're waiting for a reply from
-them, a polite follow-up after a couple weeks is fine; daily pings are
-not. Similarly, "me too" comments, or bug reports that are just a
-copy-paste of some terminal output tend to be a net-negative in terms of
-getting traction for your issue.
+ถ้าไม่ได้รับการตอบกลับทันที ให้จำไว้ว่า maintainer มักเป็นอาสาสมัครที่มีเวลาจำกัด ถ้ากำลังรอคำตอบจากพวกเขา การ follow up อย่างสุภาพหลังจากผ่านไปสองสามสัปดาห์ก็ไม่เป็นไร แต่การ ping ทุกวันไม่ใช่ ในทำนองเดียวกัน comment แบบ "me too" หรือ bug report ที่เป็นแค่การ copy-paste output จาก terminal มักจะส่งผลเสียมากกว่าดีในแง่ของการทำให้ issue ได้รับความสนใจ
 
-If you're looking to make a code contribution, you'll also want to
-familiarize yourself with the contribution guidelines. Many projects
-have a `CONTRIBUTING.md` — follow it. You'll also usually want to start
-small; a typo fix or documentation improvement is a great first
-contribution as it helps you learn the project's processes without also
-having to go through lots of back and forth on the content.
+ถ้าต้องการ contribute โค้ด ควรทำความคุ้นเคยกับ contribution guideline ด้วย หลายโปรเจกต์มี `CONTRIBUTING.md` — ให้ทำตามนั้น และโดยปกติควรเริ่มจากเล็ก ๆ การแก้ typo หรือปรับปรุง documentation เป็น first contribution ที่ดี เพราะช่วยให้เรียนรู้ process ของโปรเจกต์โดยไม่ต้องผ่านการ back and forth เรื่องเนื้อหามากมาย
 
-> Check what license the project uses, as any code you contribute will
-> fall under the same license. In particular, look out for copyleft
-> licenses (like GPL), which requires derivatives to also be open source
-> and may have implications for your employer if you touch it!
-> [choosealicense.com](https://choosealicense.com/) has more useful
-> information.
+> ตรวจสอบว่าโปรเจกต์ใช้ license อะไร เพราะโค้ดที่ contribute จะอยู่ภายใต้ license เดียวกัน โดยเฉพาะอย่างยิ่ง ระวัง copyleft license (เช่น GPL) ซึ่งกำหนดให้ derivative ต้องเป็น open source เช่นกัน และอาจมีผลกระทบต่อนายจ้างถ้าเราไปยุ่งกับมัน!
+> [choosealicense.com](https://choosealicense.com/) มีข้อมูลที่มีประโยชน์เพิ่มเติม
 
-When you've decided to open a pull request ("PR"), first make sure you
-isolate the change you actually want to be accepted. If your PR changes
-lots of other unrelated things at the same time, chances are the
-reviewer will send it back to you asking you to clean it up. This is
-similar to how you should break down your git commits into semantically
-related chunks.
+เมื่อตัดสินใจเปิด pull request ("PR") แล้ว ให้แยกการเปลี่ยนแปลงที่ต้องการให้ถูก accept ออกมาก่อน ถ้า PR เปลี่ยนแปลงสิ่งอื่นที่ไม่เกี่ยวข้องหลายอย่างพร้อมกัน โอกาสสูงที่ reviewer จะส่งกลับมาให้ทำความสะอาดก่อน ซึ่งก็คล้ายกับวิธีที่ควรแบ่ง git commit ออกเป็น chunk ที่เกี่ยวข้องกันทาง semantic
 
-In some cases, if you have many seemingly-disparate changes but
-they're all needed to enable one feature, it may be okay to open a
-larger PR that captures all the changes. However, in this case, commit
-hygiene is particularly important so that maintainers have the option
-to review the change "commit by commit".
+ในบางกรณี ถ้ามีการเปลี่ยนแปลงหลายอย่างที่ดูไม่เกี่ยวกัน แต่จำเป็นทั้งหมดเพื่อเปิดใช้ feature หนึ่ง อาจจะเปิด PR ขนาดใหญ่ที่รวมการเปลี่ยนแปลงทั้งหมดก็ได้ อย่างไรก็ตาม ในกรณีนี้ commit hygiene สำคัญเป็นพิเศษ เพื่อให้ maintainer มีตัวเลือกในการ review การเปลี่ยนแปลง "commit by commit"
 
-Next, make sure you explain the "why" behind the change well. Don't just
-describe _what_ changed — explain _why_ the change is needed and _why_
-this is a good way to address the problem. You should also proactively
-call out parts of the change that warrant special attention in the
-review, if any. Depending on `CONTRIBUTING.md` and the nature of your
-change, reviewers may also expect to see additional information like
-trade-offs you made or how to test the change.
+ต่อมา ให้อธิบาย "why" เบื้องหลังการเปลี่ยนแปลงให้ดี อย่าแค่อธิบาย _อะไร_ ที่เปลี่ยน — ให้อธิบาย _ทำไม_ การเปลี่ยนแปลงนี้จึงจำเป็น และ _ทำไม_ นี่ถึงเป็นวิธีที่ดีในการแก้ปัญหา ควรชี้ให้เห็นส่วนของการเปลี่ยนแปลงที่ต้องการความสนใจเป็นพิเศษในการ review ด้วย ถ้ามี ขึ้นอยู่กับ `CONTRIBUTING.md` และลักษณะของการเปลี่ยนแปลง reviewer อาจคาดหวังข้อมูลเพิ่มเติม เช่น trade-off ที่เลือก หรือวิธีทดสอบการเปลี่ยนแปลง
 
-> We recommend contributing back to upstream projects rather than
-> "forking" the project, at least as a first approach. Forking (license
-> permitting) should be reserved for when the contributions you want to
-> make are out of scope for the original project. If you do fork, make
-> sure you acknowledge the original project!
+> เราแนะนำให้ contribute กลับไปที่ upstream project แทนที่จะ "fork" โปรเจกต์ อย่างน้อยก็เป็นแนวทางแรก การ fork (ถ้า license อนุญาต) ควรสงวนไว้สำหรับกรณีที่ contribution ที่ต้องการทำอยู่นอกขอบเขตของโปรเจกต์ต้นฉบับ ถ้า fork ให้ acknowledge โปรเจกต์ต้นฉบับด้วย!
 
-AI makes it incredibly easy to generate plausible-looking code and PRs
-quickly, but this doesn't excuse you from understanding what you're
-contributing. Submitting AI-generated code you can't explain burdens
-maintainers with reviewing and potentially maintaining code that even
-its author doesn't understand. It's fine to use AI to help you
-identify issues and produce fixes/features, **so long as you still do
-the due diligence** to polish it into a worthwhile contribution, rather
-than passing that work on to the (already-overloaded) maintainers.
+AI ทำให้การสร้างโค้ดและ PR ที่ดูน่าเชื่อถือได้อย่างรวดเร็วเป็นเรื่องง่ายมาก แต่นั่นไม่ได้ยกเว้นเราจากการเข้าใจสิ่งที่กำลัง contribute การส่งโค้ดที่สร้างโดย AI ที่ไม่สามารถอธิบายได้จะสร้างภาระให้ maintainer ในการ review และอาจต้อง maintain โค้ดที่แม้แต่ผู้เขียนเองก็ไม่เข้าใจ การใช้ AI เพื่อช่วยระบุปัญหาและสร้าง fix/feature นั้นไม่มีปัญหา **ตราบใดที่ยังทำ due diligence** ในการขัดเกลาให้เป็น contribution ที่คุ้มค่า แทนที่จะผลักงานนั้นไปให้ maintainer (ที่งานล้นมืออยู่แล้ว)
 
-Remember that for maintainers, accepting a PR means accepting long-term
-responsibility. They will be maintaining this code long after the
-contributor has moved on, and so may decline changes that are
-well-intentioned but don't fit the project's direction, add complexity
-they don't want to maintain, or where the need simply isn't sufficiently
-well-documented. It's on _you_ as the contributor to make the case for
-why the accepting the contribution is worth the maintenance burden.
+จำไว้ว่าสำหรับ maintainer การ accept PR หมายถึงการรับผิดชอบในระยะยาว พวกเขาจะต้อง maintain โค้ดนี้หลังจากที่ contributor ไปทำอย่างอื่นแล้ว และอาจปฏิเสธการเปลี่ยนแปลงที่มีเจตนาดีแต่ไม่สอดคล้องกับทิศทางของโปรเจกต์ เพิ่มความซับซ้อนที่ไม่ต้องการ maintain หรือกรณีที่ความจำเป็นไม่ได้ถูก document อย่างเพียงพอ เป็นหน้าที่ของ _เรา_ ในฐานะ contributor ที่จะต้องสร้าง case ว่าทำไมการ accept contribution นี้จึงคุ้มค่ากับภาระการ maintain
 
-> When receiving feedback on a PR, remember that your code is not you!
-> Reviewers are trying to make the code better, not criticizing you
-> personally. Ask clarifying questions if you disagree — you might learn
-> something, or maybe they will.
+> เมื่อได้รับ feedback บน PR ให้จำไว้ว่าโค้ดของเราไม่ใช่ตัวเรา!
+> Reviewer พยายามทำให้โค้ดดีขึ้น ไม่ได้วิพากษ์เราเป็นการส่วนตัว ถามคำถามเพื่อความชัดเจนถ้าไม่เห็นด้วย — เราอาจได้เรียนรู้สิ่งใหม่ หรือบางทีพวกเขาเองอาจได้เรียนรู้
 
-## Reviewing
+## การ Review
 
-You might think code review is something senior developers do, but
-you'll likely be asked to review code much earlier than you expect, and
-your perspective is valuable. Fresh eyes catch things that experienced
-developers overlook, and questions from someone less familiar with the
-code often reveal assumptions that should be documented or simplified.
+อาจคิดว่า code review เป็นสิ่งที่นักพัฒนาอาวุโสทำ แต่จริง ๆ แล้วจะถูกขอให้ review โค้ดเร็วกว่าที่คิด และมุมมองของเราก็มีคุณค่า สายตาใหม่จับสิ่งที่นักพัฒนาที่มีประสบการณ์มองข้ามได้ และคำถามจากคนที่ไม่คุ้นเคยกับโค้ดมักเผยให้เห็นสมมติฐานที่ควรถูก document หรือทำให้ง่ายขึ้น
 
-Review is also one of the fastest ways to learn. You'll see how others
-approach problems, pick up patterns and idioms, and develop intuition
-for what makes code readable. Beyond personal growth, reviews catch bugs
-before they reach production, spread knowledge across the team, and
-improve code quality through collaboration. They are not merely
-bureaucratic overhead.
+การ review ยังเป็นหนึ่งในวิธีที่เร็วที่สุดในการเรียนรู้ จะได้เห็นว่าคนอื่นแก้ปัญหายังไง เก็บ pattern และ idiom ต่าง ๆ และพัฒนาสัญชาตญาณว่าอะไรทำให้โค้ดอ่านง่าย นอกเหนือจากการเติบโตส่วนตัว การ review จับ bug ก่อนที่จะไปถึง production กระจายความรู้ในทีม และปรับปรุงคุณภาพโค้ดผ่านการทำงานร่วมกัน มันไม่ใช่แค่ bureaucratic overhead
 
-Good code review is a skill you need to hone over time, but there are
-some tips that can make them much better much faster:
+Code review ที่ดีเป็นทักษะที่ต้องฝึกฝนเรื่อย ๆ แต่มีเคล็ดลับบางอย่างที่ช่วยให้ดีขึ้นได้เร็วมาก:
 
-- **Review the code, not the person**:
+- **Review โค้ด ไม่ใช่ตัวบุคคล**:
   "This function is confusing" vs "You wrote confusing code."
-- **Prefer actionable comments**:
-  "Can you replace these globals with a config dataclass" is an easier
-  comment to address than "Don't use globals here"
-- **Ask questions rather than making demands**:
-  "What happens if X is null here?" invites discussion better than
-  "Handle the null case."
-- **Explain the "why"**:
-  "Consider using a constant here" is less useful than "Consider using a
-  constant here so we can easily adjust the timeout based on
-  environment."
-- **Distinguish blocking issues from suggestions**:
-  Be clear about what must change versus what's a matter of preference.
-- **Acknowledge what's good**:
-  Pointing out clever solutions or clean implementations is encouraging
-  and helps the author know what to continue doing.
-- **Know when to stop**:
-  Contributors only have so much time and patience, and it's not always
-  best spent handling all the nits. Focus on the big things, and
-  consider tidying up nits yourself after the fact.
+- **ให้ comment ที่ actionable**:
+  "Can you replace these globals with a config dataclass" ง่ายต่อการ address กว่า "Don't use globals here"
+- **ถามคำถามแทนการสั่ง**:
+  "What happens if X is null here?" เชิญชวนให้เกิดการสนทนาได้ดีกว่า "Handle the null case."
+- **อธิบาย "why"**:
+  "Consider using a constant here" มีประโยชน์น้อยกว่า "Consider using a constant here so we can easily adjust the timeout based on environment."
+- **แยกแยะ blocking issue กับ suggestion**:
+  บอกให้ชัดว่าอะไรต้องเปลี่ยน กับอะไรเป็นเรื่องของ preference
+- **ชื่นชมสิ่งที่ดี**:
+  การชี้ให้เห็น solution ที่ฉลาดหรือ implementation ที่สะอาดเป็นกำลังใจ และช่วยให้ผู้เขียนรู้ว่าควรทำอะไรต่อไป
+- **รู้ว่าเมื่อไหร่ควรหยุด**:
+  Contributor มีเวลาและความอดทนจำกัด และไม่ใช่ทุก nit จะคุ้มค่าที่จะจัดการ ให้เน้นเรื่องใหญ่ และพิจารณาจัดการ nit เล็ก ๆ ด้วยตัวเองหลังจากนั้น
 
-> AI tools can catch certain issues, but they're not a substitute for
-> human review. They miss context, don't understand product
-> requirements, and can confidently suggest wrong things. They're worth
-> using as a first pass, but not a replacement for thoughtful human
-> review.
+> เครื่องมือ AI สามารถจับปัญหาบางอย่างได้ แต่ไม่สามารถทดแทนการ review โดยมนุษย์ มันพลาด context ไม่เข้าใจ product requirement และอาจแนะนำสิ่งที่ผิดอย่างมั่นใจ คุ้มค่าที่จะใช้เป็น first pass แต่ไม่ใช่สิ่งทดแทน thoughtful human review
 
-# Education
+# การให้ความรู้ (Education)
 
-A lot of our non-coding time as engineers is spent either asking or
-answering questions, possibly a mixture of both; during collaboration,
-in dialogue with peers, or while trying to learn. Asking good questions
-is a skill that makes you better at learning from anyone, not just
-perfect explainers. Julia Evans has some excellent blog posts on "[How
-to ask good questions](https://jvns.ca/blog/good-questions/)" and "[How
-to get useful answers to your
-questions](https://jvns.ca/blog/2021/10/21/how-to-get-useful-answers-to-your-questions/)"
-that are worth reading.
+เวลาที่ไม่ได้เขียนโค้ดส่วนใหญ่ของ engineer ถูกใช้ไปกับการถามหรือตอบคำถาม อาจจะทั้งสองอย่างผสมกัน ไม่ว่าจะระหว่างการทำงานร่วมกัน ในบทสนทนากับเพื่อนร่วมงาน หรือขณะพยายามเรียนรู้ การถามคำถามที่ดีเป็นทักษะที่ทำให้เราเรียนรู้จากใครก็ได้ ไม่ใช่แค่จากคนที่อธิบายเก่ง Julia Evans มีบล็อกโพสต์ที่ดีมากเกี่ยวกับ "[How to ask good questions](https://jvns.ca/blog/good-questions/)" และ "[How to get useful answers to your questions](https://jvns.ca/blog/2021/10/21/how-to-get-useful-answers-to-your-questions/)" ที่ควรอ่าน
 
-Some particularly valuable pieces of advice are:
+คำแนะนำที่มีคุณค่าเป็นพิเศษ:
 
-- **State your understanding first**: Say what you think you know and
-  ask "is that right?" This helps the answerer identify your actual
-  knowledge gaps.
-- **Ask yes/no questions**: "Is X true?" prevents tangential
-  explanations and usually prompts useful elaboration anyway.
-- **Be specific**: "How do SQL joins work?" is too vague. "Does a LEFT
-  JOIN include rows where the right table has no match?" is answerable.
-- **Admit when you don't understand**: Interrupt to ask about unfamiliar
-  terms. This reflects confidence, not weakness. Similarly, if they ask
-  questions of you that you do not know the answer to, it's best to say
-  "I don't know", and possibly follow up with "but I think ..." or even
-  "but I can find out".
-- **Don't accept incomplete answers**: Keep asking follow-ups until you
-  actually understand.
-- **Do some research first**: Basic investigation helps you ask more
-  targeted questions (though casual questions among colleagues are
-  fine).
+- **บอกความเข้าใจของตัวเองก่อน**: พูดว่าคิดว่ารู้อะไร แล้วถามว่า "ถูกไหม?" ซึ่งช่วยให้ผู้ตอบระบุช่องว่างความรู้ที่แท้จริงได้
+- **ถามคำถาม yes/no**: "X เป็นจริงไหม?" ป้องกันคำอธิบายที่ออกนอกเรื่อง และมักกระตุ้นให้เกิดการอธิบายเพิ่มเติมที่มีประโยชน์อยู่ดี
+- **ถามให้เฉพาะเจาะจง**: "SQL join ทำงานยังไง?" กว้างเกินไป "LEFT JOIN รวม row ที่ตารางขวาไม่มีข้อมูลตรงกันด้วยไหม?" ตอบได้
+- **ยอมรับเมื่อไม่เข้าใจ**: ขัดจังหวะเพื่อถามเกี่ยวกับคำศัพท์ที่ไม่คุ้นเคย สิ่งนี้สะท้อนความมั่นใจ ไม่ใช่จุดอ่อน ในทำนองเดียวกัน ถ้าพวกเขาถามคำถามที่เราไม่รู้คำตอบ ดีที่สุดคือพูดว่า "ไม่รู้" และอาจตามด้วย "แต่คิดว่า ..." หรือแม้แต่ "แต่หาคำตอบให้ได้"
+- **อย่ายอมรับคำตอบที่ไม่สมบูรณ์**: ถาม follow-up ต่อไปจนกว่าจะเข้าใจจริง ๆ
+- **ทำ research ก่อนบ้าง**: การตรวจสอบเบื้องต้นช่วยให้ถามคำถามได้ตรงประเด็นมากขึ้น (แต่คำถามแบบ casual ระหว่างเพื่อนร่วมงานก็ไม่เป็นไร)
 
-Remember: well-crafted questions benefit entire communities. They
-surface hidden assumptions that others need to understand too.
+จำไว้ว่า: คำถามที่ถูกสร้างอย่างดีเป็นประโยชน์ต่อทั้งชุมชน มันเผยให้เห็นสมมติฐานที่ซ่อนอยู่ซึ่งคนอื่นก็ต้องเข้าใจเช่นกัน
 
-> Note that this advice applies just as much when communicating with
-> LLMs!
+> สังเกตว่าคำแนะนำเหล่านี้ใช้ได้เช่นกันเมื่อสื่อสารกับ LLM!
 
-# AI etiquette
+# มารยาทการใช้ AI
 
-With the growing use of LLMs and AI across software engineering, the
-social and professional norms around are still in flux. We already
-covered many of the tactical considerations in the [agentic coding
-lecture](/2026/agentic-coding/), but there are also "softer" parts of
-their use that are worth discussing.
+ด้วยการใช้ LLM และ AI ที่เพิ่มมากขึ้นใน software engineering บรรทัดฐานทางสังคมและวิชาชีพเกี่ยวกับเรื่องนี้ยังอยู่ในช่วงเปลี่ยนแปลง เราได้พูดถึงข้อพิจารณาเชิงปฏิบัติหลายอย่างในบท [agentic coding](/2026/agentic-coding/) แล้ว แต่ยังมีด้าน "ที่นุ่มนวลกว่า" ของการใช้งานที่ควรพูดถึง
 
-The first of these is that when AI meaningfully contributed to your
-work, **disclose it**. This isn't about shame — it's about honesty,
-setting appropriate expectations, and ensuring the resulting work gets
-the appropriate level of review. It's also worthwhile to disclose which
-_parts_ you use AI for — there's a meaningful distinction between "this
-whole thing is vibecoded" and "I wrote this backup tool and used an LLM
-to style the web frontend". For example, we've used LLMs to help write
-some of these lecture notes, including proofreading, brainstorming, and
-generating first drafts of code snippets and exercises.
+อย่างแรกคือเมื่อ AI มีส่วนช่วยอย่างมีนัยสำคัญในงาน **ให้เปิดเผย** สิ่งนี้ไม่เกี่ยวกับความอาย — แต่เกี่ยวกับความซื่อสัตย์ การตั้ง expectation ที่เหมาะสม และการทำให้งานที่ได้ถูก review ในระดับที่เหมาะสม นอกจากนี้ยังคุ้มค่าที่จะเปิดเผยว่าใช้ AI กับ _ส่วนไหน_ — มีความแตกต่างอย่างมีนัยสำคัญระหว่าง "ทั้งหมดนี้เป็น vibecoded" กับ "เขียน backup tool นี้เอง แล้วใช้ LLM ช่วย style web frontend" ตัวอย่างเช่น เราใช้ LLM ช่วยเขียน lecture note เหล่านี้บางส่วน รวมถึงการ proofread, brainstorm, และสร้าง first draft ของ code snippet และแบบฝึกหัด
 
-You'll also want to follow the norms of the teams and projects you're
-contributing to here. Some teams have stricter policies around the use
-of AI than others (e.g., for compliance or data residency reasons), and
-you don't want to accidentally run afoul of that. Being open about your
-use helps prevent potentially costly mistakes.
+ควรปฏิบัติตามบรรทัดฐานของทีมและโปรเจกต์ที่กำลัง contribute ด้วย บางทีมมีนโยบายเข้มงวดเกี่ยวกับการใช้ AI มากกว่าทีมอื่น (เช่น ด้วยเหตุผลด้าน compliance หรือ data residency) และไม่ควรพลาดไปละเมิดโดยไม่ตั้งใจ การเปิดเผยเกี่ยวกับการใช้งานช่วยป้องกันข้อผิดพลาดที่อาจมีค่าใช้จ่ายสูง
 
-> If you're aiming to learn as part of the work you're doing, keep in
-> mind that if you have AI do all or most of the work for you can be
-> self-defeating; you're likely to learn more about prompting (and maybe
-> reviewing AI output) than the task itself. Especially when you're
-> learning, the point may be the journey, not the destination, so using
-> AI to "get the solution quickly" is an anti-goal.
+> ถ้ามีเป้าหมายที่จะเรียนรู้เป็นส่วนหนึ่งของงานที่ทำอยู่ ให้จำไว้ว่าถ้าปล่อยให้ AI ทำงานทั้งหมดหรือส่วนใหญ่แทน อาจเป็นการเอาชนะตัวเอง เพราะจะเรียนรู้เรื่อง prompting (และอาจจะเรื่องการ review output ของ AI) มากกว่าตัวงานเอง โดยเฉพาะเมื่อกำลังเรียนรู้ สิ่งสำคัญอาจอยู่ที่การเดินทาง ไม่ใช่จุดหมายปลายทาง ดังนั้นการใช้ AI เพื่อ "ได้คำตอบเร็ว ๆ" จึงเป็น anti-goal
 
-A related concern comes up in interviews and other assessment
-situations. These are often intended to specifically evaluate _your_
-skills and abilities, not those of an LLM. More companies now allow you
-to use LLMs and other AI-assisted tooling in interviews as long as you
-let them observe those interactions as part of the interview (i.e., they
-are evaluating your skill in making use of those tools too!), but those
-are still in the minority. If you are unsure about whether AI assistance
-is in scope for a particular task, ask!
+ข้อกังวลที่เกี่ยวข้องเกิดขึ้นในการสัมภาษณ์งานและสถานการณ์การประเมินอื่น ๆ สิ่งเหล่านี้มักมีจุดประสงค์เพื่อประเมิน _ทักษะและความสามารถ_ ของเราโดยเฉพาะ ไม่ใช่ของ LLM บริษัทจำนวนมากขึ้นอนุญาตให้ใช้ LLM และเครื่องมือ AI ในการสัมภาษณ์ได้ ตราบใดที่ให้พวกเขาสังเกตการใช้งานเป็นส่วนหนึ่งของการสัมภาษณ์ (นั่นคือ พวกเขากำลังประเมินทักษะในการใช้เครื่องมือเหล่านั้นด้วย!) แต่บริษัทเหล่านั้นยังเป็นส่วนน้อย ถ้าไม่แน่ใจว่าการช่วยเหลือจาก AI อยู่ในขอบเขตของงานใดงานหนึ่งหรือไม่ ให้ถาม!
 
-> It should go without saying that if an assessment situation explicitly
-> calls for no external tools, no LLMs, etc., you should not use them.
-> Trying to do so discretely without getting caught **will** come back
-> to bite you.
+> ไม่ต้องพูดก็รู้ว่าถ้าสถานการณ์การประเมินระบุชัดเจนว่าห้ามใช้เครื่องมือภายนอก ห้ามใช้ LLM ฯลฯ ก็ไม่ควรใช้ การพยายามทำแบบนั้นอย่างลับ ๆ โดยหวังไม่ให้ถูกจับได้ **จะ** กลับมาทำร้ายเราในที่สุด
 
-# Exercises
+# แบบฝึกหัด
 
-1. Browse the source code of a well-known project (e.g.,
-   [Redis](https://github.com/redis/redis) or
-   [curl](https://github.com/curl/curl)). Find examples of some of the
-   comment types mentioned in the lecture: a useful TODO, a reference to
-   external documentation, a "why not" comment explaining an avoided
-   approach, or a hard-learned lesson. What would be lost if that
-   comment was not there?
+1. เปิดดู source code ของโปรเจกต์ที่มีชื่อเสียง (เช่น
+   [Redis](https://github.com/redis/redis) หรือ
+   [curl](https://github.com/curl/curl)) หาตัวอย่างของ comment ประเภทต่าง ๆ ที่กล่าวถึงในบทนี้: TODO ที่มีประโยชน์, reference ไปยัง external documentation, comment "why not" ที่อธิบายแนวทางที่เลี่ยง, หรือบทเรียนที่ได้มาอย่างยากลำบาก ถ้า comment นั้นไม่มี จะสูญเสียอะไรไป?
 
-1. Pick an open-source project you're interested in and look at its
-   recent commit history (`git log`). Find one commit with a good
-   message that explains *why* the change was made, and one with a weak
-   message that only describes *what* changed. For the weak one, look at
-   the diff (`git show <hash>`) and try to write a better commit message
-   following the Problem → Solution → Implications structure. Notice how
-   much work is required to reassemble the necessary context after the
-   fact!
+2. เลือกโปรเจกต์ open-source ที่สนใจแล้วดูประวัติ commit ล่าสุด (`git log`) หา commit ที่มี message ดีซึ่งอธิบาย *ทำไม* ถึงทำการเปลี่ยนแปลง และอีกอันที่มี message อ่อนซึ่งอธิบายแค่ *อะไร* ที่เปลี่ยน สำหรับอันที่อ่อน ดู diff (`git show <hash>`) แล้วลองเขียน commit message ที่ดีกว่าโดยใช้โครงสร้าง Problem → Solution → Implications สังเกตว่าต้องใช้ความพยายามมากแค่ไหนในการรวบรวม context ที่จำเป็นหลังจากเวลาผ่านไป!
 
-1. Compare the READMEs of three GitHub projects with 1000+ stars. Are
-   all of them equally useful? Look for things that come across mostly
-   as noise to you as a lesson for future READMEs you write yourself.
+3. เปรียบเทียบ README ของโปรเจกต์ GitHub สามโปรเจกต์ที่มี 1000+ ดาว ทุกอันมีประโยชน์เท่ากันไหม? มองหาสิ่งที่รู้สึกว่าเป็น noise เป็นส่วนใหญ่ เพื่อเป็นบทเรียนสำหรับ README ที่จะเขียนเองในอนาคต
 
-1. Find an open issue on a project you use (check the "good first issue"
-   or "help wanted" labels if they have it). Evaluate the issue against
-   the criteria from the lecture: does it seem like it values the
-   maintainer's time and contains all the information necessary to debug
-   it, or do you expect that the maintainer may need to go multiple
-   rounds of questions with the submitter to get to the root problem?
+4. หา open issue ในโปรเจกต์ที่ใช้อยู่ (ลองดู label "good first issue" หรือ "help wanted" ถ้ามี) ประเมิน issue นั้นตามเกณฑ์จากบทเรียน: มันดูเหมือนเคารพเวลาของ maintainer และมีข้อมูลที่จำเป็นทั้งหมดในการ debug หรือไม่ หรือคาดว่า maintainer อาจต้องถาม-ตอบกับผู้ส่งหลายรอบเพื่อไปถึงปัญหาที่แท้จริง?
 
-1. Think of a bug you've encountered in software you use (or find one in
-   an issue tracker). Practice creating a minimal reproducible example:
-   strip away everything unrelated to the bug until you have the
-   smallest case that still demonstrates the problem. Write up what you
-   removed and why.
+5. นึกถึง bug ที่เคยพบในซอฟต์แวร์ที่ใช้ (หรือหาจาก issue tracker) ฝึกสร้าง minimal reproducible example: ตัดทุกอย่างที่ไม่เกี่ยวข้องกับ bug ออกจนเหลือ case ที่เล็กที่สุดที่ยังแสดงปัญหาได้ เขียนสรุปว่าเอาอะไรออกและทำไม
 
-1. Find a merged pull request on a project you're familiar with that has
-   substantive review comments (not just "LGTM"). Read through the
-   review. Were all the comments equally productive? If you were the PR
-   author, how would you find the experience of getting all those
-   comments?
+6. หา pull request ที่ถูก merge แล้วในโปรเจกต์ที่คุ้นเคย ซึ่งมี review comment ที่เป็นสาระ (ไม่ใช่แค่ "LGTM") อ่าน review ทั้งหมด comment ทุกอันมีประสิทธิภาพเท่ากันไหม? ถ้าเราเป็นผู้เขียน PR จะรู้สึกอย่างไรกับการได้รับ comment ทั้งหมดนั้น?
 
-1. Go to Stack Overflow and find a question in a technology you know
-   that has a highly-voted answer. Then find one that was closed or
-   heavily downvoted. Compare them against the advice from the lecture;
-   was it predictable which question would get better answers?
+7. ไปที่ Stack Overflow แล้วหาคำถามในเทคโนโลยีที่รู้จัก ที่มีคำตอบที่ได้ upvote สูง จากนั้นหาคำถามที่ถูกปิดหรือได้ downvote มาก เปรียบเทียบกับคำแนะนำจากบทเรียน คาดเดาได้ไหมว่าคำถามไหนจะได้คำตอบที่ดีกว่า?

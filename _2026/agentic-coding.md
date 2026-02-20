@@ -2,7 +2,7 @@
 layout: lecture
 title: "Agentic Coding"
 description: >
-  Learn how to use AI coding agents effectively for software development tasks.
+  เรียนรู้วิธีใช้ AI coding agent อย่างมีประสิทธิภาพสำหรับงานพัฒนาซอฟต์แวร์
 thumbnail: /static/assets/thumbnails/2026/lec7.png
 date: 2026-01-21
 ready: true
@@ -11,9 +11,9 @@ video:
   id: sTdz6PZoAnw
 ---
 
-Coding agents are conversational AI models with access to tools such as reading/writing files, web search, and invoking shell commands. They live either in the IDE or in standalone command-line or GUI tools. Coding agents are highly autonomous and powerful tools, enabling a wide variety of use cases.
+Coding agent คือ AI model แบบสนทนาที่สามารถเข้าถึง tool ต่าง ๆ เช่น อ่าน/เขียนไฟล์, ค้นหาเว็บ, และรันคำสั่ง shell ได้ มันทำงานได้ทั้งใน IDE หรือเป็นเครื่องมือ command-line หรือ GUI แบบ standalone Coding agent เป็นเครื่องมือที่ทำงานได้อัตโนมัติสูงและทรงพลัง รองรับ use case ที่หลากหลาย
 
-This lecture builds on the AI-powered development material from the [Development Environment and Tools](/2026/development-environment/) lecture. As a quick demo, let's continue with the example from the [AI-powered development](/2026/development-environment/#ai-powered-development) section:
+บทนี้ต่อยอดจากเนื้อหา AI-powered development ในบท [Development Environment and Tools](/2026/development-environment/) เพื่อเป็น demo สั้น ๆ ลองมาดูตัวอย่างต่อจากส่วน [AI-powered development](/2026/development-environment/#ai-powered-development) กัน
 
 ```python
 from urllib.request import urlopen
@@ -30,158 +30,158 @@ def extract(content: str) -> list[str]:
 print(extract(download_contents("https://raw.githubusercontent.com/missing-semester/missing-semester/refs/heads/master/_2026/development-environment.md")))
 ```
 
-We can try prompting a coding agent with the following task:
+เราลอง prompt coding agent ด้วย task นี้ได้
 
 ```
 Turn this into a proper command-line program, with argparse for argument parsing. Add type annotations, and make sure the program passes type checking.
 ```
 
-The agent will read the file to understand it, then make some edits, and finally invoke the type checker to make sure the type annotations are correct. If it makes a mistake such that it fails type checking, it will likely iterate, though this is a simple task so that is unlikely to happen. Because coding agents have access to tools that may be harmful, by default, agent harnesses prompt the user to confirm tool calls.
+Agent จะอ่านไฟล์เพื่อทำความเข้าใจ จากนั้นแก้ไขโค้ด แล้วรัน type checker เพื่อให้แน่ใจว่า type annotation ถูกต้อง ถ้ามันทำผิดจนไม่ผ่าน type checking มันก็จะวนแก้ไขเอง แม้ว่า task นี้จะง่ายพอที่จะไม่ค่อยเกิดปัญหา เนื่องจาก coding agent มีสิทธิ์เข้าถึง tool ที่อาจเป็นอันตรายได้ โดยค่าเริ่มต้นแล้ว agent harness จะถามยืนยันผู้ใช้ก่อนเรียก tool
 
-> If the coding agent makes a mistake --- for example, if you have the `mypy` binary available directly on `$PATH` but the agent tries calling `python -m mypy` --- you can give it text feedback to help it course correct.
+> ถ้า coding agent ทำผิดพลาด เช่น คุณมี binary `mypy` อยู่ใน `$PATH` โดยตรง แต่ agent กลับเรียก `python -m mypy` แทน คุณสามารถให้ feedback เป็นข้อความเพื่อช่วยแก้ไขทิศทางได้
 
-Coding agents support multi-turn interaction, so you can iterate on work over a back-and-forth conversation with the agent. You can even interrupt the agent if it's going down the wrong track. One helpful mental model might be that of a manager of an intern: the intern will do the nitty gritty work, but will require guidance, and will occasionally do the wrong thing and need to be corrected.
+Coding agent รองรับการโต้ตอบแบบ multi-turn ทำให้สามารถพัฒนาต่อยอดผ่านการสนทนาไป-มากับ agent ได้ คุณยังสามารถขัดจังหวะ agent ได้หากมันกำลังไปผิดทาง mental model ที่อาจช่วยได้คือมองตัวเองเป็นหัวหน้าที่ดูแลเด็กฝึกงาน: เด็กฝึกงานจะทำงานละเอียดให้ แต่ต้องการคำแนะนำ และอาจทำผิดบ้างซึ่งต้องคอยแก้ไข
 
-> For a more illustrative demo, try asking the agent as a follow-up to run the resulting script. Observe the outputs, and try asking it to make a change (e.g., ask it to include only absolute URLs).
+> สำหรับ demo ที่ชัดเจนกว่านี้ ลองขอให้ agent รันสคริปต์ที่ได้ต่อเลย สังเกตผลลัพธ์ แล้วลองขอให้มันแก้ไข (เช่น ขอให้เอาเฉพาะ absolute URL)
 
-# How AI models and agents work
+# AI model และ agent ทำงานอย่างไร
 
-Fully explaining the inner workings of modern [large language models (LLMs)](https://en.wikipedia.org/wiki/Large_language_model) and infrastructure such as agent harnesses is beyond the scope of this course. However, having a high-level understanding of some of the key ideas is helpful for effectively _using_ this bleeding edge technology and understanding its limitations.
+การอธิบายรายละเอียดภายในของ [large language model (LLM)](https://en.wikipedia.org/wiki/Large_language_model) สมัยใหม่ และโครงสร้างพื้นฐานอย่าง agent harness นั้นอยู่นอกขอบเขตของคอร์สนี้ แต่การเข้าใจแนวคิดหลักในระดับ high-level จะช่วยให้_ใช้งาน_เทคโนโลยีล้ำสมัยนี้ได้อย่างมีประสิทธิภาพ และเข้าใจข้อจำกัดของมัน
 
-LLMs can be viewed as modeling the probability distribution of completion strings (outputs) given prompt strings (inputs). LLM inference (what happens when you, e.g., supply a query to a conversational chat app) _samples_ from this probability distribution. LLMs have a fixed _context window_, the maximum length of the input and output strings.
+LLM สามารถมองได้ว่าเป็นการ model probability distribution ของ completion string (output) จาก prompt string (input) การทำ LLM inference (สิ่งที่เกิดขึ้นเมื่อคุณส่ง query ไปยังแอปแชท) คือการ _sample_ จาก probability distribution นี้ LLM มี _context window_ ขนาดคงที่ ซึ่งเป็นความยาวสูงสุดของ input และ output string
 
 {% comment %}
-> In mathematical notation, the LLM models the probability distribution $\pi_\theta$ of completions $y$ conditioned on prompts $x$, and we sample from this distribution: $\hat{y} \sim \pi_\theta(\cdot \mid x)$.
+> ในรูปแบบคณิตศาสตร์ LLM จะ model probability distribution $\pi_\theta$ ของ completion $y$ ที่ขึ้นอยู่กับ prompt $x$ แล้วเรา sample จาก distribution นี้: $\hat{y} \sim \pi_\theta(\cdot \mid x)$
 {% endcomment %}
 
-AI tools such as conversational chat and coding agents build on top of this primitive. For multi-turn interactions, chat apps and agents use turn markers and supply the entire conversation history as the prompt string every time there is a new user prompt, invoking LLM inference once per user prompt. For tool-calling agents, the harness interprets certain LLM outputs as requests to invoke a tool, and the harness supplies the results of the tool call back to the model as part of the prompt string (so LLM inference runs again every time there is a tool call/response). The core concepts in tool-calling agents can be [implemented in 200 lines of code](https://www.mihaileric.com/The-Emperor-Has-No-Clothes/).
+AI tool ต่าง ๆ เช่น conversational chat และ coding agent สร้างอยู่บน primitive นี้ สำหรับการโต้ตอบแบบ multi-turn แอปแชทและ agent ใช้ turn marker และส่ง conversation history ทั้งหมดเป็น prompt string ทุกครั้งที่มี user prompt ใหม่ โดยเรียก LLM inference หนึ่งครั้งต่อ user prompt หนึ่งข้อความ สำหรับ tool-calling agent นั้น harness จะตีความ LLM output บางส่วนเป็นคำร้องขอเรียก tool แล้ว harness จะส่งผลลัพธ์ของ tool call กลับไปให้ model เป็นส่วนหนึ่งของ prompt string (ดังนั้น LLM inference จะรันใหม่ทุกครั้งที่มี tool call/response) แนวคิดหลักของ tool-calling agent สามารถ [implement ได้ใน 200 บรรทัด](https://www.mihaileric.com/The-Emperor-Has-No-Clothes/)
 
-## Privacy
+## ความเป็นส่วนตัว
 
-Most AI coding tools in their standard configurations send a lot of your data to the cloud. Sometimes the harness runs locally while LLM inference runs in the cloud, other times even more of the software is running in the cloud (and, e.g., the service provider might effectively get a copy of your entire repository as well as all interactions you have with the AI tool).
+AI coding tool ส่วนใหญ่ในการตั้งค่าเริ่มต้นจะส่งข้อมูลของคุณจำนวนมากขึ้น cloud บางครั้ง harness รันแบบ local ในขณะที่ LLM inference รันบน cloud บางครั้งซอฟต์แวร์ส่วนใหญ่ก็รันบน cloud (และเช่น ผู้ให้บริการอาจได้รับสำเนา repository ทั้งหมดรวมถึงการโต้ตอบทุกครั้งที่คุณมีกับ AI tool)
 
-There are open-source AI coding tools and open-source LLMs that are pretty good (though not quite as good as the proprietary models), but at the present, for most users, running bleeding-edge open LLMs locally will be infeasible due to hardware limitations.
+มี AI coding tool แบบ open-source และ LLM แบบ open-source ที่ค่อนข้างดี (แม้จะยังไม่ดีเท่า proprietary model) แต่ในปัจจุบันสำหรับผู้ใช้ส่วนใหญ่ การรัน open LLM ล้ำสมัยแบบ local นั้นยังทำไม่ได้จริงเนื่องจากข้อจำกัดด้านฮาร์ดแวร์
 
-# Use cases
+# Use case
 
-Coding agents can be helpful for a wide variety of tasks. Some examples:
+Coding agent ช่วยได้ในงานหลากหลายประเภท ตัวอย่างเช่น
 
-- **Implementing new features.** As in the example above, you can ask a coding agent to implement a feature. Giving a good specification is more of an art than a science at this point; you want the input to the agent to be descriptive enough so that the agent does what you want it to do (at least heading in the right direction so you can iterate), but not overly descriptive to the point where you're doing too much work yourself. Test-driven development can be particularly effective: write tests (or use the coding agent to help you write tests), audit them to ensure they capture what you want, and then ask the coding agent to implement the feature. Models are continually improving, so you'll have to keep your intuition up-to-date on what the models are capable of.
-    > We used Claude Code to [implement](https://github.com/missing-semester/missing-semester/pull/345) these Tufte-style sidenotes.
+- **การ implement feature ใหม่** เหมือนในตัวอย่างข้างต้น คุณสามารถขอให้ coding agent implement feature ได้ การเขียน specification ที่ดีนั้นเป็นศิลปะมากกว่าวิทยาศาสตร์ในตอนนี้ คุณต้องให้ input กับ agent อย่างละเอียดพอที่มันจะทำในสิ่งที่คุณต้องการ (อย่างน้อยก็มุ่งไปถูกทิศทางเพื่อให้คุณ iterate ต่อได้) แต่ไม่ละเอียดเกินจนคุณทำงานเองมากไป Test-driven development จะได้ผลดีเป็นพิเศษ: เขียน test (หรือใช้ coding agent ช่วยเขียน test) ตรวจสอบให้แน่ใจว่า test ครอบคลุมสิ่งที่ต้องการ จากนั้นขอให้ coding agent implement feature Model ดีขึ้นเรื่อย ๆ ดังนั้นคุณต้องคอยอัปเดตความรู้สึกว่า model สามารถทำอะไรได้บ้าง
+    > เราใช้ Claude Code เพื่อ [implement](https://github.com/missing-semester/missing-semester/pull/345) sidenote แบบ Tufte เหล่านี้
 {%- comment %}
-No need to demo this, since the intro of a lecture was a small demo of adding a new feature.
+ไม่จำเป็นต้อง demo ส่วนนี้ เพราะตอนเปิดบทก็เป็น demo เล็ก ๆ ของการเพิ่ม feature ใหม่แล้ว
 {% endcomment %}
-- **Fixing errors.** If you have errors from your compiler, linter, type checker, or tests, you can ask your agent to correct them, for example with a prompt like "fix the issues with mypy". Coding models are particularly effective when you can get them in a feedback loop, so try to set things up so that the model can run the failing check directly, which will let it iterate autonomously. If this is impractical, you can give the model feedback manually.
-    > On commit [f552b55](https://github.com/missing-semester/missing-semester/commit/f552b5523462b22b8893a8404d2110c4e59613dd) of the missing-semester repo, we prompted Claude Code with "Review the agentic coding lecture for typos and grammatical issues" and subsequently asked it to fix the issues it found, which were committed in [f1e1c41](https://github.com/missing-semester/missing-semester/commit/f1e1c417adba6b4149f7eef91ff5624de40dc637).
+- **การแก้ error** ถ้ามี error จาก compiler, linter, type checker หรือ test คุณสามารถขอให้ agent แก้ไขได้ เช่น prompt ว่า "fix the issues with mypy" Coding model จะทำงานได้ดีเป็นพิเศษเมื่ออยู่ใน feedback loop ดังนั้นพยายามจัดสภาพแวดล้อมให้ model สามารถรัน failing check ได้โดยตรง ซึ่งจะทำให้มัน iterate ได้แบบอัตโนมัติ ถ้าทำแบบนี้ไม่สะดวก คุณก็ให้ feedback กับ model เองได้
+    > ใน commit [f552b55](https://github.com/missing-semester/missing-semester/commit/f552b5523462b22b8893a8404d2110c4e59613dd) ของ missing-semester repo เราใช้ Claude Code กับ prompt "Review the agentic coding lecture for typos and grammatical issues" แล้วตามด้วยให้มันแก้ปัญหาที่พบ ซึ่ง commit ไว้ใน [f1e1c41](https://github.com/missing-semester/missing-semester/commit/f1e1c417adba6b4149f7eef91ff5624de40dc637)
 {%- comment %}
-Demo a coding agent fixing the bug in https://github.com/anishathalye/dotbot/commit/cef40c902ef0f52f484153413142b5154bbc5e99.
+Demo การใช้ coding agent แก้ bug ใน https://github.com/anishathalye/dotbot/commit/cef40c902ef0f52f484153413142b5154bbc5e99
 
-Write the failing tests to demo the bug, and then ask the agent to fix. Prepped in branch demo-bugfix.
+เขียน failing test เพื่อ demo bug แล้วขอให้ agent แก้ไข เตรียมไว้ใน branch demo-bugfix
 
-Can run the failing test with:
+รัน failing test ได้ด้วย:
 
     hatch test tests/test_cli.py::test_issue_357
 
-Can prompt coding agent with:
+Prompt coding agent ได้ด้วย:
 
     There is a bug I wrote a failing test for, you can repro it with `hatch test tests/test_cli.py::test_issue_357`. Fix the bug.
 
-Get it to commit the changes.
+ให้มัน commit การเปลี่ยนแปลง
 {% endcomment %}
-- **Refactoring.** You can use coding agents to refactor code in various ways, from simple tasks like renaming a method (this kind of refactoring is also supported by [code intelligence](/2026/development-environment/#code-intelligence-and-language-servers)) to more complex tasks like breaking out functionality into a separate module.
-    > We used Claude Code to [split](https://github.com/missing-semester/missing-semester/pull/344) agentic coding into its own lecture.
+- **Refactoring** คุณสามารถใช้ coding agent เพื่อ refactor โค้ดในรูปแบบต่าง ๆ ตั้งแต่งานง่าย ๆ อย่างการเปลี่ยนชื่อ method (การ refactor แบบนี้ยังรองรับโดย [code intelligence](/2026/development-environment/#code-intelligence-and-language-servers) ด้วย) ไปจนถึงงานซับซ้อนอย่างการแยก functionality ออกเป็น module แยกต่างหาก
+    > เราใช้ Claude Code เพื่อ [แยก](https://github.com/missing-semester/missing-semester/pull/344) agentic coding ออกเป็นบทเรียนของตัวเอง
 {%- comment %}
-Show usage in Missing Semester, point out that the agent did make some mistakes.
+แสดงการใช้งานใน Missing Semester ชี้ให้เห็นว่า agent ก็ทำผิดพลาดบ้าง
 {% endcomment %}
-- **Code review.** You can ask coding agents to review code. You can give them basic guidance, like "review my latest changes that are not yet committed". If you want to review a pull request and your coding agent supports web fetch, or you have command-line tools like the [GitHub CLI](https://cli.github.com/) installed, you might even be able to ask the coding agent "Review the pull request {link}" and it'll handle it from there.
+- **Code review** คุณสามารถขอให้ coding agent review โค้ดได้ โดยให้คำแนะนำเบื้องต้น เช่น "review my latest changes that are not yet committed" ถ้าต้องการ review pull request และ coding agent รองรับ web fetch หรือคุณมีเครื่องมือ command-line อย่าง [GitHub CLI](https://cli.github.com/) ติดตั้งอยู่ คุณอาจขอให้ coding agent "Review the pull request {link}" แล้วมันจะจัดการให้เอง
 {%- comment %}
-In Porcupine repo, prompt agent with:
+ใน Porcupine repo ให้ prompt agent ว่า:
 
     Review this PR: https://github.com/anishathalye/porcupine/pull/39
 {% endcomment %}
-- **Code understanding.** You can ask a coding agent questions about a codebase, which can be particularly helpful for onboarding.
+- **ทำความเข้าใจโค้ด** คุณสามารถถาม coding agent เกี่ยวกับ codebase ได้ ซึ่งมีประโยชน์มากสำหรับการ onboard เข้าโปรเจกต์ใหม่
 {%- comment %}
-Some prompts to try in the missing-semester repo:
+ตัวอย่าง prompt ใน missing-semester repo:
 
     How do I run this site locally?
 
     How are the social preview cards implemented?
 {% endcomment %}
-- **As a shell.** You can ask the coding agent to use a particular tool to solve a task, so you can invoke a shell command using natural language, such as "use the find command to find all files older than 30 days" or "use mogrify to resize all the jpgs to 50% of their original size".
+- **ใช้แทน shell** คุณสามารถขอให้ coding agent ใช้เครื่องมือเฉพาะทางเพื่อทำงาน ทำให้เรียกคำสั่ง shell ด้วยภาษาธรรมชาติได้ เช่น "use the find command to find all files older than 30 days" หรือ "use mogrify to resize all the jpgs to 50% of their original size"
 {%- comment %}
-In Dotbot repo, prompt agent with:
+ใน Dotbot repo ให้ prompt agent ว่า:
 
     Use the ag command to find all Python renaming imports
 {% endcomment %}
-- **Vibe coding.** Agents are powerful enough that you can implement some applications without writing a single line of code yourself.
-    > [Here is an example](https://github.com/cleanlab/office-presence-dashboard) of a real-world project that one of the instructors vibe-coded.
+- **Vibe coding** Agent ทรงพลังพอที่คุณจะ implement แอปพลิเคชันบางตัวได้โดยไม่ต้องเขียนโค้ดเองแม้แต่บรรทัดเดียว
+    > [นี่คือตัวอย่าง](https://github.com/cleanlab/office-presence-dashboard) ของโปรเจกต์จริงที่อาจารย์ท่านหนึ่ง vibe-code ขึ้นมา
 {%- comment %}
-In missing-semester repo, prompt agent with:
+ใน missing-semester repo ให้ prompt agent ว่า:
 
     Make this site look retro.
 {% endcomment %}
 
-# Advanced agents
+# Advanced agent
 
-Here, we give a brief overview of some more advanced usage patterns and capabilities of coding agents.
+ในส่วนนี้จะให้ภาพรวมสั้น ๆ ของรูปแบบการใช้งานขั้นสูงและความสามารถเพิ่มเติมของ coding agent
 
-- **Reusable prompts.** Create reusable prompts or templates. For example, you can write a detailed prompt to do code review in a particular way, and save that as a reusable prompt.
-- **Parallel agents.** Coding agents can be slow: you can prompt the agent, and it can work at a problem for tens of minutes. You can run multiple copies of agents at the same time, either working on the same task (LLMs are stochastic, so it can be helpful to run the same thing multiple times and take the best solution) or different tasks (e.g., implement two non-overlapping features at the same time). To keep the different agents' changes from interfering with each other, you can use [git worktrees](https://git-scm.com/docs/git-worktree), which we cover in the lecture on [version control](/2026/version-control/).
-- **MCPs.** MCP, which stands for _Model Context Protocol_, is an open protocol that you can use to connect your coding agents with tools. For example, this [Notion MCP server](https://github.com/makenotion/notion-mcp-server) can let your agent read/write Notion docs, enabling use cases like "read the spec linked in {Notion doc}, draft an implementation plan as a new page in Notion, and then implement a prototype". For discovering MCPs, you can use directories like [Pulse](https://www.pulsemcp.com/servers) and [Glama](https://glama.ai/mcp/servers).
-- **Context management.** As we noted [above](#how-ai-models-and-agents-work), the LLMs that underlie coding agents have a limited _context window_. Effective use of coding agents necessitates making good use of context. You want to make sure the agent has access to the information it needs, but avoid unnecessary context to avoid overflowing the context window or degrading the performance of the model (which tends to happen as context size grows, even if it doesn't overflow the context window). Agent harnesses automatically supply, and to some degree, manage context, but a lot of control is left to the user.
-    - **Clearing the context window.** The most basic control, coding agents support clearing the context window (starting a new conversation), which you should do for unrelated queries.
-    - **Rewinding the conversation.** Some coding agents support undoing steps in the conversation history. Rather than give a follow-up message steering the agent in a different direction, in situations where an "undo" makes more sense, this more effectively manages context.
+- **Reusable prompt** สร้าง prompt หรือ template ที่นำกลับมาใช้ซ้ำได้ เช่น เขียน prompt ละเอียดสำหรับทำ code review ในแบบเฉพาะเจาะจง แล้วบันทึกเป็น reusable prompt
+- **Parallel agent** Coding agent อาจทำงานช้า: คุณ prompt agent แล้วมันอาจทำงานนานหลายสิบนาที คุณสามารถรัน agent หลายตัวพร้อมกันได้ ทั้งทำงานเดียวกัน (LLM เป็น stochastic ดังนั้นการรันซ้ำหลายครั้งแล้วเลือกคำตอบที่ดีที่สุดก็มีประโยชน์) หรือทำคนละงาน (เช่น implement สอง feature ที่ไม่ทับซ้อนกันพร้อมกัน) เพื่อไม่ให้การเปลี่ยนแปลงของ agent แต่ละตัวกระทบกัน สามารถใช้ [git worktree](https://git-scm.com/docs/git-worktree) ซึ่งเราจะพูดถึงในบทเรื่อง [version control](/2026/version-control/)
+- **MCP** MCP ย่อมาจาก _Model Context Protocol_ เป็น open protocol ที่ใช้เชื่อมต่อ coding agent กับ tool ต่าง ๆ เช่น [Notion MCP server](https://github.com/makenotion/notion-mcp-server) สามารถให้ agent อ่าน/เขียนเอกสาร Notion ได้ รองรับ use case อย่าง "อ่าน spec ที่ลิงก์ไว้ใน {Notion doc}, ร่างแผน implementation เป็นหน้าใหม่ใน Notion แล้ว implement prototype" สำหรับการค้นหา MCP สามารถใช้ directory อย่าง [Pulse](https://www.pulsemcp.com/servers) และ [Glama](https://glama.ai/mcp/servers)
+- **การจัดการ context** ดังที่กล่าวไว้ [ข้างต้น](#how-ai-models-and-agents-work) LLM ที่อยู่เบื้องหลัง coding agent มี _context window_ จำกัด การใช้ coding agent อย่างมีประสิทธิภาพต้องอาศัยการจัดการ context ให้ดี ต้องมั่นใจว่า agent เข้าถึงข้อมูลที่จำเป็น แต่หลีกเลี่ยง context ที่ไม่จำเป็นเพื่อไม่ให้ context window ล้นหรือทำให้ประสิทธิภาพของ model ลดลง (ซึ่งมักเกิดขึ้นเมื่อ context ใหญ่ขึ้น แม้จะไม่ล้น context window ก็ตาม) Agent harness จะจัดการ context ให้โดยอัตโนมัติในระดับหนึ่ง แต่การควบคุมส่วนใหญ่ยังอยู่ที่ผู้ใช้
+    - **การล้าง context window** การควบคุมพื้นฐานที่สุด coding agent รองรับการล้าง context window (เริ่มการสนทนาใหม่) ซึ่งควรทำสำหรับ query ที่ไม่เกี่ยวข้องกัน
+    - **การย้อนกลับการสนทนา** Coding agent บางตัวรองรับการ undo ขั้นตอนใน conversation history แทนที่จะส่งข้อความ follow-up เพื่อเปลี่ยนทิศทาง agent ในสถานการณ์ที่ "undo" เหมาะสมกว่า วิธีนี้จะจัดการ context ได้ดีกว่า
 {%- comment %}
-Make up a quick demo.
+สร้าง demo สั้น ๆ ขึ้นมา
 {% endcomment %}
-    - **Compaction.** To enable conversations of unbounded length, coding agents support context _compaction_: if the conversation history grows too long, they will automatically call an LLM to summarize the prefix of the conversation, and replace the conversation history with the summary. Some agents give control to the user to invoke compaction when desired.
+    - **Compaction** เพื่อรองรับการสนทนาที่ยาวไม่จำกัด coding agent รองรับ context _compaction_: ถ้า conversation history ยาวเกินไป มันจะเรียก LLM มาสรุปส่วนต้นของการสนทนาโดยอัตโนมัติ แล้วแทนที่ conversation history ด้วยบทสรุป Agent บางตัวให้ผู้ใช้เรียก compaction เองเมื่อต้องการ
 {%- comment %}
-Show `/compact` in Claude Code, show full summary.
+แสดง `/compact` ใน Claude Code แสดง summary ทั้งหมด
 {% endcomment %}
-    - **llms.txt.** The `/llms.txt` file is a proposed [standard](https://llmstxt.org/) location for a document meant for LLMs to use at inference time. Products (e.g., [cursor.com/llms.txt](https://cursor.com/llms.txt)), software libraries (e.g., [ai.pydantic.dev/llms.txt](https://ai.pydantic.dev/llms.txt)), and APIs (e.g., [apify.com/llms.txt](https://apify.com/llms.txt)) might have `llms.txt` files that are handy for development. Such documents are more information dense per token, and so they are more context-efficient than asking your coding agent to fetch and read an HTML page. External documentation is handy when a coding agent doesn't have built-in knowledge about a dependency you are trying to use (e.g., because it was published after the LLM's knowledge cutoff).
+    - **llms.txt** ไฟล์ `/llms.txt` เป็น [มาตรฐาน](https://llmstxt.org/) ที่เสนอขึ้นมาเพื่อเป็นตำแหน่งของเอกสารที่ LLM จะใช้ตอน inference Product ต่าง ๆ (เช่น [cursor.com/llms.txt](https://cursor.com/llms.txt)), software library (เช่น [ai.pydantic.dev/llms.txt](https://ai.pydantic.dev/llms.txt)), และ API (เช่น [apify.com/llms.txt](https://apify.com/llms.txt)) อาจมีไฟล์ `llms.txt` ที่เป็นประโยชน์สำหรับการพัฒนา เอกสารเหล่านี้มีความหนาแน่นของข้อมูลต่อ token สูงกว่า จึงมีประสิทธิภาพด้าน context มากกว่าการให้ coding agent fetch และอ่านหน้า HTML เอกสารภายนอกจะมีประโยชน์เมื่อ coding agent ไม่มีความรู้เกี่ยวกับ dependency ที่คุณกำลังใช้ (เช่น เพราะมันถูกเผยแพร่หลัง knowledge cutoff ของ LLM)
 {%- comment %}
-Side-by-side comparison in an empty repo (on Desktop or some other self-contained place, with `git init` run in it):
+เปรียบเทียบแบบเคียงข้างกันใน repo ว่าง (บน Desktop หรือที่อื่นที่แยกออกมา โดยรัน `git init` ไว้แล้ว):
 
     Write a single-file Python program example in demo.py using semlib to sort "Ilya Sutskever", "Soumith Chintala", and "Donald Knuth" in terms of their fame as AI researchers.
 
     Write a single-file Python program example in demo.py using semlib to sort "Ilya Sutskever", "Soumith Chintala", and "Donald Knuth" in terms of their fame as AI researchers. See https://semlib.anish.io/llms.txt. Follow links to Markdown versions of any pages linked in llms.txt files.
 
-Not sure why the agent doesn't do this by default. You'd probably put that last sentence in a CLAUDE.md file.
+ไม่แน่ใจว่าทำไม agent ถึงไม่ทำแบบนี้เป็นค่าเริ่มต้น คุณอาจใส่ประโยคสุดท้ายนั้นในไฟล์ CLAUDE.md
 {% endcomment %}
-    - **AGENTS.md.** Most coding agents support [AGENTS.md](https://agents.md/) or similar (e.g., Claude Code looks for `CLAUDE.md`) as a README for coding agents. When the agent starts, it pre-fills the context with the entire contents of `AGENTS.md`. You can use this to give the agent advice that is common across sessions (e.g., instruct it to always run the type-checker after making code changes, explain how to run unit tests, or provide links to third-party docs that the agent can browse). Some coding agents can auto-generate this file (e.g., the `/init` command in Claude Code). See [here](https://github.com/pydantic/pydantic-ai/blob/main/CLAUDE.md) for a real-world example of an `AGENTS.md`.
+    - **AGENTS.md** Coding agent ส่วนใหญ่รองรับ [AGENTS.md](https://agents.md/) หรือรูปแบบที่คล้ายกัน (เช่น Claude Code มองหา `CLAUDE.md`) เป็น README สำหรับ coding agent เมื่อ agent เริ่มทำงาน มันจะโหลดเนื้อหาทั้งหมดของ `AGENTS.md` เข้า context ล่วงหน้า คุณสามารถใช้ไฟล์นี้เพื่อให้คำแนะนำกับ agent ที่ใช้ร่วมกันได้ทุก session (เช่น สั่งให้รัน type checker ทุกครั้งหลังแก้โค้ด, อธิบายวิธีรัน unit test, หรือให้ลิงก์ไปยังเอกสาร third-party ที่ agent สามารถเปิดดูได้) Coding agent บางตัวสามารถสร้างไฟล์นี้โดยอัตโนมัติ (เช่น คำสั่ง `/init` ใน Claude Code) ดู [ที่นี่](https://github.com/pydantic/pydantic-ai/blob/main/CLAUDE.md) สำหรับตัวอย่าง `AGENTS.md` จากโปรเจกต์จริง
 {%- comment %}
-Dotbot example, CLAUDE.md that includes @DEVELOPMENT.md and says to always run the type checker and code formatter after making any changes to Python code.
+ตัวอย่าง Dotbot, CLAUDE.md ที่ include @DEVELOPMENT.md และระบุให้รัน type checker และ code formatter ทุกครั้งหลังแก้ไขโค้ด Python
 
-Example prompt, off of master:
+ตัวอย่าง prompt จาก master:
 
     Remove the "--version" command-line flag.
 
-This is something that'll be fast, for demonstration purposes.
+เป็นงานที่ทำเร็ว เพื่อวัตถุประสงค์ในการ demo
 {% endcomment %}
-    - **Skills.** Content in the `AGENTS.md` is always loaded, in its entirety, into the context window of an agent. _Skills_ add one level of indirection to avoid context bloat: you can provide the agent with a list of skills along with descriptions, and the agent can "open" the skill (load it into its context window) as desired.
-    - **Subagents.** Some coding agents let you define subagents, which are agents for task-specific workflows. The top-level coding agent can invoke a sub-agent to complete a particular task, which enables both the top-level agent and subagent to more effectively manage context. The top-level agent's context isn't bloated with everything the subagent sees, and the subagent can get just the context it needs for its task. As one example, some coding agents implement web research as a subagent: the top-level agent will pose a query to the subagent, which will run web search, retrieve individual web pages, analyze them, and provide an answer to the query to the top-level agent. This way, the top-level agent doesn't have its context bloated by the full content of all retrieved web pages, and the subagent doesn't have in its context the rest of the conversation history of the top-level agent.
+    - **Skill** เนื้อหาใน `AGENTS.md` จะถูกโหลดทั้งหมดเข้า context window ของ agent เสมอ _Skill_ เพิ่มอีกหนึ่งระดับของ indirection เพื่อหลีกเลี่ยง context bloat: คุณสามารถให้รายการ skill พร้อมคำอธิบายกับ agent แล้ว agent จะ "เปิด" skill (โหลดเข้า context window) ตามที่ต้องการ
+    - **Subagent** Coding agent บางตัวให้คุณกำหนด subagent ซึ่งเป็น agent สำหรับ workflow เฉพาะงาน Agent ระดับบนสุดสามารถเรียก subagent เพื่อทำงานเฉพาะอย่าง ทำให้ทั้ง agent ระดับบนสุดและ subagent จัดการ context ได้มีประสิทธิภาพมากขึ้น Context ของ agent ระดับบนสุดไม่ถูกเติมด้วยทุกอย่างที่ subagent เห็น และ subagent ก็ได้เฉพาะ context ที่จำเป็นสำหรับงานของมัน ตัวอย่างหนึ่ง coding agent บางตัว implement การค้นหาเว็บเป็น subagent: agent ระดับบนสุดจะส่งคำถามไปยัง subagent ซึ่งจะรัน web search, ดึงหน้าเว็บแต่ละหน้า, วิเคราะห์ แล้วส่งคำตอบกลับมา วิธีนี้ทำให้ context ของ agent ระดับบนสุดไม่ถูกเติมด้วยเนื้อหาทั้งหมดของหน้าเว็บที่ดึงมา และ subagent ก็ไม่ต้องมี conversation history ทั้งหมดของ agent ระดับบนสุดใน context ของมัน
 
-For many of the advanced features that require writing prompts (e.g., skills or subagents), you can use LLMs to get you started. Some coding agents even have built-in support for doing this. For example, Claude Code can generate a subagent from a short prompt (invoke `/agents` and create a new agent). Try creating a subagent with this prompt:
+สำหรับ feature ขั้นสูงหลายอย่างที่ต้องเขียน prompt (เช่น skill หรือ subagent) คุณสามารถใช้ LLM ช่วยเริ่มต้นได้ Coding agent บางตัวมี built-in support สำหรับทำเรื่องนี้ เช่น Claude Code สามารถสร้าง subagent จาก prompt สั้น ๆ ได้ (เรียก `/agents` แล้วสร้าง agent ใหม่) ลองสร้าง subagent ด้วย prompt นี้
 
 ```
 A Python code checking agent that uses `mypy` and `ruff` to type-check, lint, and format *check* any files that have been modified from the last git commit.
 ```
 
-Then, you can use the top-level agent to explicitly invoke the subagent with a message like "use the code checker subagent". You might also be able to get the top-level agent to automatically invoke the subagent when appropriate, for example, after modifying any Python files.
+จากนั้นคุณสามารถใช้ agent ระดับบนสุดเพื่อเรียก subagent อย่างชัดเจนด้วยข้อความเช่น "use the code checker subagent" คุณยังอาจตั้งค่าให้ agent ระดับบนสุดเรียก subagent โดยอัตโนมัติเมื่อเหมาะสม เช่น หลังจากแก้ไขไฟล์ Python ใด ๆ
 
-# What to watch out for
+# สิ่งที่ควรระวัง
 
-AI tools can make mistakes. They are built on LLMs, which are just probabilistic next-token-prediction models. They are not "intelligent" in the same way as humans. Review AI output for correctness and security bugs. Sometimes verifying code can be harder than writing the code yourself; for critical code, consider writing it by hand. AI can go down rabbit holes and try to gaslight you; be aware of debugging spirals. Don't use AI as a crutch, and be wary of overreliance or having a shallow understanding. There's still a huge class of programming tasks that AI is still incapable of doing. Computational thinking is still valuable.
+AI tool อาจทำผิดพลาดได้ มันสร้างอยู่บน LLM ซึ่งเป็นเพียง model ที่ทำนาย token ถัดไปแบบ probabilistic มันไม่ได้ "ฉลาด" ในแบบเดียวกับมนุษย์ ตรวจสอบผลลัพธ์จาก AI ทั้งในด้านความถูกต้องและ security bug บางครั้งการตรวจสอบโค้ดอาจยากกว่าการเขียนเอง สำหรับโค้ดที่สำคัญ ควรพิจารณาเขียนเอง AI อาจลงไปใน rabbit hole และพยายาม gaslight คุณ ระวังเรื่อง debugging spiral อย่าใช้ AI เป็นไม้ค้ำยัน และระวังการพึ่งพามากเกินไปหรือเข้าใจเพียงผิวเผิน งาน programming อีกจำนวนมากที่ AI ยังทำไม่ได้ Computational thinking ยังคงมีคุณค่า
 
-# Recommended software
+# ซอฟต์แวร์ที่แนะนำ
 
-Many IDEs / AI coding extensions include coding agents (see recommendations from the [development environment lecture](/2026/development-environment/)). Other popular coding agents include Anthropic's [Claude Code](https://www.claude.com/product/claude-code), OpenAI's [Codex](https://openai.com/codex/), and open-source agents like [opencode](https://github.com/anomalyco/opencode).
+IDE และ AI coding extension จำนวนมากมี coding agent ในตัว (ดูคำแนะนำจาก [บท development environment](/2026/development-environment/)) Coding agent ยอดนิยมอื่น ๆ ได้แก่ [Claude Code](https://www.claude.com/product/claude-code) ของ Anthropic, [Codex](https://openai.com/codex/) ของ OpenAI, และ agent แบบ open-source อย่าง [opencode](https://github.com/anomalyco/opencode)
 
-# Exercises
+# แบบฝึกหัด
 
-1. Compare the experience of coding by hand, using AI autocomplete, inline chat, and agents by doing the same programming task four times. The best candidate is a small-sized feature from a project you're already working on. If you're looking for other ideas, you could consider completing "good first issue" style tasks in open-source projects on GitHub, or [Advent of Code](https://adventofcode.com/) or [LeetCode](https://leetcode.com/) problems.
-1. Use an AI coding agent to navigate an unfamiliar codebase. This is best done in the context of wanting to debug or add a new feature to a project you actually care about. If you don't have any that come to mind, try using an AI agent to understand how security-related features work in the [opencode](https://github.com/anomalyco/opencode) agent.
-1. Vibe code a small app from scratch. Do not write a single line of code by hand.
-1. For your coding agent of choice, create and test an `AGENTS.md` (or analogous for your agent of choice, such as `CLAUDE.md`), a reusable prompt (e.g., [custom slash command in Claude Code](https://code.claude.com/docs/en/slash-commands) or [custom prompts in Codex](https://developers.openai.com/codex/custom-prompts)), a skill (e.g., [skill in Claude Code](https://code.claude.com/docs/en/skills) or [skill in Codex](https://developers.openai.com/codex/skills/)), and a subagent (e.g., [subagent in Claude Code](https://code.claude.com/docs/en/sub-agents)). Think about when you'd want to use one of these versus another. Note that your coding agent of choice might not support some of these functionalities; you can either skip them, or try a different coding agent that has support.
-1. Use a coding agent to accomplish the same goal as in the Markdown bullet points regex exercise from the [Code Quality lecture](/2026/code-quality/). Does it complete the tasks via direct file edits? What are the downsides and limitations of an agent editing the file directly to complete such a task? Figure out how to prompt the agent such that it doesn't complete the task via direct file edits. Hint: ask the agent to use one of the command-line tools mentioned in the [first lecture](/2026/course-shell/).
-1. Most coding agents support a form of "yolo mode" (e.g., in Claude Code, `--dangerously-skip-permissions`). It is not secure to use this mode directly, but it may be acceptable to run a coding agent in an isolated environment like a virtual machine or container and then enable autonomous operation. Get this setup running on your machine. Documentation such as [Claude Code devcontainers](https://code.claude.com/docs/en/devcontainer) or [Docker Sandboxes / Claude Code](https://docs.docker.com/ai/sandboxes/claude-code/) may come in handy. There is more than one way to set this up.
+1. เปรียบเทียบประสบการณ์ของการเขียนโค้ดเอง, ใช้ AI autocomplete, inline chat, และ agent โดยทำ programming task เดียวกันสี่ครั้ง ตัวเลือกที่ดีที่สุดคือ feature ขนาดเล็กจากโปรเจกต์ที่คุณกำลังทำอยู่ ถ้าต้องการไอเดียอื่น ลองพิจารณาทำ task แบบ "good first issue" ในโปรเจกต์ open-source บน GitHub หรือโจทย์จาก [Advent of Code](https://adventofcode.com/) หรือ [LeetCode](https://leetcode.com/)
+2. ใช้ AI coding agent เพื่อสำรวจ codebase ที่ไม่คุ้นเคย วิธีที่ดีที่สุดคือทำในบริบทที่ต้องการ debug หรือเพิ่ม feature ใหม่ให้กับโปรเจกต์ที่คุณสนใจจริง ๆ ถ้านึกไม่ออก ลองใช้ AI agent เพื่อทำความเข้าใจว่า feature ด้าน security ทำงานอย่างไรใน agent [opencode](https://github.com/anomalyco/opencode)
+3. Vibe code แอปเล็ก ๆ จากศูนย์ ห้ามเขียนโค้ดเองแม้แต่บรรทัดเดียว
+4. สำหรับ coding agent ที่คุณเลือกใช้ ให้สร้างและทดสอบ `AGENTS.md` (หรือชื่อที่เทียบเท่า เช่น `CLAUDE.md`), reusable prompt (เช่น [custom slash command ใน Claude Code](https://code.claude.com/docs/en/slash-commands) หรือ [custom prompt ใน Codex](https://developers.openai.com/codex/custom-prompts)), skill (เช่น [skill ใน Claude Code](https://code.claude.com/docs/en/skills) หรือ [skill ใน Codex](https://developers.openai.com/codex/skills/)), และ subagent (เช่น [subagent ใน Claude Code](https://code.claude.com/docs/en/sub-agents)) ลองคิดว่าเมื่อไหร่ควรใช้อันไหน โปรดทราบว่า coding agent ที่คุณเลือกอาจไม่รองรับบาง functionality เหล่านี้ คุณสามารถข้ามไปหรือลองใช้ coding agent ตัวอื่นที่รองรับ
+5. ใช้ coding agent เพื่อทำงานเดียวกับแบบฝึกหัด Markdown bullet point regex จาก [บท Code Quality](/2026/code-quality/) มันทำงานผ่านการแก้ไขไฟล์โดยตรงหรือไม่? ข้อเสียและข้อจำกัดของการที่ agent แก้ไขไฟล์โดยตรงเพื่อทำงานดังกล่าวคืออะไร? หาวิธี prompt agent ให้ไม่ทำงานผ่านการแก้ไขไฟล์โดยตรง คำใบ้: ขอให้ agent ใช้เครื่องมือ command-line ที่กล่าวถึงใน [บทแรก](/2026/course-shell/)
+6. Coding agent ส่วนใหญ่รองรับ "yolo mode" บางรูปแบบ (เช่น ใน Claude Code คือ `--dangerously-skip-permissions`) การใช้โหมดนี้โดยตรงไม่ปลอดภัย แต่อาจยอมรับได้หากรัน coding agent ในสภาพแวดล้อมที่แยกออกมาอย่าง virtual machine หรือ container แล้วจึงเปิดใช้งาน autonomous operation ให้ตั้งค่าระบบนี้บนเครื่องของคุณ เอกสารเช่น [Claude Code devcontainer](https://code.claude.com/docs/en/devcontainer) หรือ [Docker Sandboxes / Claude Code](https://docs.docker.com/ai/sandboxes/claude-code/) อาจเป็นประโยชน์ มีหลายวิธีในการตั้งค่านี้

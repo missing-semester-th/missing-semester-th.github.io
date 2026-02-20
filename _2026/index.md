@@ -1,8 +1,8 @@
 ---
 layout: page
-title: "2026 Lectures"
+title: "บทเรียน 2026"
 description: >
-  Lecture notes and videos for Missing Semester, MIT IAP 2026.
+  เนื้อหาบทเรียนและวิดีโอสำหรับ Missing Semester, MIT IAP 2026
 permalink: /2026/
 phony: true
 ---
