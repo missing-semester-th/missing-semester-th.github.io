@@ -2,7 +2,7 @@
 layout: lecture
 title: "Development Environment and Tools"
 description: >
-  Learn about IDEs, Vim, language servers, and AI-powered development tools.
+  เรียนรู้เกี่ยวกับ IDE, Vim, language server และเครื่องมือพัฒนาซอฟต์แวร์ที่ขับเคลื่อนด้วย AI
 thumbnail: /static/assets/thumbnails/2026/lec3.png
 date: 2026-01-14
 ready: true
@@ -11,121 +11,121 @@ video:
   id: QnM1nVzrkx8
 ---
 
-A _development environment_ is a set of tools for developing software. At the heart of a development environment is text editing functionality, along with accompanying features such as syntax highlighting, type checking, code formatting, and autocomplete. _Integrated development environments_ (IDEs) such as [VS Code][vs-code] bring together all of this functionality into a single application. Terminal-based development workflows combine tools such as [tmux](https://github.com/tmux/tmux) (a terminal multiplexer), [Vim](https://www.vim.org/) (a text editor), [Zsh](https://www.zsh.org/) (a shell), and language-specific command-line tools, such as [Ruff](https://docs.astral.sh/ruff/) (a Python linter and code formatter) and [Mypy](https://mypy-lang.org/) (a Python type checker).
+_Development environment_ คือชุดเครื่องมือสำหรับพัฒนาซอฟต์แวร์ หัวใจของ development environment คือความสามารถในการแก้ไขข้อความ พร้อมด้วย feature ต่าง ๆ อย่างเช่น syntax highlighting, type checking, code formatting และ autocomplete _Integrated development environment_ (IDE) อย่าง [VS Code][vs-code] รวมความสามารถทั้งหมดนี้ไว้ในแอปพลิเคชันเดียว ส่วน workflow แบบ terminal-based จะรวมเครื่องมือต่าง ๆ เข้าด้วยกัน เช่น [tmux](https://github.com/tmux/tmux) (terminal multiplexer), [Vim](https://www.vim.org/) (text editor), [Zsh](https://www.zsh.org/) (shell) และ command-line tool เฉพาะภาษา เช่น [Ruff](https://docs.astral.sh/ruff/) (Python linter และ code formatter) และ [Mypy](https://mypy-lang.org/) (Python type checker)
 
-IDEs and terminal-based workflows each have their strengths and weaknesses. For example, graphical IDEs can be easier to learn, and today's IDEs generally have better out-of-the-box AI integrations like AI autocomplete; on the other hand, terminal-based workflows are lightweight, and they may be your only option in environments where you don't have a GUI or can't install software. We recommend you develop basic familiarity with both and develop mastery of at least one. If you don't already have a preferred IDE, we recommend starting with [VS Code][vs-code].
+IDE กับ workflow แบบ terminal-based ต่างก็มีจุดเด่นและจุดด้อยของตัวเอง ตัวอย่างเช่น IDE แบบ graphical อาจเรียนรู้ได้ง่ายกว่า และ IDE ในปัจจุบันโดยทั่วไปจะมี AI integration ที่พร้อมใช้งานได้ดีกว่า เช่น AI autocomplete ในทางกลับกัน workflow แบบ terminal-based นั้นเบาและอาจเป็นทางเลือกเดียวในสภาพแวดล้อมที่ไม่มี GUI หรือไม่สามารถติดตั้งซอฟต์แวร์ได้ แนะนำให้ทำความคุ้นเคยกับทั้งสองแบบในระดับพื้นฐาน และพัฒนาความเชี่ยวชาญอย่างน้อยหนึ่งแบบ หากยังไม่มี IDE ที่ถนัด แนะนำให้เริ่มจาก [VS Code][vs-code]
 
-In this lecture, we'll cover:
+ในบทนี้จะครอบคลุม:
 
-- [Text editing and Vim](#text-editing-and-vim)
-- [Code intelligence and language servers](#code-intelligence-and-language-servers)
-- [AI-powered development](#ai-powered-development)
-- [Extensions and other IDE functionality](#extensions-and-other-ide-functionality)
+- [การแก้ไขข้อความและ Vim](#text-editing-and-vim)
+- [Code intelligence และ language server](#code-intelligence-and-language-servers)
+- [การพัฒนาซอฟต์แวร์ด้วย AI](#ai-powered-development)
+- [Extension และ feature อื่น ๆ ของ IDE](#extensions-and-other-ide-functionality)
 
 [vs-code]: https://code.visualstudio.com/
 
 # Text editing and Vim
 
-When programming, you spend most of your time navigating through code, reading snippets of code, and making edits to code, rather than writing long streams or reading files top-to-bottom. [Vim] is a text editor that is optimized for this distribution of tasks.
+เวลาเขียนโปรแกรม เราใช้เวลาส่วนใหญ่ไปกับการนำทางไปตามส่วนต่าง ๆ ของโค้ด อ่านโค้ดเป็นท่อน ๆ และแก้ไขโค้ด มากกว่าจะนั่งพิมพ์ข้อความยาว ๆ หรืออ่านไฟล์ตั้งแต่ต้นจนจบ [Vim] เป็น text editor ที่ออกแบบมาให้เหมาะกับรูปแบบการทำงานแบบนี้โดยเฉพาะ
 
-**The philosophy of Vim.** Vim has a beautiful idea as its foundation: its interface is itself a programming language, designed for navigating and editing text. Keystrokes (with mnemonic names) are commands, and these commands are composable. Vim avoids the use of the mouse, because it's too slow; Vim even avoids use of the arrow keys because it requires too much movement. The result: an editor that feels like a brain-computer interface and matches the speed at which you think.
+**ปรัชญาของ Vim** Vim มีแนวคิดที่สวยงามเป็นรากฐาน: interface ของมันนั้นเป็นภาษาโปรแกรมในตัวเอง ออกแบบมาเพื่อการนำทางและแก้ไขข้อความ keystroke (ที่ตั้งชื่อให้จำง่าย) คือ command และ command เหล่านี้สามารถ compose เข้าด้วยกันได้ Vim หลีกเลี่ยงการใช้เมาส์เพราะมันช้าเกินไป Vim แม้แต่ยังหลีกเลี่ยงการใช้ปุ่มลูกศรเพราะต้องเคลื่อนมือมากเกินไป ผลลัพธ์คือ editor ที่รู้สึกเหมือน brain-computer interface และทำงานได้เร็วทันความคิด
 
-**Vim support in other software.** You don't have to use [Vim] itself to benefit from the ideas at its core. Many programs that involve any kind of text editing support "Vim mode", either as built-in functionality or as a plugin. For example, VS Code has the [VSCodeVim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) plugin, Zsh has [built-in support](https://zsh.sourceforge.io/Guide/zshguide04.html) for Vim emulation, and even Claude Code has [built-in support](https://code.claude.com/docs/en/interactive-mode#vim-editor-mode) for Vim editor mode. Chances are that any tool you use that involves text editing supports Vim mode in one way or another.
+**การรองรับ Vim ในซอฟต์แวร์อื่น** ไม่จำเป็นต้องใช้ [Vim] ตัวจริงเพื่อจะได้ประโยชน์จากแนวคิดหลักของมัน โปรแกรมจำนวนมากที่เกี่ยวข้องกับการแก้ไขข้อความรองรับ "Vim mode" ไม่ว่าจะเป็น feature ที่มีมาในตัวหรือเป็น plugin ตัวอย่างเช่น VS Code มี plugin [VSCodeVim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim), Zsh มี[การรองรับ Vim emulation ในตัว](https://zsh.sourceforge.io/Guide/zshguide04.html) และแม้แต่ Claude Code ก็มี[การรองรับ Vim editor mode ในตัว](https://code.claude.com/docs/en/interactive-mode#vim-editor-mode) เครื่องมือไหนก็ตามที่ใช้อยู่ที่เกี่ยวข้องกับการแก้ไขข้อความ มีโอกาสสูงที่จะรองรับ Vim mode ในรูปแบบใดรูปแบบหนึ่ง
 
 ## Modal editing
 
-Vim is a _modal editor_: it has different operating modes for different classes of tasks.
+Vim เป็น _modal editor_: มันมี mode การทำงานที่แตกต่างกันสำหรับงานประเภทต่าง ๆ
 
-- **Normal**: for moving around a file and making edits
-- **Insert**: for inserting text
-- **Replace**: for replacing text
-- **Visual** (plain, line, or block): for selecting blocks of text
-- **Command-line**: for running a command
+- **Normal**: สำหรับเลื่อนไปมาในไฟล์และทำการแก้ไข
+- **Insert**: สำหรับแทรกข้อความ
+- **Replace**: สำหรับแทนที่ข้อความ
+- **Visual** (plain, line หรือ block): สำหรับเลือกบล็อกข้อความ
+- **Command-line**: สำหรับรัน command
 
-Keystrokes have different meanings in different operating modes. For example, the letter `x` in Insert mode will just insert a literal character "x", but in Normal mode, it will delete the character under the cursor, and in Visual mode, it will delete the selection.
+keystroke มีความหมายต่างกันใน mode ที่ต่างกัน ตัวอย่างเช่น ตัวอักษร `x` ใน Insert mode จะแทรกตัวอักษร "x" ธรรมดา แต่ใน Normal mode จะลบตัวอักษรที่ cursor อยู่ และใน Visual mode จะลบส่วนที่เลือกไว้
 
-In its default configuration, Vim shows the current mode in the bottom left. The initial/default mode is Normal mode. You'll generally spend most of your time between Normal mode and Insert mode.
+ในการตั้งค่าเริ่มต้น Vim จะแสดง mode ปัจจุบันที่มุมล่างซ้าย mode เริ่มต้นคือ Normal mode โดยทั่วไปจะใช้เวลาส่วนใหญ่สลับไปมาระหว่าง Normal mode กับ Insert mode
 
-You change modes by pressing `<ESC>` (the escape key) to switch from any mode back to Normal mode. From Normal mode, enter Insert mode with `i`, Replace mode with `R`, Visual mode with `v`, Visual Line mode with `V`, Visual Block mode with `<C-v>` (Ctrl-V, sometimes also written `^V`), and Command-line mode with `:`.
+การเปลี่ยน mode ทำได้โดยกด `<ESC>` (ปุ่ม escape) เพื่อกลับไป Normal mode จากทุก mode จาก Normal mode เข้า Insert mode ด้วย `i`, Replace mode ด้วย `R`, Visual mode ด้วย `v`, Visual Line mode ด้วย `V`, Visual Block mode ด้วย `<C-v>` (Ctrl-V ซึ่งบางทีเขียนว่า `^V`) และ Command-line mode ด้วย `:`
 
-You use the `<ESC>` key a lot when using Vim: consider remapping Caps Lock to Escape ([macOS instructions](https://vim.fandom.com/wiki/Map_caps_lock_to_escape_in_macOS)) or create an [alternative mapping](https://vim.fandom.com/wiki/Avoid_the_escape_key#Mappings) for `<ESC>` with a simple key sequence.
+เมื่อใช้ Vim จะต้องกดปุ่ม `<ESC>` บ่อยมาก: ลอง remap Caps Lock ให้เป็น Escape ([วิธีทำบน macOS](https://vim.fandom.com/wiki/Map_caps_lock_to_escape_in_macOS)) หรือสร้าง [mapping ทดแทน](https://vim.fandom.com/wiki/Avoid_the_escape_key#Mappings) สำหรับ `<ESC>` ด้วย key sequence ง่าย ๆ
 
-## Basics: inserting text
+## พื้นฐาน: การแทรกข้อความ
 
-From Normal mode, press `i` to enter Insert mode. Now, Vim behaves like any other text editor, until you press `<ESC>` to return to Normal mode. This, along with the basics explained above, are all you need to start editing files using Vim (though not particularly efficiently, if you're spending all your time editing from Insert mode).
+จาก Normal mode กด `i` เพื่อเข้า Insert mode ตอนนี้ Vim จะทำงานเหมือน text editor ทั่วไป จนกว่าจะกด `<ESC>` เพื่อกลับไป Normal mode ความรู้นี้รวมกับพื้นฐานที่อธิบายไปข้างต้นก็เพียงพอสำหรับการเริ่มแก้ไขไฟล์ด้วย Vim แล้ว (ถึงแม้จะยังไม่มีประสิทธิภาพมากนัก หากใช้เวลาทั้งหมดแก้ไขจาก Insert mode)
 
-## Vim's interface is a programming language
+## Interface ของ Vim คือภาษาโปรแกรม
 
-Vim's interface is a programming language. Keystrokes (with mnemonic names) are commands, and these commands _compose_. This enables efficient movement and edits, especially once the commands become muscle memory, just like typing becomes super efficient once you've learned your keyboard layout.
+Interface ของ Vim คือภาษาโปรแกรม keystroke (ที่ตั้งชื่อให้จำง่าย) คือ command และ command เหล่านี้สามารถ _compose_ เข้าด้วยกันได้ สิ่งนี้ทำให้การเคลื่อนที่และแก้ไขมีประสิทธิภาพ โดยเฉพาะเมื่อ command กลายเป็น muscle memory เหมือนกับที่การพิมพ์จะมีประสิทธิภาพสูงมากเมื่อคุ้นเคยกับ keyboard layout แล้ว
 
 ### Movement
 
-You should spend most of your time in Normal mode, using movement commands to navigate the file. Movements in Vim are also called "nouns", because they refer to chunks of text.
+ควรอยู่ใน Normal mode เป็นส่วนใหญ่ โดยใช้ movement command เพื่อนำทางในไฟล์ movement ใน Vim ยังเรียกว่า "noun" เพราะมันอ้างถึงชิ้นส่วนของข้อความ
 
-- Basic movement: `hjkl` (left, down, up, right)
-- Words: `w` (next word), `b` (beginning of word), `e` (end of word)
-- Lines: `0` (beginning of line), `^` (first non-blank character), `$` (end of line)
-- Screen: `H` (top of screen), `M` (middle of screen), `L` (bottom of screen)
-- Scroll: `Ctrl-u` (up), `Ctrl-d` (down)
-- File: `gg` (beginning of file), `G` (end of file)
-- Line numbers: `:{number}<CR>` or `{number}G` (line {number})
-    - `<CR>` refers to the carriage return / enter key
-- Misc: `%` (matching item, like parenthesis or brace)
-- Find: `f{character}`, `t{character}`, `F{character}`, `T{character}`
-    - find/to forward/backward {character} on the current line
-    - `,` / `;` for navigating matches
-- Search: `/{regex}`, `n` / `N` for navigating matches
+- การเคลื่อนที่พื้นฐาน: `hjkl` (ซ้าย, ลง, ขึ้น, ขวา)
+- คำ: `w` (คำถัดไป), `b` (ต้นคำ), `e` (ท้ายคำ)
+- บรรทัด: `0` (ต้นบรรทัด), `^` (ตัวอักษรแรกที่ไม่ใช่ช่องว่าง), `$` (ท้ายบรรทัด)
+- หน้าจอ: `H` (บนสุดของหน้าจอ), `M` (กลางหน้าจอ), `L` (ล่างสุดของหน้าจอ)
+- เลื่อนหน้าจอ: `Ctrl-u` (ขึ้น), `Ctrl-d` (ลง)
+- ไฟล์: `gg` (ต้นไฟล์), `G` (ท้ายไฟล์)
+- เลขบรรทัด: `:{number}<CR>` หรือ `{number}G` (บรรทัดที่ {number})
+    - `<CR>` หมายถึงปุ่ม carriage return / enter
+- อื่น ๆ: `%` (ตัวที่จับคู่กัน เช่น วงเล็บหรือปีกกา)
+- ค้นหาตัวอักษร: `f{character}`, `t{character}`, `F{character}`, `T{character}`
+    - ค้นหา/ไปยังตัวอักษร {character} ไปข้างหน้า/ข้างหลังบนบรรทัดปัจจุบัน
+    - `,` / `;` สำหรับเลื่อนไปยังผลลัพธ์ที่พบ
+- ค้นหา: `/{regex}`, `n` / `N` สำหรับเลื่อนไปยังผลลัพธ์ที่พบ
 
 ### Selection
 
-Visual modes:
+Visual mode ต่าง ๆ:
 
 - Visual: `v`
 - Visual Line: `V`
 - Visual Block: `Ctrl-v`
 
-Can use movement keys to make selection.
+ใช้ movement key เพื่อสร้างการเลือกได้
 
 ### Edits
 
-Everything that you used to do with the mouse, you now do with the keyboard using editing commands that compose with movement commands. Here's where Vim's interface starts to look like a programming language. Vim's editing commands are also called "verbs", because verbs act on nouns.
+ทุกอย่างที่เคยทำด้วยเมาส์ ตอนนี้ทำด้วย keyboard โดยใช้ editing command ที่ compose กับ movement command ได้ ตรงนี้แหละที่ interface ของ Vim เริ่มดูเหมือนภาษาโปรแกรม editing command ของ Vim ยังเรียกว่า "verb" เพราะ verb กระทำต่อ noun
 
-- `i` enter Insert mode
-    - but for manipulating/deleting text, want to use something more than backspace
-- `o` / `O` insert line below / above
-- `d{motion}` delete {motion}
-    - e.g. `dw` is delete word, `d$` is delete to end of line, `d0` is delete to beginning of line
-- `c{motion}` change {motion}
-    - e.g. `cw` is change word
-    - like `d{motion}` followed by `i`
-- `x` delete character (equivalent to `dl`)
-- `s` substitute character (equivalent to `cl`)
-- Visual mode + manipulation
-    - select text, `d` to delete it or `c` to change it
-- `u` to undo, `<C-r>` to redo
-- `y` to copy / "yank" (some other commands like `d` also copy)
-- `p` to paste
-- Lots more to learn: for example, `~` flips the case of a character, and `J` joins together lines
+- `i` เข้า Insert mode
+    - แต่สำหรับการจัดการ/ลบข้อความ ควรใช้อะไรที่ดีกว่า backspace
+- `o` / `O` แทรกบรรทัดใหม่ข้างล่าง / ข้างบน
+- `d{motion}` ลบตาม {motion}
+    - เช่น `dw` คือลบคำ, `d$` คือลบถึงท้ายบรรทัด, `d0` คือลบถึงต้นบรรทัด
+- `c{motion}` เปลี่ยนตาม {motion}
+    - เช่น `cw` คือเปลี่ยนคำ
+    - เหมือน `d{motion}` ตามด้วย `i`
+- `x` ลบตัวอักษร (เทียบเท่ากับ `dl`)
+- `s` แทนที่ตัวอักษร (เทียบเท่ากับ `cl`)
+- Visual mode + การจัดการ
+    - เลือกข้อความ แล้วกด `d` เพื่อลบ หรือ `c` เพื่อเปลี่ยน
+- `u` เพื่อ undo, `<C-r>` เพื่อ redo
+- `y` เพื่อ copy / "yank" (command อื่นบางตัว เช่น `d` ก็ copy ด้วย)
+- `p` เพื่อ paste
+- ยังมีอีกมากที่ต้องเรียนรู้: ตัวอย่างเช่น `~` สลับตัวพิมพ์เล็ก-ใหญ่ของตัวอักษร และ `J` เชื่อมบรรทัดเข้าด้วยกัน
 
 ### Counts
 
-You can combine nouns and verbs with a count, which will perform a given action a number of times.
+สามารถรวม noun กับ verb พร้อมกับ count ได้ ซึ่งจะทำ action นั้นซ้ำตามจำนวนที่กำหนด
 
-- `3w` move 3 words forward
-- `5j` move 5 lines down
-- `7dw` delete 7 words
+- `3w` เลื่อนไปข้างหน้า 3 คำ
+- `5j` เลื่อนลง 5 บรรทัด
+- `7dw` ลบ 7 คำ
 
 ### Modifiers
 
-You can use modifiers to change the meaning of a noun. Some modifiers are `i`, which means "inner" or "inside", and `a`, which means "around".
+สามารถใช้ modifier เพื่อเปลี่ยนความหมายของ noun ได้ modifier บางตัว ได้แก่ `i` ซึ่งหมายถึง "inner" หรือ "inside" และ `a` ซึ่งหมายถึง "around"
 
-- `ci(` change the contents inside the current pair of parentheses
-- `ci[` change the contents inside the current pair of square brackets
-- `da'` delete a single-quoted string, including the surrounding single quotes
+- `ci(` เปลี่ยนเนื้อหาภายในวงเล็บคู่ปัจจุบัน
+- `ci[` เปลี่ยนเนื้อหาภายในวงเล็บเหลี่ยมคู่ปัจจุบัน
+- `da'` ลบ string ที่อยู่ใน single quote รวมถึง single quote ที่ล้อมรอบด้วย
 
-## Putting it all together
+## รวมทุกอย่างเข้าด้วยกัน
 
-Here is a broken [fizz buzz](https://en.wikipedia.org/wiki/Fizz_buzz) implementation:
+นี่คือ implementation ของ [fizz buzz](https://en.wikipedia.org/wiki/Fizz_buzz) ที่มีบั๊ก:
 
 ```python
 def fizz_buzz(limit):
@@ -142,73 +142,73 @@ def main():
     fizz_buzz(20)
 ```
 
-We use the following sequence of commands to fix the issues, beginning in Normal mode:
+เราใช้ลำดับ command ต่อไปนี้เพื่อแก้ปัญหา โดยเริ่มจาก Normal mode:
 
-- Main is never called
-    - `G` to jump to the end of the file
-    - `o` to **o**pen a new line below
-    - Type in `if __name__ == "__main__": main()`
-        - If your editor has Python language support, it might do some auto-indentation for you in Insert mode
-    - `<ESC>` to go back to Normal mode
-- Starts at 0 instead of 1
-    - `/` followed by `range` and `<CR>` to search for "range"
-    - `ww` to move forward two **w**ords (you could also use `2w`, but in practice, for small counts it's common to repeat the key instead of using the count functionality)
-    - `i` to switch to **i**nsert mode, and add `1,`
-    - `<ESC>` to go back to Normal mode
-    - `e` to jump to the **e**nd of the next word
-    - `a` to start **a**ppending text, and add `+ 1`
-    - `<ESC>` to go back to Normal mode
-- Prints "fizz" for multiples of 5
-    - `:6<CR>` to go to line 6
-    - `ci"` to **c**hange **i**nside the '**"**', change to `"buzz"`
-    - `<ESC>` to go back to Normal mode
+- Main ไม่เคยถูกเรียก
+    - `G` เพื่อกระโดดไปท้ายไฟล์
+    - `o` เพื่อ **o**pen บรรทัดใหม่ข้างล่าง
+    - พิมพ์ `if __name__ == "__main__": main()`
+        - หาก editor มีการรองรับภาษา Python อาจจะ auto-indent ให้ใน Insert mode
+    - `<ESC>` เพื่อกลับไป Normal mode
+- เริ่มที่ 0 แทนที่จะเป็น 1
+    - `/` ตามด้วย `range` แล้วกด `<CR>` เพื่อค้นหา "range"
+    - `ww` เพื่อเลื่อนไปข้างหน้าสองคำ (**w**ord) (จะใช้ `2w` ก็ได้ แต่ในทางปฏิบัติ สำหรับจำนวนน้อย ๆ มักจะกดปุ่มซ้ำแทนการใช้ count)
+    - `i` เพื่อเข้า **i**nsert mode แล้วเพิ่ม `1,`
+    - `<ESC>` เพื่อกลับไป Normal mode
+    - `e` เพื่อกระโดดไปท้ายคำถัดไป (**e**nd)
+    - `a` เพื่อเริ่ม **a**ppend ข้อความ แล้วเพิ่ม `+ 1`
+    - `<ESC>` เพื่อกลับไป Normal mode
+- แสดง "fizz" สำหรับตัวเลขที่หารด้วย 5 ลงตัว
+    - `:6<CR>` เพื่อไปที่บรรทัดที่ 6
+    - `ci"` เพื่อ **c**hange **i**nside เครื่องหมาย '**"**' แล้วเปลี่ยนเป็น `"buzz"`
+    - `<ESC>` เพื่อกลับไป Normal mode
 
-## Learning Vim
+## การเรียนรู้ Vim
 
-The best way to learn Vim is to learn the fundamentals (what we've covered so far) and then just enable Vim mode in all your software and start using it in practice. Avoid the temptation to use the mouse or the arrow keys; in some editors, you can unbind the arrow keys to force yourself to build good habits.
+วิธีที่ดีที่สุดในการเรียน Vim คือเรียนพื้นฐาน (ที่ครอบคลุมไปแล้วข้างต้น) จากนั้นก็เปิดใช้ Vim mode ในซอฟต์แวร์ทุกตัวแล้วเริ่มใช้งานจริง หลีกเลี่ยงการใช้เมาส์หรือปุ่มลูกศร ใน editor บางตัวสามารถ unbind ปุ่มลูกศรเพื่อบังคับตัวเองให้สร้างนิสัยที่ดีได้
 
-### Additional resources
+### แหล่งเรียนรู้เพิ่มเติม
 
-- The [Vim lecture](/2020/editors/) from the previous iteration of this class --- we have covered Vim in more depth there
-- `vimtutor` is a tutorial that comes installed with Vim --- if Vim is installed, you should be able to run `vimtutor` from your shell
-- [Vim Adventures](https://vim-adventures.com/) is a game to learn Vim
+- [บทเรียน Vim](/2020/editors/) จาก class รุ่นก่อนหน้า --- เราได้ครอบคลุม Vim ไว้อย่างละเอียดกว่าในนั้น
+- `vimtutor` เป็น tutorial ที่ติดตั้งมาพร้อมกับ Vim --- หากติดตั้ง Vim ไว้แล้ว สามารถรัน `vimtutor` จาก shell ได้เลย
+- [Vim Adventures](https://vim-adventures.com/) เป็นเกมสำหรับเรียน Vim
 - [Vim Tips Wiki](https://vim.fandom.com/wiki/Vim_Tips_Wiki)
-- [Vim Advent Calendar](https://vimways.org/2019/) has various Vim tips
-- [VimGolf](https://www.vimgolf.com/) is [code golf](https://en.wikipedia.org/wiki/Code_golf), but where the programming language is Vim's UI
+- [Vim Advent Calendar](https://vimways.org/2019/) มี Vim tip ต่าง ๆ
+- [VimGolf](https://www.vimgolf.com/) คือ [code golf](https://en.wikipedia.org/wiki/Code_golf) แต่ภาษาโปรแกรมที่ใช้คือ UI ของ Vim
 - [Vi/Vim Stack Exchange](https://vi.stackexchange.com/)
 - [Vim Screencasts](http://vimcasts.org/)
-- [Practical Vim](https://pragprog.com/titles/dnvim2/) (book)
+- [Practical Vim](https://pragprog.com/titles/dnvim2/) (หนังสือ)
 
 [Vim]: https://www.vim.org/
 
-# Code intelligence and language servers
+# Code intelligence และ language server
 
-IDEs generally offer language-specific support that requires semantic understanding of the code through IDE extensions that connect to _language servers_ that implement [Language Server Protocol](https://microsoft.github.io/language-server-protocol/). For example, the [Python extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python) relies on [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance), and the [Go extension for VS Code](https://marketplace.visualstudio.com/items?itemName=golang.go) relies on the first-party [gopls](https://go.dev/gopls/). By installing the extension and language server for the languages you work with, you can enable many language-specific features in your IDE, such as:
+IDE โดยทั่วไปจะให้การสนับสนุนเฉพาะภาษาที่ต้องอาศัยความเข้าใจเชิง semantic ของโค้ดผ่าน IDE extension ที่เชื่อมต่อกับ _language server_ ซึ่ง implement [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) ตัวอย่างเช่น [Python extension สำหรับ VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python) พึ่งพา [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) และ [Go extension สำหรับ VS Code](https://marketplace.visualstudio.com/items?itemName=golang.go) พึ่งพา [gopls](https://go.dev/gopls/) ซึ่งเป็น first-party การติดตั้ง extension และ language server สำหรับภาษาที่ใช้งาน จะช่วยเปิดใช้ feature เฉพาะภาษาจำนวนมากใน IDE เช่น:
 
-- **Code completion.** Better autocomplete and autosuggest, such as being able to see an object's fields and methods after typing `object.`.
-- **Inline documentation.** Seeing documentation on hover and autosuggest.
-- **Jump-to-definition.** Jumping from a use site to the definition, such as being able to go from a field reference `object.field` to the definition of the field.
-- **Find references.** The inverse of the above, find all sites where a particular item such as a field or type is referenced.
-- **Help with imports.** Organizing imports, removing unused imports, flagging missing imports.
-- **Code quality.** These tools can be used standalone, but this functionality is often provided by language servers as well. Code formatting auto-indents and auto-formats code, and type checkers and linters find errors in your code, as you type. We will cover this class of functionality in greater depth in the [lecture on code quality](/2026/code-quality/).
+- **Code completion** autocomplete และ autosuggest ที่ดีขึ้น เช่น สามารถเห็น field และ method ของ object หลังจากพิมพ์ `object.`
+- **Inline documentation** เห็นเอกสารประกอบเมื่อ hover เมาส์และจาก autosuggest
+- **Jump-to-definition** กระโดดจากจุดที่ใช้งานไปยังจุดที่นิยาม เช่น สามารถไปจาก field reference `object.field` ไปยังจุดที่นิยาม field นั้น
+- **Find references** ตรงกันข้ามกับข้อข้างต้น ค้นหาทุกจุดที่มีการอ้างอิงถึง item เช่น field หรือ type
+- **ช่วยจัดการ import** จัดระเบียบ import, ลบ import ที่ไม่ได้ใช้, แจ้งเตือน import ที่ขาดหายไป
+- **Code quality** เครื่องมือเหล่านี้ใช้แยกเดี่ยวก็ได้ แต่ functionality นี้มักถูกจัดให้โดย language server ด้วยเช่นกัน code formatting จัดย่อหน้าและจัดรูปแบบโค้ดอัตโนมัติ ส่วน type checker และ linter ช่วยหาข้อผิดพลาดในโค้ดขณะพิมพ์ เราจะครอบคลุม functionality กลุ่มนี้อย่างละเอียดใน[บทเรียนเรื่อง code quality](/2026/code-quality/)
 
-## Configuring language servers
+## การตั้งค่า language server
 
-For some languages, all you need to do is install the extension and language server, and you'll be all set. For others, to get the maximum benefit from the language server, you need to tell the IDE about your environment. For example, pointing VS Code to your [Python environment](https://code.visualstudio.com/docs/python/environments) will enable the language server to see your installed packages. Environments are covered in more depth in our [lecture on packaging and shipping code](/2026/shipping-code/).
+สำหรับบางภาษา สิ่งที่ต้องทำคือติดตั้ง extension และ language server เท่านั้นก็พร้อมใช้งาน แต่สำหรับภาษาอื่น ๆ เพื่อให้ได้ประโยชน์สูงสุดจาก language server ต้องบอก IDE เกี่ยวกับ environment ของเรา ตัวอย่างเช่น การชี้ VS Code ไปยัง [Python environment](https://code.visualstudio.com/docs/python/environments) จะทำให้ language server เห็น package ที่ติดตั้งไว้ เรื่อง environment จะครอบคลุมอย่างละเอียดใน[บทเรียนเรื่อง packaging และ shipping code](/2026/shipping-code/)
 
-Depending on the language, there might be some settings you can configure for your language server. For example, using the Python support in VS Code, you can disable static type checking for projects that don't make use of Python's optional type annotations.
+ขึ้นอยู่กับภาษา อาจมี setting บางอย่างที่ตั้งค่าได้สำหรับ language server ตัวอย่างเช่น การใช้ Python support ใน VS Code สามารถปิด static type checking สำหรับ project ที่ไม่ได้ใช้ optional type annotation ของ Python
 
-# AI-powered development
+# การพัฒนาซอฟต์แวร์ด้วย AI
 
-Since the introduction of [GitHub Copilot][github-copilot] using OpenAI's [Codex model](https://openai.com/index/openai-codex/) in mid 2021, [LLMs](https://en.wikipedia.org/wiki/Large_language_model) have become widely adopted in software engineering. There are three main form factors in use right now: autocomplete, inline chat, and coding agents.
+ตั้งแต่การเปิดตัว [GitHub Copilot][github-copilot] ที่ใช้ [Codex model](https://openai.com/index/openai-codex/) ของ OpenAI ในกลางปี 2021 [LLM](https://en.wikipedia.org/wiki/Large_language_model) ได้ถูกนำมาใช้อย่างแพร่หลายในวงการวิศวกรรมซอฟต์แวร์ ปัจจุบันมีรูปแบบการใช้งานหลัก 3 แบบ: autocomplete, inline chat และ coding agent
 
 [github-copilot]: https://github.com/features/copilot/ai-code-editor
 
 ## Autocomplete
 
-AI-powered autocomplete has the same form factor as traditional autocomplete in your IDE, suggesting completions at your cursor position as you type. Sometimes, it's used as a passive feature that "just works". Beyond that, AI autocomplete is generally [prompted](https://en.wikipedia.org/wiki/Prompt_engineering) using code comments.
+AI-powered autocomplete มีรูปแบบเดียวกับ autocomplete แบบดั้งเดิมใน IDE โดยแนะนำการเติมข้อความที่ตำแหน่ง cursor ขณะพิมพ์ บางครั้งใช้เป็น feature แบบ passive ที่ "ทำงานเอง" ได้เลย นอกเหนือจากนั้น AI autocomplete โดยทั่วไปจะถูก [prompt](https://en.wikipedia.org/wiki/Prompt_engineering) ด้วย code comment
 
-For example, let's write a script to download the contents of these lecture notes and extract all the links. We can start with:
+ตัวอย่างเช่น ลองเขียน script เพื่อดาวน์โหลดเนื้อหาของบทเรียนนี้และดึง link ทั้งหมดออกมา เราเริ่มด้วย:
 
 ```python
 import requests
@@ -216,34 +216,34 @@ import requests
 def download_contents(url: str) -> str:
 ```
 
-The model will autocomplete the body of the function:
+model จะ autocomplete ส่วนเนื้อหาของ function:
 
 ```python
     response = requests.get(url)
     return response.text
 ```
 
-We can further guide completions using comments. For example, if we start writing a function to extract all Markdown links, but it doesn't have a particularly descriptive name:
+เราสามารถนำทาง completion เพิ่มเติมได้ด้วย comment ตัวอย่างเช่น ถ้าเริ่มเขียน function สำหรับดึง Markdown link ทั้งหมด แต่ชื่อ function ไม่ได้อธิบายความหมายชัดเจนนัก:
 
 ```python
 def extract(contents: str) -> list[str]:
 ```
 
-The model will autocomplete something like this:
+model จะ autocomplete ออกมาประมาณนี้:
 
 ```python
     lines = contents.splitlines()
     return [line for line in lines if line.strip()]
 ```
 
-We can guide the completion through code comments:
+เราสามารถนำทาง completion ด้วย code comment:
 
 ```python
 def extract(content: str) -> list[str]:
     # extract all Markdown links from the content
 ```
 
-This time, the model gives a better completion:
+คราวนี้ model ให้ completion ที่ดีขึ้น:
 
 ```python
     import re
@@ -251,11 +251,11 @@ This time, the model gives a better completion:
     return re.findall(pattern, content)
 ```
 
-Here, we see one downside of this AI coding tool: it can only provide completions at the cursor. In this case, it would be better practice to put the `import re` at the module level, rather than inside the function.
+ตรงนี้จะเห็นข้อเสียอย่างหนึ่งของ AI coding tool ตัวนี้: มันสามารถให้ completion ที่ตำแหน่ง cursor เท่านั้น ในกรณีนี้ จะเป็น practice ที่ดีกว่าถ้าวาง `import re` ไว้ที่ระดับ module แทนที่จะอยู่ภายใน function
 
-The example above used a poorly-named function to demonstrate how code completion can be steered using comments; in practice, you'd want to write code with functions named more descriptively, like `extract_links`, and you'd want to write docstrings (and based on this, the model should generate a completion analogous to the one above).
+ตัวอย่างข้างต้นใช้ function ที่ตั้งชื่อไม่ดีเพื่อสาธิตว่า code completion สามารถถูกนำทางด้วย comment ได้อย่างไร ในทางปฏิบัติ ควรเขียนโค้ดโดยตั้งชื่อ function ให้อธิบายความหมายมากกว่านี้ เช่น `extract_links` และควรเขียน docstring ด้วย (จากข้อมูลนี้ model ควรจะสร้าง completion ที่คล้ายกับข้างต้นได้)
 
-For demonstration purposes, we can complete the script:
+เพื่อวัตถุประสงค์ในการสาธิต เราเขียน script ให้สมบูรณ์:
 
 ```python
 print(extract(download_contents("https://raw.githubusercontent.com/missing-semester/missing-semester/refs/heads/master/_2026/development-environment.md")))
@@ -263,15 +263,15 @@ print(extract(download_contents("https://raw.githubusercontent.com/missing-semes
 
 ## Inline chat
 
-Inline chat lets you select a line or block and then directly prompt the AI model to propose an edit. In this interaction mode, the model can make changes to existing code (which differs from autocomplete, which only completes code beyond the cursor).
+Inline chat ให้เลือกบรรทัดหรือบล็อกของโค้ด แล้ว prompt AI model โดยตรงเพื่อเสนอการแก้ไข ในรูปแบบการทำงานนี้ model สามารถแก้ไขโค้ดที่มีอยู่แล้วได้ (ซึ่งต่างจาก autocomplete ที่เติมโค้ดหลัง cursor เท่านั้น)
 
-Continuing the example from above, suppose we decided not to use the third-party `requests` library. We could select the relevant three lines of code, invoke inline chat, and say something like:
+ต่อจากตัวอย่างข้างต้น สมมติว่าตัดสินใจไม่ใช้ library `requests` ของ third-party เราสามารถเลือกโค้ด 3 บรรทัดที่เกี่ยวข้อง เรียกใช้ inline chat แล้วพิมพ์ประมาณว่า:
 
 ```
 use built-in libraries instead
 ```
 
-The model proposes:
+model เสนอ:
 
 ```python
 from urllib.request import urlopen
@@ -281,25 +281,25 @@ def download_contents(url: str) -> str:
         return response.read().decode('utf-8')
 ```
 
-## Coding agents
+## Coding agent
 
-Coding agents are covered in depth in the [Agentic Coding](/2026/agentic-coding/) lecture.
+Coding agent จะถูกครอบคลุมอย่างละเอียดในบทเรียน [Agentic Coding](/2026/agentic-coding/)
 
-## Recommended software
+## ซอฟต์แวร์ที่แนะนำ
 
-Some popular AI IDEs are [VS Code][vs-code] with the [GitHub Copilot][github-copilot] extension and [Cursor](https://cursor.com/). GitHub Copilot is currently available [for free for students](https://github.com/education/students), teachers, and maintainers of popular open source projects. This is a rapidly evolving space. Many of the leading products have roughly equivalent functionality.
+AI IDE ที่เป็นที่นิยม ได้แก่ [VS Code][vs-code] พร้อม extension [GitHub Copilot][github-copilot] และ [Cursor](https://cursor.com/) GitHub Copilot ปัจจุบัน[ให้ใช้ฟรีสำหรับนักศึกษา](https://github.com/education/students) อาจารย์ และผู้ดูแล open source project ที่เป็นที่นิยม นี่เป็นพื้นที่ที่พัฒนาอย่างรวดเร็ว ผลิตภัณฑ์ชั้นนำหลายตัวมี functionality ที่ใกล้เคียงกัน
 
-# Extensions and other IDE functionality
+# Extension และ feature อื่น ๆ ของ IDE
 
-IDEs are powerful tools, made even more powerful by _extensions_. We can't cover all of these features in a single lecture, but here we provide some pointers to a couple popular extensions. We encourage you to explore this space on your own; there are many lists of popular IDE extensions available online, such as [Vim Awesome](https://vimawesome.com/) for Vim plugins and [VS Code extensions sorted by popularity](https://marketplace.visualstudio.com/search?target=VSCode&category=All%20categories&sortBy=Installs).
+IDE เป็นเครื่องมือที่ทรงพลัง และยิ่งทรงพลังขึ้นด้วย _extension_ เราไม่สามารถครอบคลุม feature ทั้งหมดเหล่านี้ได้ในบทเดียว แต่จะชี้แนะไปยัง extension ยอดนิยมบางตัว แนะนำให้สำรวจพื้นที่นี้ด้วยตัวเอง มีรายการ IDE extension ยอดนิยมออนไลน์มากมาย เช่น [Vim Awesome](https://vimawesome.com/) สำหรับ Vim plugin และ [VS Code extension เรียงตามความนิยม](https://marketplace.visualstudio.com/search?target=VSCode&category=All%20categories&sortBy=Installs)
 
-- [Development containers](https://containers.dev/): supported by popular IDEs (e.g., [supported by VS Code](https://code.visualstudio.com/docs/devcontainers/containers)), dev containers let you use a container to run development tools. This can be helpful for portability or isolation. The [lecture on packaging and shipping code](/2026/shipping-code/) covers containers in more depth.
-- Remote development: do development on a remote machine using SSH (e.g., with the [Remote SSH plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)). This can be handy, for example, if you want to develop and run code on a beefy GPU machine in the cloud.
-- Collaborative editing: edit the same file, Google Docs style (e.g., with the [Live Share plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)).
+- [Development container](https://containers.dev/): รองรับโดย IDE ยอดนิยม (เช่น [รองรับโดย VS Code](https://code.visualstudio.com/docs/devcontainers/containers)) dev container ให้ใช้ container เพื่อรันเครื่องมือพัฒนา สิ่งนี้มีประโยชน์ในเรื่อง portability หรือ isolation [บทเรียนเรื่อง packaging และ shipping code](/2026/shipping-code/) จะครอบคลุมเรื่อง container อย่างละเอียดยิ่งขึ้น
+- Remote development: พัฒนาบนเครื่อง remote ผ่าน SSH (เช่น ด้วย [Remote SSH plugin สำหรับ VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)) สิ่งนี้มีประโยชน์ ตัวอย่างเช่น เมื่อต้องการพัฒนาและรันโค้ดบนเครื่อง GPU แรง ๆ บน cloud
+- Collaborative editing: แก้ไขไฟล์เดียวกันแบบ Google Docs (เช่น ด้วย [Live Share plugin สำหรับ VS Code](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare))
 
-# Exercises
+# แบบฝึกหัด
 
-1. Enable Vim mode in all the software you use that supports it, such as your editor and your shell, and use Vim mode for all your text editing for the next month. Whenever something seems inefficient, or when you think "there must be a better way", try Googling it, there probably is a better way.
-1. Complete a challenge from [VimGolf](https://www.vimgolf.com/).
-1. Configure an IDE extension and language server for a project that you're working on. Ensure that all the expected functionality, such as jump-to-definition for library dependencies, works as expected. If you don't have code that you can use for this exercise, you can use some open-source project from GitHub (such as [this one](https://github.com/spf13/cobra)).
-1. Browse a list of IDE extensions and install one that seems useful to you.
+1. เปิดใช้ Vim mode ในซอฟต์แวร์ทุกตัวที่ใช้อยู่ที่รองรับ เช่น editor และ shell แล้วใช้ Vim mode สำหรับการแก้ไขข้อความทุกอย่างตลอดเดือนหน้า เมื่อไหร่ก็ตามที่รู้สึกว่าทำอะไรไม่คล่อง หรือคิดว่า "น่าจะมีวิธีที่ดีกว่านี้" ให้ลอง Google ดู มักจะมีวิธีที่ดีกว่าจริง ๆ
+2. ทำ challenge จาก [VimGolf](https://www.vimgolf.com/) ให้สำเร็จ
+3. ตั้งค่า IDE extension และ language server สำหรับ project ที่กำลังทำอยู่ ตรวจสอบว่า functionality ที่คาดหวังทั้งหมด เช่น jump-to-definition สำหรับ library dependency ทำงานได้ตามที่คาดไว้ หากไม่มีโค้ดที่จะใช้สำหรับแบบฝึกหัดนี้ สามารถใช้ open-source project จาก GitHub ได้ (เช่น [ตัวนี้](https://github.com/spf13/cobra))
+4. สำรวจรายการ IDE extension แล้วติดตั้งตัวที่ดูเป็นประโยชน์

@@ -2,7 +2,7 @@
 layout: lecture
 title: "Packaging and Shipping Code"
 description: >
-  Learn about project packaging, environments, versioning, and deploying libraries, applications, and services.
+  เรียนรู้เกี่ยวกับการ packaging โปรเจกต์, environments, การทำ versioning, และการ deploy libraries, applications และ services
 thumbnail: /static/assets/thumbnails/2026/lec6.png
 date: 2026-01-20
 ready: true
@@ -11,14 +11,14 @@ video:
   id: KBMiB-8P4Ns
 ---
 
-Getting code to work as intended is hard; getting that same code to run on a machine different from your own is often harder.
+การทำให้โค้ดทำงานได้ตามที่ต้องการนั้นยากอยู่แล้ว แต่การทำให้โค้ดเดียวกันรันได้บนเครื่องอื่นที่ไม่ใช่เครื่องของเรามักจะยากกว่าอีก
 
-Shipping code means taking the code you wrote and converting it into a usable form that someone else can run without your computer's exact setup.
-Shipping code takes many forms and depends on the choices of programming language, system libraries, and operating system, among many other factors.
-It also depends on what you are building: a software library, a command line tool, and a web service all have different requirements and deployment steps.
-Regardless, there is a common pattern between all these scenarios: we need to define what the deliverable is --- a.k.a. the _artifact_ --- and what assumptions it makes about the environment around it.
+การ ship code หมายถึงการเอาโค้ดที่เราเขียนมาแปลงให้อยู่ในรูปแบบที่คนอื่นสามารถรันได้โดยไม่ต้องมี setup เหมือนเครื่องของเราทุกประการ
+การ ship code มีหลายรูปแบบและขึ้นอยู่กับการเลือกภาษาโปรแกรม, system libraries, ระบบปฏิบัติการ และปัจจัยอื่นๆ อีกมากมาย
+นอกจากนี้ยังขึ้นอยู่กับว่าเรากำลังสร้างอะไร: software library, command line tool, และ web service ล้วนมีข้อกำหนดและขั้นตอนการ deploy ที่แตกต่างกัน
+อย่างไรก็ตาม มี pattern ร่วมกันระหว่าง scenarios ทั้งหมดเหล่านี้: เราต้องนิยามว่าสิ่งที่ส่งมอบคืออะไร --- หรือที่เรียกว่า _artifact_ --- และมันตั้งสมมติฐานอะไรเกี่ยวกับ environment รอบตัวมัน
 
-In this lecture, we'll cover:
+ในบทนี้จะครอบคลุมเรื่อง:
 
 - [Dependencies & Environments](#dependencies--environments)
 - [Artifacts & Packaging](#artifacts--packaging)
@@ -29,14 +29,14 @@ In this lecture, we'll cover:
 - [Services & Orchestration](#services--orchestration)
 - [Publishing](#publishing)
 
-We'll explain these concepts through examples from the Python ecosystem, as concrete examples are helpful for understanding. While the tools are different for other programming language ecosystems, the concepts will largely be the same.
+เราจะอธิบาย concepts เหล่านี้ผ่านตัวอย่างจาก Python ecosystem เนื่องจากตัวอย่างที่เป็นรูปธรรมช่วยให้เข้าใจได้ง่ายขึ้น แม้ว่าเครื่องมือจะแตกต่างกันสำหรับ ecosystem ของภาษาโปรแกรมอื่นๆ แต่ concepts จะเหมือนกันเป็นส่วนใหญ่
 
 # Dependencies & Environments
 
-In modern software development, layers of abstraction are ubiquitous.
-Programs naturally offload logic to other libraries or services.
-However, this introduces a _dependency_ relationship between your program and the libraries it requires to function.
-For instance, in Python, to fetch the content of a website we often do:
+ในการพัฒนาซอฟต์แวร์สมัยใหม่ layers of abstraction มีอยู่ทุกหนทุกแห่ง
+โปรแกรมต่างๆ จะถ่ายโอน logic ไปให้ libraries หรือ services อื่นๆ โดยธรรมชาติ
+อย่างไรก็ตาม สิ่งนี้ทำให้เกิดความสัมพันธ์แบบ _dependency_ ระหว่างโปรแกรมของเรากับ libraries ที่มันต้องการเพื่อทำงาน
+ตัวอย่างเช่น ใน Python เมื่อเราต้องการดึงเนื้อหาของเว็บไซต์ เรามักจะทำแบบนี้:
 
 ```python
 import requests
@@ -44,7 +44,7 @@ import requests
 response = requests.get("https://missing.csail.mit.edu")
 ```
 
-Yet the `requests` library does not come bundled with the Python runtime, so if we try to run this code without having `requests` installed, Python will raise an error:
+แต่ library `requests` ไม่ได้มาพร้อมกับ Python runtime ดังนั้นถ้าเรารันโค้ดนี้โดยไม่ได้ install `requests` ไว้ Python จะแจ้ง error:
 
 ```console
 $ python fetch.py
@@ -54,14 +54,14 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'requests'
 ```
 
-To make this library available we need to first run `pip install requests` to install it.
-`pip` is the command line tool that the Python programming language provides for installing packages.
-Executing `pip install requests` produces the following sequence of actions:
+เพื่อทำให้ library นี้พร้อมใช้งาน เราต้องรัน `pip install requests` เพื่อ install มันก่อน
+`pip` คือ command line tool ที่ Python มีให้สำหรับการ install packages
+การรัน `pip install requests` จะทำขั้นตอนต่อไปนี้:
 
-1. Search for requests in the Python Package Index ([PyPI](https://pypi.org/))
-1. Search for the appropriate artifact for the platform we are running under
-1. Resolve dependencies --- the `requests` library itself depends on other packages, so the installer must find compatible versions of all transitive dependencies and install them beforehand
-1. Download the artifacts, then unpack and copy the files into the right places in our filesystem
+1. ค้นหา requests ใน Python Package Index ([PyPI](https://pypi.org/))
+2. ค้นหา artifact ที่เหมาะกับ platform ที่เรากำลังใช้อยู่
+3. Resolve dependencies --- library `requests` เองก็ขึ้นอยู่กับ packages อื่น ดังนั้น installer ต้องหา versions ที่เข้ากันได้ของ transitive dependencies ทั้งหมดและ install มันก่อน
+4. Download artifacts จากนั้น unpack และคัดลอกไฟล์ไปยังตำแหน่งที่ถูกต้องใน filesystem ของเรา
 
 ```console
 $ pip install requests
@@ -79,8 +79,8 @@ Installing collected packages: urllib3, idna, charset-normalizer, certifi, reque
 Successfully installed certifi-2024.8.30 charset-normalizer-3.4.0 idna-3.10 requests-2.32.3 urllib3-2.2.3
 ```
 
-Here we can see that `requests` has its own dependencies such as `certifi` or `charset-normalizer` and that they have to be installed before `requests` can be installed.
-Once installed, the Python runtime can find this library when importing it.
+ตรงนี้จะเห็นว่า `requests` มี dependencies ของตัวเอง เช่น `certifi` หรือ `charset-normalizer` และมันต้องถูก install ก่อนที่จะ install `requests` ได้
+เมื่อ install แล้ว Python runtime ก็จะหา library นี้เจอเมื่อ import มัน
 
 ```console
 $ python -c 'import requests; print(requests.__path__)'
@@ -90,19 +90,19 @@ $ pip list | grep requests
 requests        2.32.3
 ```
 
-Programming languages have different tools, conventions and practices for installing and publishing libraries.
-In some languages like Rust, the toolchain is unified --- `cargo` handles building, testing, dependency management, and publishing.
-In others like Python, the unification happens at a specification level --- rather than a single tool, there are standardized specifications that define how packaging works, allowing multiple competing tools for each task (`pip` vs [`uv`](https://docs.astral.sh/uv/), `setuptools` vs [`hatch`](https://hatch.pypa.io/) vs [`poetry`](https://python-poetry.org/)).
-And in some ecosystems like LaTeX, distributions like TeX Live or MacTeX come bundled with thousands of packages pre-installed.
+ภาษาโปรแกรมแต่ละภาษามีเครื่องมือ, conventions และแนวปฏิบัติที่แตกต่างกันสำหรับการ install และ publish libraries
+ในบางภาษาอย่าง Rust, toolchain จะรวมเป็นหนึ่งเดียว --- `cargo` จัดการทั้งการ build, testing, dependency management และ publishing
+ในภาษาอื่นอย่าง Python การรวมเป็นหนึ่งเดียวเกิดขึ้นในระดับ specification --- แทนที่จะมี tool เดียว จะมี standardized specifications ที่กำหนดว่า packaging ทำงานอย่างไร ทำให้มี tools หลายตัวแข่งกันสำหรับแต่ละงาน (`pip` vs [`uv`](https://docs.astral.sh/uv/), `setuptools` vs [`hatch`](https://hatch.pypa.io/) vs [`poetry`](https://python-poetry.org/))
+และในบาง ecosystem อย่าง LaTeX, distributions อย่าง TeX Live หรือ MacTeX มาพร้อม packages ที่ pre-installed ไว้หลายพันตัว
 
-Introducing dependencies also introduces dependency conflicts.
-Conflicts happen when programs require incompatible versions of the same dependency.
-For example, if `tensorflow==2.3.0` requires `numpy>=1.16.0,<1.19.0` and `pandas==1.2.0`  requires `numpy>=1.16.5`, then any version satisfying `numpy>=1.16.5,<1.19.0` will be valid.
-But if another package in your project requires `numpy>=1.19`, you have a conflict with no valid version that satisfies all constraints.
+การเพิ่ม dependencies ยังนำมาซึ่ง dependency conflicts อีกด้วย
+Conflicts เกิดขึ้นเมื่อโปรแกรมต้องการ versions ที่เข้ากันไม่ได้ของ dependency ตัวเดียวกัน
+ตัวอย่างเช่น ถ้า `tensorflow==2.3.0` ต้องการ `numpy>=1.16.0,<1.19.0` และ `pandas==1.2.0` ต้องการ `numpy>=1.16.5` ก็จะมี version ที่ตรงตามเงื่อนไข `numpy>=1.16.5,<1.19.0` ใช้ได้
+แต่ถ้า package อื่นในโปรเจกต์ต้องการ `numpy>=1.19` ก็จะเกิด conflict ขึ้นเพราะไม่มี version ไหนที่ตอบสนองเงื่อนไขทั้งหมดได้
 
-This situation --- where multiple packages require mutually incompatible versions of shared dependencies --- is commonly referred to as _dependency hell_.
-One way to deal with conflicts is to isolate the dependencies of each program into their own _environment_.
-In Python we create a virtual environment by running:
+สถานการณ์แบบนี้ --- ที่หลาย packages ต้องการ versions ที่เข้ากันไม่ได้ของ shared dependencies --- มักเรียกกันว่า _dependency hell_
+วิธีหนึ่งในการจัดการกับ conflicts คือการแยก dependencies ของแต่ละโปรแกรมออกเป็น _environment_ ของตัวเอง
+ใน Python เราสร้าง virtual environment โดยรัน:
 
 ```console
 $ which python
@@ -124,17 +124,17 @@ Package Version
 pip     24.0
 ```
 
-You can think of an environment as an entire standalone version of the language runtime with its own set of installed packages.
-This virtual environment or venv isolates the installed dependencies from the global Python installation.
-It is a good practice to have a virtual environment for each project, containing the dependencies it requires.
+ลองนึกภาพว่า environment คือ language runtime เวอร์ชันเต็มที่แยกออกมาต่างหากพร้อม packages ที่ install ไว้เป็นชุดของตัวเอง
+Virtual environment หรือ venv นี้จะแยก dependencies ที่ install ไว้ออกจากการ install Python แบบ global
+เป็นแนวปฏิบัติที่ดีที่จะมี virtual environment สำหรับแต่ละโปรเจกต์ โดยบรรจุ dependencies ที่ต้องการไว้ข้างใน
 
-> While many modern operating systems ship with installations of programming language runtimes like Python, it is unwise to modify these installations since the OS might rely on them for its own functionality. Prefer using separate environments instead.
+> แม้ว่าระบบปฏิบัติการสมัยใหม่หลายตัวจะมาพร้อมกับ programming language runtimes อย่าง Python ที่ install ไว้แล้ว แต่ไม่ควรไปแก้ไข installations เหล่านี้ เพราะ OS อาจพึ่งพามันสำหรับการทำงานของตัวเอง ควรใช้ environments ที่แยกออกมาแทน
 
-In some languages, the installation protocol is not defined by a tool but as a specification.
-In Python [PEP 517](https://peps.python.org/pep-0517/) defines the build system interface and [PEP 621](https://peps.python.org/pep-0621/) specifies how project metadata is stored in `pyproject.toml`.
-This has enabled developers to improve upon `pip` and produce more optimized tools like `uv`. To install `uv` it suffices to do `pip install uv`.
+ในบางภาษา installation protocol ไม่ได้ถูกกำหนดโดย tool ใด tool หนึ่ง แต่เป็น specification
+ใน Python [PEP 517](https://peps.python.org/pep-0517/) กำหนด build system interface และ [PEP 621](https://peps.python.org/pep-0621/) ระบุวิธีเก็บ project metadata ใน `pyproject.toml`
+สิ่งนี้ทำให้นักพัฒนาสามารถปรับปรุง `pip` และสร้างเครื่องมือที่ optimize ได้ดีกว่าอย่าง `uv` การ install `uv` แค่รัน `pip install uv`
 
-Using `uv` instead of `pip` follows the same interface but is significantly faster:
+การใช้ `uv` แทน `pip` มี interface เดียวกันแต่เร็วกว่ามาก:
 
 ```console
 $ uv pip install requests
@@ -148,9 +148,9 @@ Installed 5 packages in 8ms
  + urllib3==2.2.3
 ```
 
-> We strongly recommend using `uv pip` instead of `pip` whenever possible as it dramatically reduces the installation time.
+> แนะนำอย่างยิ่งให้ใช้ `uv pip` แทน `pip` ทุกครั้งที่ทำได้ เพราะจะลดเวลาการ install ได้อย่างมาก
 
-Beyond dependency isolation, environments also allow you to have different versions of your programming language runtime.
+นอกจากการแยก dependencies แล้ว environments ยังช่วยให้เราใช้ programming language runtime หลาย versions ได้อีกด้วย
 
 ```console
 $ uv venv --python 3.12 venv312
@@ -168,15 +168,15 @@ $ source venv311/bin/activate && python --version
 Python 3.11.10
 ```
 
-This helps when you need to test your code across multiple Python versions or when a project requires a specific version.
+สิ่งนี้มีประโยชน์เมื่อต้อง test โค้ดข้าม Python หลาย versions หรือเมื่อโปรเจกต์ต้องการ version เฉพาะ
 
-> In some programming languages, each project automatically gets its own environment for its dependencies rather than you creating it manually, but the principle is the same. Most languages these days also have a mechanism for managing multiple versions of the language on a single system, and then specifying which version to use for individual projects.
+> ในบางภาษาโปรแกรม แต่ละโปรเจกต์จะได้ environment ของตัวเองสำหรับ dependencies โดยอัตโนมัติแทนที่เราจะต้องสร้างเอง แต่หลักการเดียวกัน ภาษาส่วนใหญ่ในปัจจุบันยังมีกลไกสำหรับจัดการหลาย versions ของภาษาในระบบเดียว แล้วระบุว่าจะใช้ version ไหนสำหรับแต่ละโปรเจกต์
 
 # Artifacts & Packaging
 
-In software development we differentiate between source code and artifacts. Developers write and read source code, while artifacts are the packaged, distributable outputs produced from that source code --- ready to be installed or deployed.
-An artifact can be as simple as a file of code that we run, and as complex as an entire Virtual Machine that contains all the necessary bits and bobs of an application.
-Consider this example where we have a Python file `greet.py` in our current directory:
+ในการพัฒนาซอฟต์แวร์ เราแยกความแตกต่างระหว่าง source code กับ artifacts นักพัฒนาเขียนและอ่าน source code ในขณะที่ artifacts คือ outputs ที่ถูก package ไว้แล้วพร้อมแจกจ่าย ผลิตขึ้นจาก source code --- พร้อมสำหรับการ install หรือ deploy
+Artifact อาจง่ายแค่ไฟล์โค้ดที่เรารัน หรือซับซ้อนเท่ากับ Virtual Machine ทั้งเครื่องที่บรรจุส่วนประกอบทุกอย่างของ application ไว้
+ลองดูตัวอย่างนี้ที่เรามีไฟล์ Python `greet.py` อยู่ใน directory ปัจจุบัน:
 
 ```console
 $ cat greet.py
@@ -191,15 +191,15 @@ $ python -c "from greet import greet; print(greet('World'))"
 ModuleNotFoundError: No module named 'greet'
 ```
 
-The import fails once we move to a different directory because Python only searches for modules in specific locations (the current directory, installed packages, and paths in `PYTHONPATH`). Packaging solves this by installing the code into a known location.
+การ import ล้มเหลวเมื่อเราย้ายไป directory อื่น เพราะ Python จะค้นหา modules เฉพาะในตำแหน่งที่กำหนดไว้เท่านั้น (directory ปัจจุบัน, packages ที่ install ไว้ และ paths ใน `PYTHONPATH`) การทำ packaging แก้ปัญหานี้โดยการ install โค้ดไปยังตำแหน่งที่รู้จัก
 
-In Python, packaging a library involves producing an artifact that package installers like `pip` or `uv` can use to install the relevant files.
-Python artifacts are called _wheels_ and contain all the necessary information to install a package: the code files, metadata about the package (name, version, dependencies), and instructions for where to place files in the environment.
-Building an artifact requires that we write a project file (also often known as manifest) detailing the specifics of the project, the required dependencies, the version of the package, and other information. In Python, we use `pyproject.toml` for this purpose.
+ใน Python การ package library เกี่ยวข้องกับการสร้าง artifact ที่ package installers อย่าง `pip` หรือ `uv` สามารถใช้ install ไฟล์ที่เกี่ยวข้องได้
+Python artifacts เรียกว่า _wheels_ และบรรจุข้อมูลทั้งหมดที่จำเป็นสำหรับการ install package: ไฟล์โค้ด, metadata เกี่ยวกับ package (ชื่อ, version, dependencies) และคำสั่งว่าจะวางไฟล์ไว้ที่ไหนใน environment
+การ build artifact ต้องเขียน project file (หรือที่มักเรียกว่า manifest) ระบุรายละเอียดของโปรเจกต์ dependencies ที่ต้องการ, version ของ package และข้อมูลอื่นๆ ใน Python เราใช้ `pyproject.toml` สำหรับจุดประสงค์นี้
 
-> `pyproject.toml` is the modern and recommended way. While earlier packaging methods like `requirements.txt` or `setup.py` are still supported, you should prefer `pyproject.toml` whenever possible.
+> `pyproject.toml` เป็นวิธีที่ทันสมัยและแนะนำให้ใช้ แม้ว่า packaging methods ก่อนหน้าอย่าง `requirements.txt` หรือ `setup.py` จะยังรองรับอยู่ แต่ควรใช้ `pyproject.toml` ทุกครั้งที่ทำได้
 
-Here's a minimal `pyproject.toml` for a library that also provides a command-line tool:
+นี่คือ `pyproject.toml` แบบ minimal สำหรับ library ที่มี command-line tool ด้วย:
 
 ```toml
 [project]
@@ -216,9 +216,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 ```
 
-The `typer` library is a popular Python package for creating command-line interfaces with minimal boilerplate.
+Library `typer` เป็น Python package ยอดนิยมสำหรับสร้าง command-line interfaces โดยใช้ boilerplate น้อยที่สุด
 
-And the corresponding `greeting.py`:
+และไฟล์ `greeting.py` ที่สอดคล้องกัน:
 
 ```python
 import typer
@@ -236,7 +236,7 @@ if __name__ == "__main__":
     typer.run(main)
 ```
 
-With this file, we can now build the wheel:
+เมื่อมีไฟล์นี้แล้ว เราสามารถ build wheel ได้:
 
 ```console
 $ uv build
@@ -250,9 +250,9 @@ greeting-0.1.0-py3-none-any.whl
 greeting-0.1.0.tar.gz
 ```
 
-The `.whl` file is the wheel (a zip archive with a specific structure), and the `.tar.gz` is a source distribution for systems that need to build from source.
+ไฟล์ `.whl` คือ wheel (zip archive ที่มีโครงสร้างเฉพาะ) และ `.tar.gz` คือ source distribution สำหรับระบบที่ต้อง build จาก source
 
-You can inspect the contents of a wheel to see what gets packaged:
+เราสามารถตรวจสอบเนื้อหาของ wheel เพื่อดูว่ามีอะไรถูก package ไว้บ้าง:
 
 ```console
 $ unzip -l dist/greeting-0.1.0-py3-none-any.whl
@@ -268,7 +268,7 @@ Archive:  dist/greeting-0.1.0-py3-none-any.whl
       998                     5 files
 ```
 
-Now if we were to give this wheel to someone else, they could install it by running:
+ถ้าเราส่ง wheel นี้ให้คนอื่น พวกเขาก็สามารถ install ได้โดยรัน:
 
 ```console
 $ uv pip install ./greeting-0.1.0-py3-none-any.whl
@@ -276,45 +276,45 @@ $ greet Alice
 Hello, Alice!
 ```
 
-This would install the library we built earlier into their environment, including the `greet` cli tool.
+คำสั่งนี้จะ install library ที่เรา build ไว้ก่อนหน้านี้เข้าไปใน environment ของพวกเขา รวมถึง `greet` cli tool ด้วย
 
-There are limitations to this approach. In particular if our library depends on platform-specific libraries, e.g. CUDA for GPU acceleration, then our artifact only works on systems with those specific libraries installed, and we may need to build separate wheels for different platforms (Linux, macOS, Windows) and architectures (x86, ARM).
+วิธีนี้มีข้อจำกัด โดยเฉพาะถ้า library ของเราขึ้นอยู่กับ platform-specific libraries เช่น CUDA สำหรับ GPU acceleration แล้ว artifact ของเราจะทำงานได้เฉพาะบนระบบที่ install libraries เฉพาะเหล่านั้นไว้เท่านั้น และเราอาจต้อง build wheels แยกกันสำหรับ platforms (Linux, macOS, Windows) และ architectures (x86, ARM) ที่แตกต่างกัน
 
 
-When installing software, there's an important distinction between installing from source and installing a prebuilt binary. Installing from source means downloading the original code and compiling it on your machine --- this requires having a compiler and build tools installed, and can take significant time for large projects.
+เมื่อ install ซอฟต์แวร์ มีความแตกต่างที่สำคัญระหว่างการ install จาก source กับการ install prebuilt binary การ install จาก source หมายถึงการ download โค้ดต้นฉบับแล้ว compile มันบนเครื่องของเรา --- ซึ่งต้องมี compiler และ build tools ติดตั้งไว้ และอาจใช้เวลานานสำหรับโปรเจกต์ขนาดใหญ่
 
-Installing a prebuilt binary means downloading an artifact that was already compiled by someone else --- faster and simpler, but the binary must match your platform and architecture.
-For example, [ripgrep's releases page](https://github.com/BurntSushi/ripgrep/releases) shows prebuilt binaries for Linux (x86_64, ARM), macOS (Intel, Apple Silicon), and Windows.
+การ install prebuilt binary หมายถึงการ download artifact ที่ถูก compile ไว้แล้วโดยคนอื่น --- เร็วกว่าและง่ายกว่า แต่ binary ต้องตรงกับ platform และ architecture ของเรา
+ตัวอย่างเช่น [หน้า releases ของ ripgrep](https://github.com/BurntSushi/ripgrep/releases) แสดง prebuilt binaries สำหรับ Linux (x86_64, ARM), macOS (Intel, Apple Silicon) และ Windows
 
 
 # Releases & Versioning
 
-Code is built in a continuous process but is released on a discrete basis.
-In software development there is a clear distinction between development and production environments.
-Code needs to be proven to work in a dev environment before getting _shipped_ to prod.
-The release process involves many steps, including testing, dependency management, versioning, configuration, deployment and publishing.
+โค้ดถูก build อย่างต่อเนื่อง แต่ถูก release เป็นจังหวะๆ
+ในการพัฒนาซอฟต์แวร์มีความแตกต่างชัดเจนระหว่าง development environment กับ production environment
+โค้ดต้องได้รับการพิสูจน์ว่าทำงานได้ใน dev environment ก่อนที่จะถูก _ship_ ไปยัง prod
+กระบวนการ release ประกอบด้วยหลายขั้นตอน ได้แก่ testing, dependency management, versioning, configuration, deployment และ publishing
 
 
-Software libraries are not static and evolve over time getting fixes and new features.
-We track this evolution by discrete version identifiers that correspond to the state of the library at a certain point in time.
-Changes in the behavior of a library can range from patches that fix noncritical functionality, new features that extend its functionality, to changes breaking backwards compatibility.
-Changelogs document what changes a version introduces --- these are documents that software developers use to communicate the changes associated with a new release.
+Software libraries ไม่ได้หยุดนิ่ง แต่วิวัฒนาการไปตามเวลาด้วยการได้รับ fixes และ features ใหม่
+เราติดตามวิวัฒนาการนี้ด้วย version identifiers ที่สอดคล้องกับสถานะของ library ณ ช่วงเวลาหนึ่ง
+การเปลี่ยนแปลงพฤติกรรมของ library มีตั้งแต่ patches ที่แก้ไข functionality ที่ไม่วิกฤต, features ใหม่ที่ขยาย functionality, ไปจนถึงการเปลี่ยนแปลงที่ทำลาย backwards compatibility
+Changelogs บันทึกว่า version หนึ่งมีการเปลี่ยนแปลงอะไรบ้าง --- เป็นเอกสารที่นักพัฒนาซอฟต์แวร์ใช้สื่อสารการเปลี่ยนแปลงที่เกี่ยวข้องกับ release ใหม่
 
-However, keeping track of the ongoing changes in each and every dependency is impractical, even more so when we consider the transitive dependencies --- i.e. the dependencies of our dependencies.
+อย่างไรก็ตาม การติดตามการเปลี่ยนแปลงที่เกิดขึ้นอย่างต่อเนื่องในแต่ละ dependency ทั้งหมดนั้นไม่เป็นเรื่องจริง ยิ่งเมื่อคำนึงถึง transitive dependencies --- คือ dependencies ของ dependencies ของเรา
 
-> You can visualize the entire dependency tree of your project with `uv tree`, which shows all packages and their transitive dependencies in a tree format.
+> สามารถดู dependency tree ทั้งหมดของโปรเจกต์ได้ด้วย `uv tree` ซึ่งจะแสดง packages ทั้งหมดและ transitive dependencies ในรูปแบบ tree
 
-To simplify this problem there are conventions on how to version software, and one of the most prevalent is [Semantic Versioning](https://semver.org/) or SemVer.
-Under Semantic Versioning a version has an identifier of the form MAJOR.MINOR.PATCH where each one of the values takes an integer value. The short version is that upgrading:
+เพื่อทำให้ปัญหานี้ง่ายขึ้น จึงมี conventions ว่าจะ version ซอฟต์แวร์อย่างไร และหนึ่งในที่แพร่หลายที่สุดคือ [Semantic Versioning](https://semver.org/) หรือ SemVer
+ภายใต้ Semantic Versioning version จะมี identifier ในรูปแบบ MAJOR.MINOR.PATCH โดยแต่ละค่าเป็นจำนวนเต็ม โดยสรุปแล้ว การอัปเกรด:
 
-- PATCH (e.g., 1.2.3 → 1.2.4) should only contain bug fixes and be fully backwards compatible
-- MINOR (e.g., 1.2.3 → 1.3.0) adds new functionality in a backwards-compatible way
-- MAJOR (e.g., 1.2.3 → 2.0.0) indicates breaking changes that may require code modifications
+- PATCH (เช่น 1.2.3 → 1.2.4) ควรมีแค่ bug fixes และเข้ากันได้กับเวอร์ชันก่อนหน้าอย่างสมบูรณ์
+- MINOR (เช่น 1.2.3 → 1.3.0) เพิ่ม functionality ใหม่ในแบบที่เข้ากันได้กับเวอร์ชันก่อนหน้า
+- MAJOR (เช่น 1.2.3 → 2.0.0) บ่งชี้ว่ามี breaking changes ที่อาจต้องแก้ไขโค้ด
 
-> This is a simplification and we encourage reading the full SemVer specification to understand for instance why going from 0.1.3 to 0.2.0 might cause breaking changes or what 1.0.0-rc.1 means.
-Python packaging supports semantic versioning natively, so when we specify the versions of our dependencies we can use various specifiers:
+> นี่เป็นการสรุปแบบย่อ แนะนำให้อ่าน SemVer specification ฉบับเต็มเพื่อทำความเข้าใจว่าทำไมการไปจาก 0.1.3 เป็น 0.2.0 อาจทำให้เกิด breaking changes หรือ 1.0.0-rc.1 หมายถึงอะไร
+Python packaging รองรับ semantic versioning โดยตรง ดังนั้นเมื่อเราระบุ versions ของ dependencies เราสามารถใช้ specifiers ต่างๆ ได้:
 
-In the `pyproject.toml` we have different ways of constraining the ranges of compatible versions of our dependencies:
+ใน `pyproject.toml` เรามีวิธีต่างๆ ในการจำกัดช่วงของ versions ที่เข้ากันได้ของ dependencies:
 
 ```toml
 [project]
@@ -326,22 +326,22 @@ dependencies = [
 ]
 ```
 
-Version specifiers exist across many package managers (npm, cargo, etc.) with varying exact semantics. The `~=` operator is Python's "compatible release" operator --- `~=2.1.0` means "any version that is compatible with 2.1.0", which translates to `>=2.1.0` and `<2.2.0`. This is roughly equivalent to the caret (`^`) operator in npm and cargo, which follows SemVer's notion of compatibility.
+Version specifiers มีอยู่ในหลาย package managers (npm, cargo ฯลฯ) โดยมี semantics ที่แตกต่างกันเล็กน้อย Operator `~=` เป็น "compatible release" operator ของ Python --- `~=2.1.0` หมายถึง "version ใดก็ได้ที่เข้ากันได้กับ 2.1.0" ซึ่งแปลว่า `>=2.1.0` และ `<2.2.0` สิ่งนี้เทียบได้คร่าวๆ กับ caret (`^`) operator ใน npm และ cargo ซึ่งใช้แนวคิด compatibility ของ SemVer
 
-Not all software uses semantic versioning. A common alternative is Calendar Versioning (CalVer), where versions are based on release dates rather than semantic meaning. For example, Ubuntu uses versions like `24.04` (April 2024) and `24.10` (October 2024). CalVer makes it easy to see how old a release is, though it doesn't communicate anything about compatibility.  Lastly, semantic versioning is not infallible, and sometimes maintainers inadvertently introduce breaking changes in minor or patch releases.
+ซอฟต์แวร์ไม่ได้ใช้ semantic versioning ทั้งหมด ทางเลือกที่พบบ่อยคือ Calendar Versioning (CalVer) ที่ versions ตั้งตามวันที่ release แทนที่จะเป็นความหมายเชิง semantic ตัวอย่างเช่น Ubuntu ใช้ versions อย่าง `24.04` (เมษายน 2024) และ `24.10` (ตุลาคม 2024) CalVer ทำให้เห็นได้ง่ายว่า release เก่าแค่ไหน แม้จะไม่ได้สื่ออะไรเกี่ยวกับ compatibility สุดท้ายแล้ว semantic versioning ก็ไม่ได้สมบูรณ์แบบ และบางครั้ง maintainers ก็แนะนำ breaking changes ใน minor หรือ patch releases โดยไม่ได้ตั้งใจ
 
 
 # Reproducibility
 
-In modern software development the code you write sits atop a significant number of layers of abstraction.
-This includes things like your programming language runtime, third party libraries, the operating system, or even the hardware itself.
-Any difference across any of these layers might change the behavior of your code or even prevent it from working as intended.
-Furthermore, even differences in the underlying hardware impact your ability to ship software.
+ในการพัฒนาซอฟต์แวร์สมัยใหม่ โค้ดที่เราเขียนอยู่บน layers of abstraction จำนวนมาก
+ซึ่งรวมถึงสิ่งต่างๆ เช่น programming language runtime, third party libraries, ระบบปฏิบัติการ หรือแม้แต่ hardware เอง
+ความแตกต่างใดๆ ใน layers เหล่านี้อาจเปลี่ยนพฤติกรรมของโค้ดหรือแม้แต่ทำให้มันไม่ทำงานตามที่ต้องการ
+ยิ่งกว่านั้น ความแตกต่างใน hardware ที่อยู่เบื้องล่างก็ส่งผลต่อความสามารถในการ ship ซอฟต์แวร์ของเราด้วย
 
-Pinning a library refers to specifying an exact version rather than a range, e.g. `requests==2.32.3` instead of `requests>=2.0`.
+การ pin library หมายถึงการระบุ version ที่แน่นอนแทนที่จะเป็นช่วง เช่น `requests==2.32.3` แทนที่จะเป็น `requests>=2.0`
 
-Part of the job of a package manager is to consider all the constraints provided by the dependencies --- and transitive dependencies --- and then produce a valid list of versions that will satisfy all the constraints.
-The specific list of versions can then be saved to a file for reproducibility purposes; these files are referred to as _lock files_.
+ส่วนหนึ่งของหน้าที่ package manager คือการพิจารณา constraints ทั้งหมดที่กำหนดโดย dependencies --- และ transitive dependencies --- แล้วสร้างรายการ versions ที่ใช้ได้ซึ่งตอบสนอง constraints ทั้งหมด
+รายการ versions เฉพาะนั้นสามารถบันทึกลงไฟล์เพื่อจุดประสงค์ด้าน reproducibility ไฟล์เหล่านี้เรียกว่า _lock files_
 
 ```console
 $ uv lock
@@ -362,37 +362,37 @@ wheels = [
 ...
 ```
 
-One critical distinction when dealing with dependency versioning and reproducibility is the difference between libraries and applications/services.
-A library is intended to be imported and used by other code which might have its own dependencies, so specifying overly strict version constraints can cause conflicts with the user's other dependencies.
-In contrast, applications or services are final consumers of the software and typically expose their functionality through a user interface or an API, not through a programming interface.
-For libraries, it is good practice to specify version ranges to maximize compatibility with the wider package ecosystem. For applications, pinning exact versions ensures reproducibility --- everyone running the application uses the exact same dependencies.
+ข้อแตกต่างที่สำคัญเมื่อจัดการกับ dependency versioning และ reproducibility คือความแตกต่างระหว่าง libraries กับ applications/services
+Library ถูกสร้างมาให้ import และใช้โดยโค้ดอื่นซึ่งอาจมี dependencies ของตัวเอง ดังนั้นการระบุ version constraints ที่เข้มงวดเกินไปอาจทำให้เกิด conflicts กับ dependencies อื่นๆ ของผู้ใช้
+ในทางตรงกันข้าม applications หรือ services เป็นผู้บริโภคขั้นสุดท้ายของซอฟต์แวร์ และมักจะเปิดเผย functionality ผ่าน user interface หรือ API ไม่ใช่ผ่าน programming interface
+สำหรับ libraries เป็นแนวปฏิบัติที่ดีที่จะระบุ version ranges เพื่อให้เข้ากันได้สูงสุดกับ package ecosystem ที่กว้างขึ้น สำหรับ applications การ pin exact versions ช่วยให้เกิด reproducibility --- ทุกคนที่รัน application ใช้ dependencies เดียวกันทุกประการ
 
 
-For projects requiring maximum reproducibility, tools like [Nix](https://nixos.org/) and [Bazel](https://bazel.build/) provide _hermetic_ builds --- where every input including compilers, system libraries, and even the build environment itself is pinned and content-addressed. This guarantees bit-for-bit identical outputs regardless of when or where the build runs.
+สำหรับโปรเจกต์ที่ต้องการ reproducibility สูงสุด เครื่องมืออย่าง [Nix](https://nixos.org/) และ [Bazel](https://bazel.build/) มี _hermetic_ builds --- ที่ทุก input รวมถึง compilers, system libraries และแม้แต่ build environment เองก็ถูก pin และ content-addressed สิ่งนี้รับประกันว่า outputs จะเหมือนกันทุก bit ไม่ว่าจะ build เมื่อไหร่หรือที่ไหนก็ตาม
 
-> You can even use NixOS to manage your entire computer install so that you can trivially spin up new copies of your computer setup and manage their complete configuration through version-controlled configuration files.
+> ยังสามารถใช้ NixOS จัดการการ install คอมพิวเตอร์ทั้งเครื่องได้ เพื่อให้สามารถสร้างสำเนาของ setup คอมพิวเตอร์ได้อย่างง่ายดาย และจัดการ configuration ทั้งหมดผ่าน configuration files ที่ถูก version-controlled
 
-A neverending tension in software development is that new software versions introduce breakage either intentionally or unintentionally, while on the other hand, old software versions become compromised with security vulnerabilities over time.
-We can address this by using continuous integration pipelines (we'll see more in the [Code Quality and CI](/2026/code-quality/) lecture) that test our application against new software versions and having automation in place for detecting when new versions of our dependencies are released, such as [Dependabot](https://github.com/dependabot).
+ความตึงเครียดที่ไม่มีวันจบในการพัฒนาซอฟต์แวร์คือ software versions ใหม่อาจทำให้เกิดปัญหาทั้งโดยตั้งใจและไม่ตั้งใจ ในขณะเดียวกัน software versions เก่าก็ค่อยๆ มีช่องโหว่ด้านความปลอดภัยเพิ่มขึ้นเรื่อยๆ
+เราสามารถจัดการกับสิ่งนี้ได้โดยใช้ continuous integration pipelines (จะเรียนรู้เพิ่มเติมในบท [Code Quality and CI](/2026/code-quality/)) ที่ test application ของเรากับ software versions ใหม่ และมี automation สำหรับตรวจจับเมื่อ dependencies มี versions ใหม่ออกมา เช่น [Dependabot](https://github.com/dependabot)
 
-Even with CI testing in place, issues still occur when upgrading software versions, often because of the inevitable mismatch between dev and prod environments.
-In those circumstances the best course of action is to have a _rollback_ plan, where the version upgrade is reverted and a known good version is redeployed instead.
+แม้จะมี CI testing อยู่แล้ว ปัญหาก็ยังเกิดขึ้นได้เมื่ออัปเกรด software versions บ่อยครั้งเนื่องจากความไม่ตรงกันที่หลีกเลี่ยงไม่ได้ระหว่าง dev กับ prod environments
+ในสถานการณ์เหล่านั้น แนวทางที่ดีที่สุดคือการมีแผน _rollback_ ที่ version ที่อัปเกรดจะถูก revert และ version ที่ทำงานได้ดีจะถูก deploy กลับแทน
 
 # VMs & Containers
 
-As you start relying on more complex dependencies, it is likely that the dependencies of your code will span beyond the boundaries of what the package manager can handle.
-One common reason is having to interface with specific system libraries or hardware drivers.
-For example, in scientific computing and AI, programs often need specialized libraries and drivers to utilize GPU hardware.
-Many system-level dependencies (GPU drivers, specific compiler versions, shared libraries like OpenSSL) still require system-wide installation.
+เมื่อเริ่มพึ่งพา dependencies ที่ซับซ้อนมากขึ้น มีแนวโน้มว่า dependencies ของโค้ดจะขยายเกินขอบเขตของสิ่งที่ package manager จัดการได้
+เหตุผลที่พบบ่อยคือต้อง interface กับ system libraries หรือ hardware drivers เฉพาะ
+ตัวอย่างเช่น ในงาน scientific computing และ AI โปรแกรมมักต้องการ libraries และ drivers เฉพาะทางเพื่อใช้งาน GPU hardware
+System-level dependencies หลายตัว (GPU drivers, compiler versions เฉพาะ, shared libraries อย่าง OpenSSL) ยังต้องการการ install แบบ system-wide
 
-Traditionally this wider dependency problem was solved with Virtual Machines (VMs).
-VMs abstract the entire computer and provide a completely isolated environment with its own dedicated operating system.
-A more modern approach is containers, which package an application along with its dependencies, libraries, and filesystem, but share the host's operating system kernel rather than virtualizing an entire computer.
-Containers are lighter weight than VMs because they share the kernel, making them faster to start and more efficient to run.
+แต่เดิมปัญหา dependency ที่กว้างขวางนี้แก้ด้วย Virtual Machines (VMs)
+VMs จำลองคอมพิวเตอร์ทั้งเครื่องและให้ environment ที่แยกออกมาอย่างสมบูรณ์พร้อมระบบปฏิบัติการเฉพาะของตัวเอง
+แนวทางที่ทันสมัยกว่าคือ containers ซึ่ง package application พร้อมกับ dependencies, libraries และ filesystem แต่ใช้ kernel ของ host ร่วมกันแทนที่จะจำลองคอมพิวเตอร์ทั้งเครื่อง
+Containers มีน้ำหนักเบากว่า VMs เพราะใช้ kernel ร่วมกัน ทำให้เริ่มต้นได้เร็วกว่าและรันได้อย่างมีประสิทธิภาพมากกว่า
 
-The most popular container platform is [Docker](https://www.docker.com/). Docker introduced a standardized way to build, distribute, and run containers. Under the hood, Docker uses containerd as its container runtime --- an industry standard that other tools like Kubernetes also use.
+Container platform ที่ได้รับความนิยมมากที่สุดคือ [Docker](https://www.docker.com/) Docker นำเสนอวิธีมาตรฐานในการ build, distribute และ run containers เบื้องหลังนั้น Docker ใช้ containerd เป็น container runtime --- ซึ่งเป็นมาตรฐานอุตสาหกรรมที่เครื่องมืออื่นอย่าง Kubernetes ก็ใช้เช่นกัน
 
-Running a container is straightforward. For example, to run a Python interpreter inside a container we use `docker run` (The `-it` flags make the container interactive with a terminal. When you exit, the container stops.).
+การรัน container ทำได้ตรงไปตรงมา ตัวอย่างเช่น การรัน Python interpreter ภายใน container เราใช้ `docker run` (flags `-it` ทำให้ container เป็น interactive พร้อม terminal เมื่อ exit ออกมา container ก็จะหยุด)
 
 ```console
 $ docker run -it python:3.12 python
@@ -401,9 +401,9 @@ Python 3.12.7 (main, Nov  5 2024, 02:53:25) [GCC 12.2.0] on linux
 Hello from inside a container!
 ```
 
-In practice your program might depend on the entire filesystem.
-To overcome this, we can use container images that ship the entire filesystem of the application as the artifact.
-The container images are created programmatically. With docker we specify exactly the dependencies, system libraries, and configuration of the image using a Dockerfile syntax:
+ในทางปฏิบัติ โปรแกรมอาจขึ้นอยู่กับ filesystem ทั้งหมด
+เพื่อจัดการกับเรื่องนี้ เราสามารถใช้ container images ที่ ship filesystem ทั้งหมดของ application มาเป็น artifact
+Container images ถูกสร้างขึ้นด้วยโปรแกรม ด้วย Docker เราระบุ dependencies, system libraries และ configuration ของ image อย่างแม่นยำโดยใช้ Dockerfile syntax:
 
 ```dockerfile
 FROM python:3.12
@@ -417,11 +417,11 @@ WORKDIR /app
 RUN pip install .
 ```
 
-An important distinction: a Docker **image** is the packaged artifact (like a template), while a **container** is a running instance of that image. You can run multiple containers from the same image. Images are built in layers, where each instruction (`FROM`, `RUN`, `COPY`, etc) in a Dockerfile creates a new layer. Docker caches these layers, so if you change a line in your Dockerfile, only that layer and subsequent layers need to be rebuilt.
+ข้อแตกต่างที่สำคัญ: Docker **image** คือ artifact ที่ถูก package ไว้ (เหมือน template) ในขณะที่ **container** คือ running instance ของ image นั้น สามารถรันหลาย containers จาก image เดียวกันได้ Images ถูก build เป็น layers โดยแต่ละ instruction (`FROM`, `RUN`, `COPY` ฯลฯ) ใน Dockerfile จะสร้าง layer ใหม่ Docker จะ cache layers เหล่านี้ ดังนั้นถ้าเราเปลี่ยนบรรทัดหนึ่งใน Dockerfile เฉพาะ layer นั้นและ layers ถัดไปเท่านั้นที่ต้อง rebuild
 
-The previous Dockerfile has several issues: it uses the full Python image instead of a slim variant, runs separate `RUN` commands creating unnecessary layers, versions are not pinned, and it doesn't clean up package manager caches, shipping unnecessary files. Other frequent mistakes include insecurely running containers as root and accidentally embedding secrets in layers.
+Dockerfile ก่อนหน้านี้มีปัญหาหลายอย่าง: ใช้ Python image แบบเต็มแทนที่จะเป็น slim variant, รัน `RUN` commands แยกกันทำให้เกิด layers ที่ไม่จำเป็น, versions ไม่ได้ถูก pin, และไม่ได้ล้าง package manager caches ทำให้ ship ไฟล์ที่ไม่จำเป็นไปด้วย ข้อผิดพลาดอื่นๆ ที่พบบ่อย ได้แก่ การรัน containers เป็น root อย่างไม่ปลอดภัย และการฝัง secrets ไว้ใน layers โดยไม่ตั้งใจ
 
-Here's an improved version
+นี่คือเวอร์ชันที่ปรับปรุงแล้ว
 
 ```dockerfile
 FROM python:3.12-slim
@@ -434,19 +434,19 @@ RUN uv pip install --system -r uv.lock
 COPY . /app
 ```
 
-In the previous example we see that instead of installing `uv` from source, we are copying the prebuilt binary from the `ghcr.io/astral-sh/uv:latest` image. This is known as the _builder_ pattern. With this pattern we do not need to ship all the tools needed to compile our code, just the final binary that is needed to run the application (`uv` in this case).
+ในตัวอย่างก่อนหน้านี้จะเห็นว่าแทนที่จะ install `uv` จาก source เรากำลัง copy prebuilt binary จาก image `ghcr.io/astral-sh/uv:latest` สิ่งนี้เรียกว่า _builder_ pattern ด้วย pattern นี้เราไม่ต้อง ship เครื่องมือทั้งหมดที่ต้องใช้ compile โค้ด แค่ final binary ที่ต้องใช้รัน application (`uv` ในกรณีนี้)
 
-Docker has important limitations to be aware of. First, container images are often platform-specific --- an image built for `linux/amd64` won't run natively on `linux/arm64` (Apple Silicon Macs) without emulation, which is slow. Second, Docker containers require a Linux kernel, so on macOS and Windows, Docker actually runs a lightweight Linux VM under the hood, adding overhead. Third, Docker's isolation is weaker than VMs --- containers share the host kernel, which is a security concern in multi-tenant environments.
+Docker มีข้อจำกัดที่สำคัญที่ควรรู้ไว้ ประการแรก container images มักเป็น platform-specific --- image ที่ build สำหรับ `linux/amd64` จะไม่สามารถรันบน `linux/arm64` (Mac ที่ใช้ Apple Silicon) ได้โดยตรง ต้องใช้ emulation ซึ่งช้า ประการที่สอง Docker containers ต้องการ Linux kernel ดังนั้นบน macOS และ Windows Docker จริงๆ แล้วรัน Linux VM แบบ lightweight อยู่เบื้องหลัง ซึ่งเพิ่ม overhead ประการที่สาม การแยกตัวของ Docker อ่อนกว่า VMs --- containers ใช้ host kernel ร่วมกัน ซึ่งเป็นข้อกังวลด้านความปลอดภัยใน multi-tenant environments
 
-> These days, more projects are also making use of nix to manage even "system-wide" libraries and applications per project through [nix flakes](https://serokell.io/blog/practical-nix-flakes).
+> ในปัจจุบัน มีโปรเจกต์มากขึ้นที่ใช้ nix ในการจัดการแม้แต่ libraries และ applications ระดับ "system-wide" ต่อโปรเจกต์ผ่าน [nix flakes](https://serokell.io/blog/practical-nix-flakes)
 
 # Configuration
 
-Software is inherently configurable. In the [command line environment](/2026/command-line-environment/) lecture we saw programs receiving options via flags, environment variables or even configuration files a.k.a. dotfiles. This holds true even for more complex applications, and there are established patterns for managing configuration at scale.
-Software configuration should not be embedded in the code but be provided at runtime.
-A couple of common ones being environment variables and config files.
+ซอฟต์แวร์โดยธรรมชาติแล้วสามารถ configure ได้ ในบท [command line environment](/2026/command-line-environment/) เราเห็นโปรแกรมรับ options ผ่าน flags, environment variables หรือแม้แต่ configuration files หรือ dotfiles สิ่งนี้เป็นจริงแม้กับ applications ที่ซับซ้อนกว่า และมี patterns ที่ใช้กันมาแล้วสำหรับการจัดการ configuration ในวงกว้าง
+Software configuration ไม่ควรฝังอยู่ในโค้ด แต่ควรถูกให้ตอน runtime
+รูปแบบที่พบบ่อยสองอย่างคือ environment variables และ config files
 
-Here's an example of an application that is configured via environment variables:
+นี่คือตัวอย่างของ application ที่ถูก configure ผ่าน environment variables:
 
 ```python
 import os
@@ -456,7 +456,7 @@ DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
 API_KEY = os.environ["API_KEY"]  # Required - will raise if not set
 ```
 
-An application could also be configured via a configuration file (e.g., a Python program that loads a config via `yaml.load`), `config.yaml`:
+Application ยังสามารถถูก configure ผ่าน configuration file ได้ (เช่น โปรแกรม Python ที่ load config ผ่าน `yaml.load`) `config.yaml`:
 
 ```yaml
 database:
@@ -468,22 +468,22 @@ server:
   debug: false
 ```
 
-A good right-hand rule for thinking about configuration is that the same codebase should be deployable to different environments (development, staging, production) with only configuration changes, never code changes.
+หลักคิดง่ายๆ สำหรับ configuration คือ codebase เดียวกันควร deploy ไปยัง environments ที่แตกต่างกัน (development, staging, production) ได้โดยเปลี่ยนแค่ configuration ไม่ใช่โค้ด
 
-Among the many configuration options there is often sensitive data such as API keys.
-Secrets need to be handled with care to avoid exposing them accidentally, and must not be included in version control.
+ในบรรดา configuration options มากมาย มักมี sensitive data เช่น API keys อยู่ด้วย
+Secrets ต้องจัดการอย่างระมัดระวังเพื่อหลีกเลี่ยงการเปิดเผยโดยบังเอิญ และต้องไม่รวมอยู่ใน version control
 
 
 # Services & Orchestration
 
-Modern applications rarely exist in isolation. A typical web application might need a database for persistent storage, a cache for performance, a message queue for background tasks, and various other supporting services. Rather than bundling everything into a single monolithic application, modern architectures often decompose functionality into separate services that can be developed, deployed, and scaled independently.
+Applications สมัยใหม่ไม่ค่อยอยู่โดดเดี่ยว Web application ทั่วไปอาจต้องการ database สำหรับ persistent storage, cache สำหรับ performance, message queue สำหรับ background tasks, และ supporting services อื่นๆ อีกหลายตัว แทนที่จะรวมทุกอย่างไว้ใน monolithic application เดียว สถาปัตยกรรมสมัยใหม่มักแยก functionality ออกเป็น services แยกกันที่สามารถพัฒนา, deploy และ scale ได้อย่างอิสระ
 
-As an example, if we determine our application might benefit from using a cache, instead of rolling our own we can leverage existing battle tested solutions like [Redis](https://redis.io/) or [Memcached](https://memcached.org/).
-We could embed Redis in our application dependencies by building it as part of the container, but that means harmonizing all the dependencies between Redis and our application which could be challenging or even unfeasible.
-Instead what we can do is deploy each application separately in its own container.
-This is commonly referred to as a microservice architecture where each component runs as an independent service that communicates over the network, typically via HTTP APIs.
+ตัวอย่างเช่น ถ้าเราพิจารณาว่า application อาจได้ประโยชน์จากการใช้ cache แทนที่จะสร้างเอง เราสามารถใช้ solutions ที่ผ่านการทดสอบมาแล้วอย่าง [Redis](https://redis.io/) หรือ [Memcached](https://memcached.org/)
+เราอาจฝัง Redis ไว้ใน application dependencies โดย build เป็นส่วนหนึ่งของ container แต่นั่นหมายความว่าต้องประสาน dependencies ทั้งหมดระหว่าง Redis กับ application ของเรา ซึ่งอาจยากหรือแม้แต่เป็นไปไม่ได้
+แทนที่จะทำแบบนั้น เราสามารถ deploy แต่ละ application แยกกันใน container ของตัวเอง
+สิ่งนี้มักเรียกว่า microservice architecture ที่แต่ละ component รันเป็น service อิสระที่สื่อสารกันผ่าน network โดยปกติผ่าน HTTP APIs
 
-[Docker Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container applications. Rather than managing containers individually, you declare all services in a single YAML file and orchestrate them together. Now our full application encompasses more than one container:
+[Docker Compose](https://docs.docker.com/compose/) คือเครื่องมือสำหรับกำหนดและรัน multi-container applications แทนที่จะจัดการ containers ทีละตัว เราประกาศ services ทั้งหมดใน YAML file เดียวและ orchestrate มันเข้าด้วยกัน ตอนนี้ application เต็มรูปแบบของเราครอบคลุมมากกว่าหนึ่ง container:
 
 ```yaml
 # docker-compose.yml
@@ -506,10 +506,10 @@ volumes:
   redis_data:
 ```
 
-With `docker compose up`, both services start together, and the web application can connect to Redis using the hostname `cache` (Docker's internal DNS resolves service names automatically).
-Docker Compose lets us declare how we want to deploy one or more services, and handles the orchestration of starting them together, setting up networking between them, and managing shared volumes for data persistence.
+ด้วย `docker compose up` services ทั้งสองจะเริ่มพร้อมกัน และ web application สามารถเชื่อมต่อกับ Redis ได้โดยใช้ hostname `cache` (DNS ภายในของ Docker จะ resolve ชื่อ service โดยอัตโนมัติ)
+Docker Compose ให้เราประกาศว่าต้องการ deploy services อย่างไร และจัดการ orchestration ของการเริ่ม services พร้อมกัน, ตั้งค่า networking ระหว่างกัน, และจัดการ shared volumes สำหรับ data persistence
 
-For production deployments, you often want your docker compose services to start automatically on boot and restart on failure. A common approach is to use systemd to manage the docker compose deployment:
+สำหรับ production deployments มักต้องการให้ docker compose services เริ่มอัตโนมัติเมื่อ boot และ restart เมื่อ fail แนวทางที่พบบ่อยคือใช้ systemd จัดการ docker compose deployment:
 
 ```ini
 # /etc/systemd/system/myapp.service
@@ -529,11 +529,11 @@ ExecStop=/usr/bin/docker compose down
 WantedBy=multi-user.target
 ```
 
-This systemd unit file ensures your application starts when the system boots (after Docker is ready), and provides standard controls like `systemctl start myapp`, `systemctl stop myapp`, and `systemctl status myapp`.
+systemd unit file นี้ทำให้ application เริ่มเมื่อระบบ boot (หลังจาก Docker พร้อม) และให้ controls มาตรฐานอย่าง `systemctl start myapp`, `systemctl stop myapp` และ `systemctl status myapp`
 
-As deployment requirements grow more complex --- needing scalability across multiple machines, fault tolerance when services crash, and high availability guarantees --- organizations turn to sophisticated container orchestration platforms like Kubernetes (k8s), which can manage thousands of containers across clusters of machines. That said, Kubernetes has a steep learning curve and significant operational overhead, so it's often overkill for smaller projects.
+เมื่อความต้องการในการ deploy ซับซ้อนขึ้น --- ต้องการ scalability ข้ามหลายเครื่อง, fault tolerance เมื่อ services crash, และ high availability guarantees --- องค์กรก็หันไปใช้ container orchestration platforms ที่ซับซ้อนอย่าง Kubernetes (k8s) ซึ่งสามารถจัดการ containers หลายพันตัวข้ามกลุ่มเครื่อง อย่างไรก็ตาม Kubernetes มี learning curve ที่สูงและ operational overhead ที่มาก ดังนั้นมักจะเกินความจำเป็นสำหรับโปรเจกต์ขนาดเล็ก
 
-This multi-container setup is partly feasible because modern services communicate with each other via standardized APIs, with HTTP REST APIs. For example, whenever a program interacts with an LLM provider like OpenAI or Anthropic, under the hood it is sending an HTTP request to their servers and parsing the response:
+การตั้งค่า multi-container นี้เป็นไปได้ส่วนหนึ่งเพราะ services สมัยใหม่สื่อสารกันผ่าน standardized APIs ซึ่งก็คือ HTTP REST APIs ตัวอย่างเช่น เมื่อโปรแกรมโต้ตอบกับ LLM provider อย่าง OpenAI หรือ Anthropic เบื้องหลังมันกำลังส่ง HTTP request ไปยัง servers ของพวกเขาและ parse response ที่ได้กลับมา:
 
 ```console
 $ curl https://api.anthropic.com/v1/messages \
@@ -546,17 +546,17 @@ $ curl https://api.anthropic.com/v1/messages \
 
 # Publishing
 
-Once you have shown your code to work, you might be interested in distributing it for others to download and install.
-Distribution takes many forms and is intrinsically tied to the programming language and environments that you operate with.
+เมื่อโค้ดของเราพิสูจน์แล้วว่าทำงานได้ เราอาจสนใจที่จะ distribute มันให้คนอื่น download และ install
+การ distribution มีหลายรูปแบบและผูกติดอยู่กับภาษาโปรแกรมและ environments ที่เราใช้งาน
 
-The simplest form of distribution is uploading artifacts for people to download and install locally.
-This is still common and you can find it in places like [Ubuntu's package archive](http://archive.ubuntu.com/ubuntu/pool/main/), which is essentially an HTTP directory listing of `.deb` files.
+รูปแบบที่ง่ายที่สุดของการ distribution คือการ upload artifacts ให้คนอื่น download และ install ในเครื่อง
+สิ่งนี้ยังเป็นเรื่องปกติอยู่ และสามารถพบได้ในที่อย่าง [Ubuntu's package archive](http://archive.ubuntu.com/ubuntu/pool/main/) ซึ่งเป็น HTTP directory listing ของไฟล์ `.deb`
 
-These days, GitHub has become the de facto platform for publishing source code and artifacts.
-While the source code is often publicly available, GitHub Releases allow maintainers to attach prebuilt binaries and other artifacts to tagged versions.
+ในปัจจุบัน GitHub ได้กลายเป็น platform มาตรฐานสำหรับ publish source code และ artifacts
+แม้ว่า source code มักจะเปิดให้เข้าถึงได้ GitHub Releases ช่วยให้ maintainers แนบ prebuilt binaries และ artifacts อื่นๆ กับ tagged versions ได้
 
 
-Package managers sometimes support installing directly from GitHub, either from source or from a pre-built wheel:
+บาง package managers รองรับการ install โดยตรงจาก GitHub ไม่ว่าจะจาก source หรือจาก pre-built wheel:
 
 ```console
 # Install from source (will clone and build)
@@ -569,8 +569,8 @@ $ pip install git+https://github.com/psf/requests.git@v2.32.3
 $ pip install https://github.com/user/repo/releases/download/v1.0/package-1.0-py3-none-any.whl
 ```
 
-In fact, some languages like Go use a decentralized distribution model --- rather than a central package repository, Go modules are distributed directly from their source code repositories.
-Module paths like `github.com/gorilla/mux` indicate where the code lives, and `go get` fetches directly from there. However, most package managers like `pip`, `cargo`, or `brew` have central indexes of pre-packaged projects for ease of distribution and installation. If we run
+จริงๆ แล้ว บางภาษาอย่าง Go ใช้ decentralized distribution model --- แทนที่จะมี central package repository Go modules ถูก distribute โดยตรงจาก source code repositories
+Module paths อย่าง `github.com/gorilla/mux` บ่งบอกว่าโค้ดอยู่ที่ไหน และ `go get` จะ fetch มาจากที่นั่นโดยตรง อย่างไรก็ตาม package managers ส่วนใหญ่อย่าง `pip`, `cargo` หรือ `brew` มี central indexes ของ pre-packaged projects เพื่อให้ง่ายต่อการ distribution และ installation ถ้าเรารัน
 
 ```console
 $ uv pip install requests --verbose --no-cache 2>&1 | grep -F '.whl'
@@ -579,18 +579,18 @@ DEBUG No cache entry for: https://files.pythonhosted.org/packages/1e/db/4254e3ea
 DEBUG No cache entry for: https://files.pythonhosted.org/packages/1e/db/4254e3eabe8020b458f1a747140d32277ec7a271daf1d235b70dc0b4e6e3/requests-2.32.5-py3-none-any.whl
 ```
 
-we see where we are fetching the `requests` wheel from. Notice the `py3-none-any` in the filename --- this means the wheel works with any Python 3 version, on any OS, on any architecture. For packages with compiled code, the wheel is platform-specific:
+จะเห็นว่าเรากำลัง fetch wheel `requests` จากที่ไหน สังเกต `py3-none-any` ในชื่อไฟล์ --- หมายความว่า wheel นี้ทำงานได้กับ Python 3 ทุก version, OS ใดก็ได้ และ architecture ใดก็ได้ สำหรับ packages ที่มี compiled code wheel จะเป็น platform-specific:
 
 ```console
 $ uv pip install numpy --verbose --no-cache 2>&1 | grep -F '.whl'
 DEBUG Selecting: numpy==2.2.1 [compatible] (numpy-2.2.1-cp312-cp312-macosx_14_0_arm64.whl)
 ```
 
-Here `cp312-cp312-macosx_14_0_arm64` indicates this wheel is specifically for CPython 3.12 on macOS 14+ for ARM64 (Apple Silicon). If you're on a different platform, `pip` will download a different wheel or build from source.
+ตรงนี้ `cp312-cp312-macosx_14_0_arm64` บ่งบอกว่า wheel นี้เฉพาะสำหรับ CPython 3.12 บน macOS 14+ สำหรับ ARM64 (Apple Silicon) ถ้าอยู่บน platform อื่น `pip` จะ download wheel อื่นหรือ build จาก source
 
-Conversely, for people to be able to find a package we've created, we need to publish it to one of these registries.
-In Python, the main registry is the [Python Package Index (PyPI)](https://pypi.org).
-Like with installing, there are multiple ways of publishing packages. The `uv publish` command provides a modern interface for uploading packages to PyPI:
+ในทางกลับกัน เพื่อให้คนอื่นค้นหา package ที่เราสร้างได้ เราต้อง publish มันไปยัง registries เหล่านี้
+ใน Python registry หลักคือ [Python Package Index (PyPI)](https://pypi.org)
+เช่นเดียวกับการ install มีหลายวิธีในการ publish packages คำสั่ง `uv publish` มี interface ที่ทันสมัยสำหรับ upload packages ไปยัง PyPI:
 
 ```console
 $ uv publish --publish-url https://test.pypi.org/legacy/
@@ -598,17 +598,17 @@ Publishing greeting-0.1.0.tar.gz
 Publishing greeting-0.1.0-py3-none-any.whl
 ```
 
-Here we are using [TestPyPI](https://test.pypi.org) --- a separate package registry intended for testing your publishing workflow without polluting the real PyPI. Once uploaded, you can install from TestPyPI:
+ตรงนี้เราใช้ [TestPyPI](https://test.pypi.org) --- package registry แยกต่างหากที่มีไว้สำหรับทดสอบ publishing workflow โดยไม่ทำให้ PyPI จริงรก เมื่อ upload แล้ว สามารถ install จาก TestPyPI ได้:
 
 ```console
 $ uv pip install --index-url https://test.pypi.org/simple/ greeting
 ```
 
-A key consideration when publishing software is trust. How do users verify that the package they download actually comes from you and hasn't been tampered with? Package registries use checksums to verify integrity, and some ecosystems support package signing to provide cryptographic proof of authorship.
+ข้อพิจารณาสำคัญเมื่อ publish ซอฟต์แวร์คือเรื่องความน่าเชื่อถือ ผู้ใช้จะตรวจสอบได้อย่างไรว่า package ที่พวกเขา download มาจากเราจริงๆ และไม่ถูก tamper? Package registries ใช้ checksums เพื่อตรวจสอบความถูกต้อง และบาง ecosystems รองรับ package signing เพื่อให้ cryptographic proof ของ authorship
 
-Different languages have their own package registries: [crates.io](https://crates.io) for Rust, [npm](https://www.npmjs.com) for JavaScript, [RubyGems](https://rubygems.org) for Ruby, and [Docker Hub](https://hub.docker.com) for container images. Meanwhile, for private or internal packages, organizations often deploy their own package repositories (such as a private PyPI server or a private Docker registry) or use managed solutions from cloud providers.
+ภาษาต่างๆ มี package registries ของตัวเอง: [crates.io](https://crates.io) สำหรับ Rust, [npm](https://www.npmjs.com) สำหรับ JavaScript, [RubyGems](https://rubygems.org) สำหรับ Ruby, และ [Docker Hub](https://hub.docker.com) สำหรับ container images สำหรับ private หรือ internal packages องค์กรมักจะ deploy package repositories ของตัวเอง (เช่น private PyPI server หรือ private Docker registry) หรือใช้ managed solutions จาก cloud providers
 
-Deploying a web service to the internet involves additional infrastructure: domain name registration, DNS configuration to point your domain to your server, and often a reverse proxy like nginx to handle HTTPS and route traffic. For simpler use cases like documentation or static sites, [GitHub Pages](https://pages.github.com/) provides free hosting directly from a repository.
+การ deploy web service ไปยัง internet ต้องมี infrastructure เพิ่มเติม: การจดทะเบียน domain name, การ configure DNS ให้ชี้ domain ไปยัง server, และมักจะมี reverse proxy อย่าง nginx เพื่อจัดการ HTTPS และ route traffic สำหรับกรณีที่ง่ายกว่าอย่าง documentation หรือ static sites [GitHub Pages](https://pages.github.com/) ให้ hosting ฟรีโดยตรงจาก repository
 
 <!--
 ## Documentation
@@ -622,9 +622,9 @@ For HTTP-based APIs, the [OpenAPI specification](https://www.openapis.org/) (for
 
 # Exercises
 
-1. Save your environment with `printenv` to a file, create a venv, activate it, `printenv` to another file and `diff before.txt after.txt`. What changed in the environment? Why does the shell prefer the venv? (Hint: look at `$PATH` before and after activation.) Run `which deactivate` and reason about what the deactivate bash function is doing.
-1. Create a Python package with a `pyproject.toml` and install it in a virtual environment. Create a lockfile and inspect it.
-1. Install Docker and use it to build the Missing Semester class website locally using docker compose.
-1. Write a Dockerfile for a simple Python application. Then write a `docker-compose.yml` that runs your application alongside a Redis cache.
-1. Publish a Python package to TestPyPI (don't publish to the real PyPI unless it's worth sharing!). Then build a Docker image with said package and push it to `ghcr.io`.
-1. Make a website using [GitHub Pages](https://docs.github.com/en/pages/quickstart). Extra (non-)credit: configure it with a custom domain.
+1. บันทึก environment ด้วย `printenv` ลงไฟล์ สร้าง venv, activate มัน, `printenv` ลงอีกไฟล์หนึ่ง แล้ว `diff before.txt after.txt` มีอะไรเปลี่ยนแปลงใน environment? ทำไม shell ถึงเลือกใช้ venv? (คำใบ้: ดู `$PATH` ก่อนและหลัง activation) ลองรัน `which deactivate` แล้ววิเคราะห์ว่า deactivate bash function ทำอะไร
+2. สร้าง Python package ที่มี `pyproject.toml` แล้ว install มันใน virtual environment สร้าง lockfile แล้วตรวจดูเนื้อหา
+3. Install Docker แล้วใช้มัน build เว็บไซต์ Missing Semester class ใน local โดยใช้ docker compose
+4. เขียน Dockerfile สำหรับ Python application อย่างง่าย จากนั้นเขียน `docker-compose.yml` ที่รัน application พร้อม Redis cache
+5. Publish Python package ไปยัง TestPyPI (อย่า publish ไปยัง PyPI จริง เว้นแต่จะเป็นของที่คุ้มค่าจะแบ่งปัน!) จากนั้น build Docker image ที่มี package ดังกล่าว แล้ว push ไปยัง `ghcr.io`
+6. สร้างเว็บไซต์โดยใช้ [GitHub Pages](https://docs.github.com/en/pages/quickstart) เพิ่มเติม (ไม่มีเครดิตให้): configure ด้วย custom domain
