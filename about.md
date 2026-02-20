@@ -3,138 +3,85 @@ layout: lecture
 title: "Why we are teaching this class"
 ---
 
-During a traditional Computer Science education, chances are you will take
-plenty of classes that teach you advanced topics within CS, everything from
-Operating Systems to Programming Languages to Machine Learning. But at many
-institutions there is one essential topic that is rarely covered and is instead
-left for students to pick up on their own: computing ecosystem literacy.
+ในการศึกษาด้านวิทยาการคอมพิวเตอร์ (Computer Science) ตามปกติ พวกเราน่าจะต้องผ่านวิชาเรียนขั้นสูงมากมาย ตั้งแต่ระบบปฏิบัติการ (Operating Systems) ภาษาโปรแกรม (Programming Languages) ไปจนถึง Machine Learning แต่ปัญหาคือในหลายๆ สถาบัน กลับมีหัวข้อสำคัญเรื่องหนึ่งที่ไม่ค่อยถูกนำมาสอน ปล่อยให้นักศึกษาต้องไปเรียนรู้กันเอาเอง นั่นก็คือ "ความเข้าใจในเครื่องมือและสภาพแวดล้อมในการเขียนโปรแกรม (Computing Ecosystem Literacy)"
 
-Over the years, we have helped teach several classes at MIT, and over and over
-we have seen that many students have limited knowledge of the tools available
-to them. Computers were built to automate manual tasks, yet students often
-perform repetitive tasks by hand or fail to take full advantage of powerful
-tools such as version control and text editors. In the best case, this results
-in inefficiencies and wasted time; in the worst case, it results in issues like
-data loss or inability to complete certain tasks.
+ตลอดหลายปีที่ผ่านมา พวกเราได้ช่วยสอนหลายวิชาที่ MIT และเรามักจะเห็นภาพเดิมๆ ซ้ำแล้วซ้ำเล่า คือนักศึกษาหลายคนมีความรู้จำกัดเรื่องเครื่องมือที่สามารถนำมาใช้งานได้ ทั้งที่คอมพิวเตอร์ถูกสร้างขึ้นมาเพื่อทำงานซ้ำซากแทนเราแบบอัตโนมัติ (Automate) แต่นักศึกษากลับชอบป้อนคำสั่งซ้ำๆ ด้วยมือ (Manual) หรือไม่ก็ใช้ประโยชน์จากเครื่องมืออันทรงพลังอย่างระบบ Version Control และ Text Editors ได้ไม่เต็มประสิทธิภาพ ในกรณีที่ดีที่สุด ปัญหานี้ทำให้เกิดความล่าช้าและเสียเวลาโดยเปล่าประโยชน์ แต่ในกรณีที่เลวร้ายกว่านั้น มันทำให้เกิดข้อมูลสูญหาย หรืองานพังจนทำต่อไม่ได้
 
-These topics are not taught as part of the university curriculum: students are
-never shown how to use these tools, or at least not how to use them
-efficiently, and thus waste time and effort on tasks that _should_ be simple.
-The standard CS curriculum is missing critical topics about the computing
-ecosystem that could make students' lives significantly easier.
+หัวข้อเหล่านี้มักไม่ได้ถูกบรรจุในหลักสูตรมหาวิทยาลัย นักศึกษาไม่เคยถูกสอนว่าต้องใช้งานเครื่องมือเหล่านี้อย่างไร หรืออย่างน้อยก็ไม่เคยถูกสอนให้ใช้อย่าง **มีประสิทธิภาพ** ผลที่ตามมาคือต้องมาเสียเวลาและลงแรงไปกับงานที่จริงๆ แล้ว "ควรจะ" เป็นเรื่องง่าย สรุปก็คือ หลักสูตร CS ปกติยังขาดการสอนเนื้อหาสำคัญๆ เกี่ยวกับระบบสภาพแวดล้อมต่างๆ ที่จะช่วยให้ชีวิตการเขียนโค้ดของนักศึกษาง่ายขึ้นได้อีกมาก
 
-# The missing semester of your CS education
+# เทอมที่หายไปในชีวิตเด็ก CS (The missing semester of your CS education)
 
-To help remedy this, we created a class that covers all the topics we
-consider crucial to be an effective computer scientist and programmer. The
-class is pragmatic and practical, and it provides hands-on introduction to
-tools and techniques that you can immediately apply in a wide variety of
-situations you will encounter. The latest iteration of this class, with
-substantially revised material, is being run during MIT's "Independent
-Activities Period" in January 2026 — a one-month semester that features shorter
-student-run classes. While the lectures themselves are only available to the MIT
-community, we will provide all lecture materials along with video recordings of
-lectures to the public.
+เพื่ออุดช่องโหว่ตรงนี้ เราจึงจัดทำวิชานี้ขึ้นมาเพื่อครอบคลุมหัวข้อทั้งหมดที่เรามองว่า "จำเป็น" ต่อการเป็นโปรแกรมเมอร์ที่มีประสิทธิภาพ วิชานี้เน้นปฏิบัติและสามารถนำไปใช้ได้จริง (Pragmatic & Practical) โดยจะปูพื้นฐานการใช้งานเครื่องมือและเทคนิคต่างๆ ที่พวกคุณสามารถนำไปประยุกต์ใช้กับสถานการณ์หลากหลายรูปแบบที่จะต้องเจอได้ทันที เวอร์ชันล่าสุดของคอร์สนี้มีการปรับปรุงเนื้อหาขนานใหญ่ และนำมาสอนในช่วง "Independent Activities Period" ของ MIT ในเดือนมกราคม 2026 (เทอมระยะสั้น 1 เดือนที่นักศึกษาจัดสอนเอง) ถึงแม้วิชาเรียนจะจำกัดแค่ภายใน MIT แต่เราได้นำสื่อการสอนทั้งหมดพร้อมวิดีโอบันทึกการสอนมาเปิดให้เรียนกันได้แบบสาธารณะ
 
-If this sounds like it might be for you, here are some concrete
-examples of what the class will teach:
+ถ้าคิดว่านี่คือสิ่งที่คุณกำลังตามหาอยู่ นี่คือตัวอย่างคร่าวๆ ของสิ่งที่จะได้เรียนในวิชานี้:
 
-## Command shell
+## Command Shell
 
-How to automate common and repetitive tasks with aliases, scripts,
-and build systems. No more copy-pasting commands from a text
-document. No more "run these 15 commands one after the other". No
-more "you forgot to run this thing" or "you forgot to pass this
-argument".
+วิธีเขียนสร้างระบบอัตโนมัติ (Automate) สำหรับงานที่ต้องทำบ่อยๆ และทำซ้ำๆ ด้วย Aliases, Scripts และ Build Systems เลิกได้แล้วกับการก็อปปี้คำสั่งมาวางจากไฟล์ Text เลิกการต้องมาจำว่า "ต้องรัน 15 คำสั่งนี้เรียงต่อกัน" เลิกปัญหา "ลืมรันคำสั่งตัวนี้" หรือ "ลืมส่ง Argument ตัวนั้น" ได้แล้ว
 
-For example, searching through your history quickly can be a huge time saver. In the example below we show several tricks related to navigating your shell history for `convert` commands.
+ตัวอย่างเช่น การค้นหาประวัติคำสั่งผ่าน History อย่างรวดเร็วจะช่วยประหยัดเวลาได้เยอะมาก ในวิดีโอด้านล่างนี้ เราจะแสดงเทคนิคหลายวิธีในการไล่ค้นประวัติของคำสั่ง `convert`
 
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/history.mp4" type="video/mp4">
 </video>
 
-## Version control
+## Version Control
 
-How to use version control _properly_, and take advantage of it to
-save you from disaster, collaborate with others, and quickly find and
-isolate problematic changes. No more `rm -rf; git clone`. No more
-merge conflicts (well, fewer of them at least). No more huge blocks
-of commented-out code. No more fretting over how to find what broke
-your code. No more "oh no, did we delete the working code?!". We'll
-even teach you how to contribute to other people's projects with pull
-requests!
+การใช้ Version Control อย่าง **ถูกวิธี (properly)** และใช้ประโยชน์จากมันเพื่อพาคุณรอดจากวิกฤต, สามารถทำงานร่วมกับคนอื่นได้ รวมถึงการค้นหาและแยกโค้ดส่วนที่มีปัญหาออกมาได้อย่างรวดเร็ว พอกันทีกับ `rm -rf; git clone` พอกันทีกับ Merge Conflict (เอาเป็นว่าขอให้เจอน้อยลงก็พอ) พอกันทีกับก้อน Commented-out Code ลากยาว พอกันทีกับการต้องมานั่งปวดหัวว่าใครทำโค้ดพัง หรืออาการช็อคว่า "เฮ้ย โค้ดที่ใช้งานได้เมื่อกี้เพิ่งหายไปไหน?!" เราจะสอนบรรดาเครื่องมือรวมไปถึงวิธีส่ง Pull Requests เพื่อไปช่วยสมทบ (Contribute) งานของชาวบ้านด้วย
 
-In the example below we use `git bisect` to find which commit broke a unit test and then we fix it with `git revert`.
+ในตัวอย่างด้านล่าง เราใช้ `git bisect` เพื่อควานหาว่า Commit ไหนเป็นตัวการทำให้ Unit Test พัง แล้วตามไปแก้ด้วย `git revert`
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
+
   <source src="/static/media/demos/git.mp4" type="video/mp4">
 </video>
 
-## Text editing
+## Text Editing
 
-How to efficiently edit files from the command-line, both locally and
-remotely, and take advantage of advanced editor features. No more
-copying files back and forth. No more repetitive file editing.
+วิธีแก้ไขไฟล์อย่างมีประสิทธิภาพผ่าน Command-Line ทั้งบนเครื่องของตัวเอง (Locally) และเครื่องระยะไกล (Remotely) และใช้ฟีเจอร์ระดับสูงของ Editor ให้เป็นประโยชน์ พอกันทีกับการก็อปปี้ไฟล์สลับไปมา พอกันทีกับการแก้ไฟล์เรื่องเดิมๆ ซ้ำแล้วซ้ำเล่า
 
-Vim macros are one of its best features, in the example below we quickly convert an html table to csv format using a nested vim macro.
+Vim macros คือหนึ่งในฟีเจอร์ที่ดีที่สุด ในตัวอย่างด้านล่าง เราสามารถแปลง HTML Table เป็นรูปแบบ CSV ได้อย่างรวดเร็วด้วยการใช้ Nested Vim Macro
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
+
   <source src="/static/media/demos/vim.mp4" type="video/mp4">
 </video>
 
-## Remote machines
+## Remote Machines
 
-How to stay sane when working with remote machines using SSH keys and
-terminal multiplexing. No more keeping many terminals open just to
-run two commands at once. No more typing your password every time you
-connect. No more losing everything just because your Internet
-disconnected or you had to reboot your laptop.
+วิธีคุมสติให้อยู่รอดเมื่อต้องทำงานบนเครื่อง Remote ด้วย SSH Keys และ Terminal Multiplexing หมดปัญหาที่ต้องเปิดเบราว์เซอร์หรือ Terminal กองเต็มหน้าจอเพียงเพื่อจะรันสองคำสั่งพร้อมกัน เลิกพิมพ์รหัสผ่านซ้ำทุกรอบตอนคอนเนค หมดปัญหาของพังหายหมดเพียงเพราะอินเทอร์เน็ตหลุดกะทันหัน หรือต้อง Reboot แลปท็อป
 
-In the example below we use `tmux` to keep sessions alive in remote servers and `mosh` to support network roaming and disconnection.
+ในวิดีโอด้านล่าง เราพาใช้ `tmux` เพื่อป้องไม่ให้ Session ขาดหลุดจากการทำงานบน Remote Server และใช้ `mosh` เพื่อให้รองรับกรณีการเปลี่ยนเครือข่ายมือถือและเน็ตหลุด
 
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/ssh.mp4" type="video/mp4">
 </video>
 
-## Finding files
+## Finding Files
 
-How to quickly find files that you are looking for. No
-more clicking through files in your project until you find the one
-that has the code you want.
+วิธีค้นหาไฟล์ที่ต้องการอย่างรวดเร็ว พอกันทีกับการต้องนั่งคลิกหาทีละไฟล์ในโปรเจกต์ กว่าจะเจอโค้ดหน้าตาอย่างที่อยากได้
 
-In the example below we quickly look for files with `fd` and for code snippets with `rg`. We also quickly `cd` and `vim` recent/frequent files/folder using `fasd`.
+ในวิดีโอดังกล่าวนี้เราตามหาไฟล์อย่างรวดเร็วด้วย `fd` และสืบหา Code Snippets ด้วย `rg` รวมทั้งสั่ง `cd` และ `vim` เรียกใช้ไฟล์/โฟลเดอร์ที่เพิ่งเข้าบ่อยๆ ได้อย่างรวดเร็วโดยใช้ `fasd`
 
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/find.mp4" type="video/mp4">
 </video>
 
-## Data wrangling
+## Data Wrangling
 
-How to quickly and easily modify, view, parse, plot, and compute over
-data and files directly from the command-line. No more copy pasting
-from log files. No more manually computing statistics over data. No
-more spreadsheet plotting.
+วิธีปรับแต่ง, แสดงผล, แปลง (Parse), พล็อตข้อมูล และคำนวณสถิติจากข้อมูลไฟล์โดยตรงจากหน้า Command-Line ได้อย่างง่ายและรวดเร็ว พอกันทีกับการก็อปวางจาก Log File พอกันทีกับการใช้เครื่องคิดเลขจิ้มสถิติเองจากข้อมูล พอกันทีกับการพล็อตบน Spreadsheet
 
-## Code quality and continuous integration
+## Code Quality and Continuous Integration
 
-How to use autoformatting, linting, testing, and code coverage tools to improve
-code quality. No more ugly code. No more regressions. No more code that works
-on your computer but crashes on everyone else's.
+วิธีใช้งาน Autoformatting, Linting, Testing และ Code Coverage Tools เพื่อยกระดับ Code Quality เลิกเขียนโค้ดอ่านยาก เลิกเจอปัญหาบั๊กพังกลับมา (Regressions) เลิกเจอปัญหา "บนเครื่องเราก็รันผ่านนะ แต่พังบนเครื่องของคนอื่น"
 
-## Beyond the code
+## ขยับไปไกลกว่าแค่ตัวโค้ด (Beyond the Code)
 
-How to write great documentation, communicate clearly with open-source
-maintainers, submit actionable issues, and contribute pull requests that get
-merged. No more confused users who can't get started using your software. No
-more ghosting from maintainers.
+วิธีเขียนเอกสาร (Documentation) ให้ออกมาดี การสื่อสารพูดคุยกับเหล่า Open-source Maintainers ให้รู้เรื่อง การแจ้งปัญหา (Issue) อย่างตรงจุด และส่ง Pull Requests ให้ได้รับการถูกใช้โค้ด (Merged) หมดปัญหาผู้ใช้หน้าใหม่งงจนติดตั้งโปรแกรมคุณไม่เป็น หมดปัญหาโดน Maintainer อ่านไม่ตอบ
 
-# Conclusion
+# บทสรุป (Conclusion)
 
-This, and more, will be covered across the 9 class lectures, each including
-exercises for you to get more familiar with the tools on your own. If you can't
-wait until January 2026, you can also take a look at the lectures from the
-[previous offering of the course](/2020/), which covers many of the same
-topics.
+ทุกอย่างที่ได้กล่าวไป รวมทั้งหัวข้ออื่นๆ จะรวมอยู่ในการบรรยายฉบับเต็มทั้ง 9 บทเรียน แต่ละบทเรียนก็จะมีแบบฝึกหัดเพื่อให้พวกคุณได้ลองทำความคุ้นเคยกับเครื่องมือต่างๆ ด้วยตัวเอง หากคุณอดใจรอตัวเต็มในมกราคม 2026 ไม่ไหว ก็สามารถกลับไปดูวิดีโอจาก [วิชาที่เคยสอนไว้เมื่อปีก่อนหน้า](/2020/) ซึ่งมีเนื้อหาครอบคลุมหลายหัวข้อที่คล้ายคลึงกันไปก่อนได้
 
-We hope to see you in January, whether virtually or in person!
+หวังว่าจะได้พบพวกคุณในเดือนมกราคมนี้นะครับ ไม่ว่าจะตัวเป็นๆ ในคลาส หรือเจอกันบนโลกออนไลน์ก็ตาม!
 
 Happy hacking,<br>
 [Anish](https://anish.io/), [Jon](https://thesquareplanet.com/), and [Jose](https://josejg.com/)
