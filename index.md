@@ -64,8 +64,7 @@ same topics.
 
 # Beyond MIT
 
-We've also shared this class beyond MIT in the hopes that others may
-benefit from these resources. You can find posts and discussion on
+เราได้เผยแพร่คอร์สนี้ออกไปนอก MIT ด้วย เพื่อหวังว่าผู้อื่นจะได้รับประโยชน์จากแหล่งความรู้เหล่านี้ คุณสามารถอ่านโพสต์และพูดคุยแลกเปลี่ยนได้ที่
 
 - Hacker News ([2026](https://news.ycombinator.com/item?id=47075545), [2020](https://news.ycombinator.com/item?id=22226380), [2019](https://news.ycombinator.com/item?id=19078281))
 - Lobsters ([2026](https://lobste.rs/s/q4ykw7/missing_semester_your_cs_education_2026), [2020](https://lobste.rs/s/ti1k98/missing_semester_your_cs_education_mit), [2019](https://lobste.rs/s/h6157x/mit_hacker_tools_lecture_series_on))
@@ -95,12 +94,9 @@ benefit from these resources. You can find posts and discussion on
 - [Bengali](https://missing-semester-bn.github.io/)
 - [Thai](https://missing-semester-th.github.io/)
 
-Note: these are external links to community translations. We have not vetted
-them.
+หมายเหตุ: ลิงก์เหล่านี้เป็นลิงก์ภายนอกที่แปลโดยชุมชน ทางเราไม่ได้ตรวจสอบความถูกต้อง
 
-Have you created a translation of the course notes from this class? Submit a
-[pull request](https://github.com/missing-semester/missing-semester/pulls) so
-we can add it to the list!
+หากคุณแปลเนื้อหาคอร์สนี้เป็นภาษาอื่น สามารถส่ง [pull request](https://github.com/missing-semester/missing-semester/pulls) มาเพื่อให้เราเพิ่มลงในรายการได้เลยครับ!
 
 ## Acknowledgments
 
